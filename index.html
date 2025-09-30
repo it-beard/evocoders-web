@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EvoCoders - AI & Modern Development Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 30px 0;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: '🚀';
+            font-size: 32px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            color: white;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .courses {
+            padding: 60px 20px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .course-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .course-card .description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .course-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .course-card ul li {
+            padding: 8px 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .course-card ul li::before {
+            content: '✓ ';
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .getting-started {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .getting-started h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .step {
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            border-radius: 15px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .getting-started {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">EvoCoders</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Добро пожаловать в EvoCoders Learn!</h1>
+            <p>Ваш путь к мастерству в AI и современной разработке</p>
+            <div class="subtitle">
+                Изучите всё необходимое для работы с искусственным интеллектом в разработке программного обеспечения — от основ до продвинутых техник
+            </div>
+        </div>
+    </section>
+
+    <section class="courses">
+        <div class="container">
+            <div class="courses-grid">
+                <div class="course-card" style="animation-delay: 0.1s">
+                    <div class="course-icon">🧠</div>
+                    <h3>Базовая теория</h3>
+                    <p class="description">Фундамент AI-знаний для каждого разработчика</p>
+                    <div class="course-meta">
+                        <span>📚 5 уровней</span>
+                    </div>
+                    <ul>
+                        <li>Генеративный AI и большие языковые модели (LLM)</li>
+                        <li>Промпты, токены, контекст и галлюцинации</li>
+                        <li>Основы нейронных сетей и обучения моделей</li>
+                        <li>Агенты, RAG и продвинутые техники</li>
+                        <li>Будущее AI: AGI, ASI и безопасность</li>
+                    </ul>
+                    <a href="https://learn.itbeard.com/evocoders/basic-theory/index.html" class="btn">Начать курс →</a>
+                </div>
+
+                <div class="course-card" style="animation-delay: 0.2s">
+                    <div class="course-icon">💻</div>
+                    <h3>AI-ассистированное программирование</h3>
+                    <p class="description">Практический курс по использованию AI-инструментов для кодирования</p>
+                    <div class="course-meta">
+                        <span>📖 15 глав</span>
+                    </div>
+                    <ul>
+                        <li>Промпт/контекст-инжиниринг</li>
+                        <li>Умные подсказки кода (Copilot и др.)</li>
+                        <li>AI-чат внутри IDE</li>
+                        <li>Агентная генерация кода</li>
+                        <li>Model Context Protocol</li>
+                        <li>Популярные AI-инструменты для разработчиков</li>
+                    </ul>
+                    <a href="https://learn.itbeard.com/evocoders/ai-programming/index.html" class="btn">Начать курс →</a>
+                </div>
+
+                <div class="course-card" style="animation-delay: 0.3s">
+                    <div class="course-icon">🤖</div>
+                    <h3>Модели для кодирования</h3>
+                    <p class="description">Практическое руководство по выбору, запуску и использованию AI-моделей</p>
+                    <div class="course-meta">
+                        <span>📚 6 глав</span>
+                    </div>
+                    <ul>
+                        <li>Бенчмарки и лидерборды</li>
+                        <li>Лучшие закрытые модели (Claude, GPT-4, Gemini)</li>
+                        <li>Лучшие открытые модели (Llama, Mistral, Qwen)</li>
+                        <li>Как запускать LLM локально</li>
+                        <li>Требования к оборудованию</li>
+                    </ul>
+                    <a href="https://learn.itbeard.com/evocoders/models-for-coding/index.html" class="btn">Начать курс →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="getting-started">
+        <div class="container">
+            <h2>🎯 С чего начать?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Новичок в AI?</h3>
+                    <p>Начните с курса Базовая теория, чтобы заложить фундамент для понимания искусственного интеллекта</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Хотите улучшить свой код?</h3>
+                    <p>Переходите к AI-программированию и узнайте, как AI может ускорить вашу разработку</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Интересуют модели?</h3>
+                    <p>Изучите курс Модели для кодирования и научитесь выбирать и запускать нужные модели</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>🤖 Все курсы постоянно обновляются, как и сам AI</p>
+            <p style="margin-top: 10px;">Создано с ❤️ для сообщества разработчиков</p>
+            <p style="margin-top: 20px; opacity: 0.7;">© 2025 EvoCoders. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.course-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
