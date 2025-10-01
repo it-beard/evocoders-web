@@ -24,13 +24,18 @@
 }
 
 body {
-    font-family: 'VT323', monospace;
+    font-family: 'Share Tech Mono', monospace;
     line-height: 1.6;
     color: var(--text-white);
     background: var(--retro-darker);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 body::before {
@@ -69,7 +74,17 @@ body::before {
 }
 
 code, .mono {
-    font-family: 'VT323', monospace;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "kern" 1;
+    letter-spacing: 0.02em;
+}
+
+p, span, div {
+    font-variant-numeric: tabular-nums;
 }
 
 .container {
@@ -141,7 +156,7 @@ header {
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 25px;
     text-shadow: 
@@ -161,7 +176,7 @@ header {
 }
 
 .hero p {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 40px;
     color: var(--retro-purple);
     max-width: 800px;
@@ -171,7 +186,7 @@ header {
 }
 
 .hero .subtitle {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: var(--text-white);
     max-width: 800px;
     margin: 0 auto 40px;
@@ -364,6 +379,8 @@ header {
     margin-bottom: 20px;
     color: var(--text-primary);
     text-shadow: 0 0 10px var(--retro-cyan);
+    letter-spacing: 0.03em;
+    line-height: 1.4;
 }
 
 .benefit-card h3 i {
@@ -377,6 +394,7 @@ header {
     font-size: 1.3rem;
     color: var(--text-white);
     line-height: 1.7;
+    letter-spacing: 0.01em;
 }
 
 .structure {
@@ -549,7 +567,7 @@ header {
         0 0 20px rgba(0, 245, 212, 0.5),
         inset 0 0 10px rgba(0, 245, 212, 0.1);
     text-shadow: 0 0 10px var(--retro-cyan);
-    font-family: 'VT323', monospace;
+    font-family: 'Share Tech Mono', monospace;
     position: relative;
     text-transform: uppercase;
     letter-spacing: 2px;
