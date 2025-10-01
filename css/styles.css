@@ -267,6 +267,16 @@ header {
     line-height: 1.8;
 }
 
+.mission .mission-text {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-shadow: 0 0 10px var(--retro-cyan);
+    border-left: 4px solid var(--retro-cyan);
+    padding-left: 20px;
+    margin: 30px auto 50px;
+}
+
 .theses {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
