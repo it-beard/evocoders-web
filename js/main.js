@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const game = new GameOfLife('game-of-life-canvas', 12, 0.14, 20, 7000);
     game.start();
 
-    // Terminal-like typing animation for hero title
-    const titleEl = document.querySelector('.terminal-title');
-    if (titleEl) {
-        const promptEl = titleEl.querySelector('.prompt');
-        const typedEl = titleEl.querySelector('.typed');
-        const cursorEl = titleEl.querySelector('.cursor');
-        const text = 'Эволюция Кода';
-
+    // Terminal-like typing animation for header logo and hero title (if present)
+    function initTyping(scopeSelector, text) {
+        const container = document.querySelector(scopeSelector);
+        if (!container) return;
+        const promptEl = container.querySelector('.prompt');
+        const typedEl = container.querySelector('.typed');
+        const cursorEl = container.querySelector('.cursor');
+        if (!promptEl || !typedEl || !cursorEl) return;
         setTimeout(() => {
             promptEl.classList.remove('blink');
             let i = 0;
@@ -28,7 +28,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             };
             typeNext();
-        }, 600);
+        }, 400);
+    }
+
+    // Header logo typing
+    initTyping('header .terminal-title', 'Эволюция Кода');
+
+    // If hero title left empty (because we moved it to header), skip. If there is another terminal-title in hero, init it as well.
+    const heroTerminal = document.querySelector('.hero .terminal-title');
+    if (heroTerminal) {
+        initTyping('.hero .terminal-title', 'Эволюция Кода');
     }
 
     const observer = new IntersectionObserver((entries) => {
