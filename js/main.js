@@ -6,6 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const game = new GameOfLife('game-of-life-canvas', 12, 0.14, 20, 7000);
     game.start();
 
+    // Click/touch to add bursts to Game of Life
+    function injectFromEvent(e) {
+        if (!e) return;
+        let x, y;
+        if (e.touches && e.touches.length) {
+            x = e.touches[0].clientX; y = e.touches[0].clientY;
+        } else {
+            x = e.clientX; y = e.clientY;
+        }
+        game.injectAtClient(x, y);
+    }
+    window.addEventListener('click', injectFromEvent);
+    window.addEventListener('touchstart', injectFromEvent, { passive: true });
+
     // Terminal-like typing animation for header logo and hero title (if present)
     function initTyping(scopeSelector, text) {
         const container = document.querySelector(scopeSelector);

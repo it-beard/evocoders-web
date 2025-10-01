@@ -283,7 +283,7 @@ header .terminal-title {
 }
 
 .mission h2 {
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 35px;
     color: var(--text-primary);
     text-shadow: 
@@ -363,7 +363,7 @@ header .terminal-title {
 
 .benefits h2 {
     text-align: center;
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 60px;
     color: var(--text-primary);
     text-shadow: 
@@ -463,7 +463,7 @@ header .terminal-title {
 
 .structure h2 {
     text-align: center;
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 40px;
     color: var(--text-primary);
     text-shadow: 
@@ -489,7 +489,7 @@ header .terminal-title {
 }
 
 .resources h2 {
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 60px;
     color: var(--text-primary);
     text-shadow: 
@@ -577,7 +577,7 @@ header .terminal-title {
 }
 
 .cta h2 {
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 30px;
     color: var(--text-primary);
     text-shadow: 
@@ -664,12 +664,17 @@ header .terminal-title {
 }
 
 .companies h2 {
-    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-size: clamp(1.2rem, 6vw, 3rem);
     margin-bottom: 40px;
     color: var(--text-primary);
     text-shadow: 
         0 0 10px var(--retro-cyan),
         3px 3px 0px var(--retro-blue);
+}
+
+/* Prevent decorative bracket/arrow wrapping on small screens */
+.mission h2, .benefits h2, .structure h2, .resources h2, .cta h2, .companies h2 {
+    white-space: nowrap;
 }
 
 .companies-content {

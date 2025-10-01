@@ -148,6 +148,31 @@
         arraysEqual(a, b) {
             if (a.length !== b.length) return false; for (let i = 0; i < a.length; i++) { if (a[i] !== b[i]) return false; } return true;
         }
+
+        // Interaction helpers
+        setCell(x, y, alive = 1) {
+            if (this.cols === 0 || this.rows === 0) return;
+            // Wrap around
+            const cx = (x % this.cols + this.cols) % this.cols;
+            const cy = (y % this.rows + this.rows) % this.rows;
+            this.current[this.idx(cx, cy)] = alive ? 1 : 0;
+        }
+
+        // Stamp a small randomized 5x5 burst centered at (cellX, cellY)
+        stampBurst(cellX, cellY, radius = 3, prob = 0.55) {
+            for (let dy = -radius; dy <= radius; dy++) {
+                for (let dx = -radius; dx <= radius; dx++) {
+                    if (Math.random() < prob) this.setCell(cellX + dx, cellY + dy, 1);
+                }
+            }
+        }
+
+        // Convert viewport client coords to cell coords and inject a burst
+        injectAtClient(clientX, clientY) {
+            const cellX = Math.floor(clientX / this.cellSize);
+            const cellY = Math.floor(clientY / this.cellSize);
+            this.stampBurst(cellX, cellY);
+        }
     }
 
     window.GameOfLife = GameOfLife;
