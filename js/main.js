@@ -89,4 +89,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         }
     }, 2000);
+
+    // Footer system uptime
+    const uptimeEl = document.getElementById('uptime');
+    if (uptimeEl) {
+        const start = Date.now();
+        const format = (seconds) => {
+            // Display as xxd (seconds), but keep nice formatting when grows
+            return `${seconds.toString().padStart(2,'0')}s`;
+        };
+        setInterval(() => {
+            const secs = Math.floor((Date.now() - start) / 1000);
+            uptimeEl.textContent = `SYSTEM UPTIME ${format(secs)}`;
+        }, 1000);
+    }
 });
