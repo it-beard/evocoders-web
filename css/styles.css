@@ -97,10 +97,10 @@ p, span, div {
 
 header {
     padding: 30px 0;
-    background: rgba(10, 14, 39, 0.85);
+    background: var(--retro-dark);
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 10000;
     border-bottom: 4px solid var(--border-color);
     box-shadow: 0 0 20px rgba(157, 76, 237, 0.5);
 }
@@ -800,6 +800,19 @@ footer p {
         width: 80%;
         max-width: 300px;
     }
+    /* Justify body text on mobile */
+    .hero p,
+    .hero .subtitle,
+    .mission p,
+    .structure-content,
+    .companies-content,
+    .cta p,
+    .benefit-card p,
+    .resource-card p {
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -809,6 +822,14 @@ footer p {
         font-size: 2rem;
     }
     .container { padding: 0 15px; }
+    .hero p,
+    .hero .subtitle,
+    .mission p,
+    .structure-content,
+    .companies-content,
+    .cta p,
+    .benefit-card p,
+    .resource-card p { text-align: justify; }
 }
 
 .floating {
