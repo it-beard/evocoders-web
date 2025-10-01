@@ -155,25 +155,29 @@ header {
     overflow: hidden;
 }
 
-.hero h1 {
+.hero h1 { display: block; }
+
+.terminal-title {
     font-size: 4.5rem;
     font-weight: 700;
     margin-bottom: 25px;
-    text-shadow: 
+    text-shadow:
         0 0 10px var(--retro-cyan),
         0 0 20px var(--retro-purple),
         0 0 30px var(--retro-purple),
         4px 4px 0px var(--retro-blue);
     line-height: 1.2;
     color: var(--text-primary);
-    animation: float 6s ease-in-out infinite;
     position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
 }
 
-.hero h1::after {
-    content: '';
-    animation: blink 1s infinite;
-}
+.terminal-title .prompt { margin-right: 8px; }
+.terminal-title .cursor { margin-left: 8px; opacity: 0; }
+.terminal-title .blink { animation: blink 1s step-end infinite; }
+.terminal-title .typing { animation: none; }
 
 .hero p {
     font-size: 2rem;
