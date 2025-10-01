@@ -65,9 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -100px 0px'
     });
     
-    document.querySelectorAll('.fade-in').forEach(el => {
-        observer.observe(el);
-    });
+    const fadeEls = document.querySelectorAll('.fade-in');
+    fadeEls.forEach(el => observer.observe(el));
 
     // Ensure above-the-fold content is visible on first paint (fix for some mobile browsers)
     function revealAboveFold() {
@@ -78,7 +77,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    revealAboveFold();
+    // On rules page, reveal immediately (first-paint issue on some mobile browsers)
+    const isRules = document.body.classList.contains('rules-page');
+    if (isRules) {
+        fadeEls.forEach(el => el.classList.add('visible'));
+    } else {
+        revealAboveFold();
+    }
     window.addEventListener('resize', revealAboveFold);
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
