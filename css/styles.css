@@ -190,7 +190,7 @@ header .terminal-title {
 
 .hero {
     text-align: center;
-    padding: 100px 20px;
+    padding: 100px 20px 0px 20px;
     color: var(--text-white);
     position: relative;
     overflow: hidden;
@@ -492,6 +492,15 @@ header .terminal-title {
     color: var(--text-white);
     font-size: 1.4rem;
 }
+
+/* Lists inside content (used on rules page) */
+.structure-content ol {
+    padding-left: 1.4rem; /* indent first-level markers */
+}
+.structure-content li {
+    margin: 12px 0 18px 0; /* space between first-level items */
+}
+.structure-content li p { margin: 8px 0; }
 
 .structure-content p {
     margin-bottom: 25px;
@@ -801,13 +810,14 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    .hero { padding: 70px 20px; }
+    .hero { padding: 70px 20px 0px 20px; }
     .hero h1 { font-size: 2.5rem; }
     .hero p { font-size: 1.3rem; }
     .mission, .structure, .cta, .contact {
-        padding: 30px 20px;
+        padding: 30px 24px; /* small inner gap from frame on mobile */
         margin: 40px 15px;
     }
+    .structure-content ol { padding-left: 1.2rem; }
     .theses, .benefits-grid, .resources-grid {
         grid-template-columns: 1fr;
     }

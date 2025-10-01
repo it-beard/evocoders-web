@@ -68,6 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.fade-in').forEach(el => {
         observer.observe(el);
     });
+
+    // Ensure above-the-fold content is visible on first paint (fix for some mobile browsers)
+    function revealAboveFold() {
+        document.querySelectorAll('.fade-in').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < (window.innerHeight - 80)) {
+                el.classList.add('visible');
+            }
+        });
+    }
+    revealAboveFold();
+    window.addEventListener('resize', revealAboveFold);
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
