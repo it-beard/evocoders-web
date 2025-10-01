@@ -3,402 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EvoCoders - AI & Modern Development Learning</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            padding: 30px 0;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo::before {
-            content: '🚀';
-            font-size: 32px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            color: white;
-            animation: fadeIn 1s ease-in;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero p {
-            font-size: 24px;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
-
-        .hero .subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .courses {
-            padding: 60px 20px;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .course-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .course-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .course-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #667eea;
-        }
-
-        .course-card .description {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .course-card ul {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .course-card ul li {
-            padding: 8px 0;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .course-card ul li::before {
-            content: '✓ ';
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .course-meta {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #888;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .getting-started {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            margin: 40px 20px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .getting-started h2 {
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-            text-align: left;
-        }
-
-        .step {
-            padding: 25px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-            border-radius: 15px;
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .step h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .step p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: white;
-            opacity: 0.9;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .getting-started {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+    <title>Эволюция Кода - Закрытый клуб разработчиков</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <div class="logo">EvoCoders</div>
+            <div class="logo">Эволюция Кода</div>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
-            <h1>Добро пожаловать в EvoCoders Learn!</h1>
-            <p>Ваш путь к мастерству в AI и современной разработке</p>
+            <h1 class="floating">Эволюция Кода <span class="gradient-text">🧬</span></h1>
+            <p>Закрытый клуб для разработчиков, изучающих AI и повышающих продуктивность через ИИ-инструменты</p>
             <div class="subtitle">
-                Изучите всё необходимое для работы с искусственным интеллектом в разработке программного обеспечения — от основ до продвинутых техник
+                Сообщество разработчиков и разработчиц, которые хотят повысить свои знания в AI и смежных темах, 
+                а также повысить продуктивность в работе через использование AI-инструментов.
             </div>
         </div>
     </section>
 
-    <section class="courses">
+    <section class="mission fade-in">
         <div class="container">
-            <div class="courses-grid">
-                <div class="course-card" style="animation-delay: 0.1s">
-                    <div class="course-icon">🧠</div>
-                    <h3>Базовая теория</h3>
-                    <p class="description">Фундамент AI-знаний для каждого разработчика</p>
-                    <div class="course-meta">
-                        <span>📚 5 уровней</span>
-                    </div>
-                    <ul>
-                        <li>Генеративный AI и большие языковые модели (LLM)</li>
-                        <li>Промпты, токены, контекст и галлюцинации</li>
-                        <li>Основы нейронных сетей и обучения моделей</li>
-                        <li>Агенты, RAG и продвинутые техники</li>
-                        <li>Будущее AI: AGI, ASI и безопасность</li>
-                    </ul>
-                    <a href="https://learn.itbeard.com/evocoders/basic-theory/index.html" class="btn">Начать курс →</a>
+            <h2>Наша миссия</h2>
+            <p>
+                Создание сообщества разработчиков и разработчиц, отлично ориентирующихся в бурно развивающемся мире 
+                нейросетей и AI. Увеличение продуктивности и востребованности участников клуба через изучение 
+                AI-инструментов и применение их в работе.
+            </p>
+            
+            <div class="theses">
+                <div class="thesis fade-in">
+                    <div class="mono">1</div>
+                    <div>AI не заменит разработчиков</div>
                 </div>
-
-                <div class="course-card" style="animation-delay: 0.2s">
-                    <div class="course-icon">💻</div>
-                    <h3>AI-ассистированное программирование</h3>
-                    <p class="description">Практический курс по использованию AI-инструментов для кодирования</p>
-                    <div class="course-meta">
-                        <span>📖 15 глав</span>
-                    </div>
-                    <ul>
-                        <li>Промпт/контекст-инжиниринг</li>
-                        <li>Умные подсказки кода (Copilot и др.)</li>
-                        <li>AI-чат внутри IDE</li>
-                        <li>Агентная генерация кода</li>
-                        <li>Model Context Protocol</li>
-                        <li>Популярные AI-инструменты для разработчиков</li>
-                    </ul>
-                    <a href="https://learn.itbeard.com/evocoders/ai-programming/index.html" class="btn">Начать курс →</a>
+                <div class="thesis fade-in">
+                    <div class="mono">2</div>
+                    <div>Разработчики, использующие AI, заменят разработчиков, игнорирующих AI</div>
                 </div>
-
-                <div class="course-card" style="animation-delay: 0.3s">
-                    <div class="course-icon">🤖</div>
-                    <h3>Модели для кодирования</h3>
-                    <p class="description">Практическое руководство по выбору, запуску и использованию AI-моделей</p>
-                    <div class="course-meta">
-                        <span>📚 6 глав</span>
-                    </div>
-                    <ul>
-                        <li>Бенчмарки и лидерборды</li>
-                        <li>Лучшие закрытые модели (Claude, GPT-4, Gemini)</li>
-                        <li>Лучшие открытые модели (Llama, Mistral, Qwen)</li>
-                        <li>Как запускать LLM локально</li>
-                        <li>Требования к оборудованию</li>
-                    </ul>
-                    <a href="https://learn.itbeard.com/evocoders/models-for-coding/index.html" class="btn">Начать курс →</a>
+                <div class="thesis fade-in">
+                    <div class="mono">3</div>
+                    <div>AI улучшает продуктивность</div>
+                </div>
+                <div class="thesis fade-in">
+                    <div class="mono">4</div>
+                    <div>Понимание устройства AI-based технологий становится необходимым минимумом в разработке</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="getting-started">
+    <section class="benefits">
         <div class="container">
-            <h2>🎯 С чего начать?</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Новичок в AI?</h3>
-                    <p>Начните с курса Базовая теория, чтобы заложить фундамент для понимания искусственного интеллекта</p>
+            <h2 class="fade-in">Что даёт клуб?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-users"></i> Сообщество 700+ инженеров</h3>
+                    <p>Новые контакты и возможности для развития и сотрудничества с неравнодушными к ИИ разработчиками</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Хотите улучшить свой код?</h3>
-                    <p>Переходите к AI-программированию и узнайте, как AI может ускорить вашу разработку</p>
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-video"></i> Эксклюзивный контент</h3>
+                    <p>200+ часов материалов: лекции, воркшопы, интервью, доклады, обзоры и созвоны</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Интересуют модели?</h3>
-                    <p>Изучите курс Модели для кодирования и научитесь выбирать и запускать нужные модели</p>
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-tools"></i> 400+ ИИ-инструментов</h3>
+                    <p>Ссылки на 400+ инструментов для программирования с ИИ и 70+ новостных ресурсов с рекомендациями</p>
                 </div>
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-newspaper"></i> Новостные дайджесты</h3>
+                    <p>Еженедельные обзоры самых актуальных новостей из мира ИИ и разработки (аудио и текст)</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-question-circle"></i> Экспертные ответы</h3>
+                    <p>Возможность получать ответы на свои вопросы от экспертов и делиться знаниями с единомышленниками</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="structure fade-in">
+        <div class="container">
+            <h2>Устройство клуба</h2>
+            <div class="structure-content">
+                <p>
+                    Эволюция Кода представляет из себя закрытую группу в Telegram, которая состоит из тематических чатов. 
+                    Весь контент и активности клуба сосредоточены в этих чатах, а иногда даже выходят за рамки онлайн-группы: 
+                    общедоступный контент, офлайн-сходки и др.
+                </p>
+                <p style="margin-top: 25px;">
+                    Подписываясь на Эволюцию Кода ты получаешь доступ к группе и всему контенту, содержащемуся в ней, 
+                    а также к прямому общению с участниками клуба.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources">
+        <div class="container">
+            <h2 class="fade-in">Наши открытые ресурсы</h2>
+            <div class="resources-grid">
+                <div class="resource-card fade-in">
+                    <h3><i class="fab fa-telegram"></i> Telegram-канал</h3>
+                    <p>Тизеры клубного контента и анонсы мероприятий</p>
+                </div>
+                <div class="resource-card fade-in">
+                    <h3><i class="fab fa-youtube"></i> YouTube-канал</h3>
+                    <p>Примеры контента и шортсы</p>
+                </div>
+                <div class="resource-card fade-in">
+                    <h3><i class="fab fa-github"></i> GitHub-репозиторий</h3>
+                    <p>Открытый репозиторий с юзкейсами из клуба</p>
+                </div>
+            </div>
+            <a href="https://t.me/evocoders" class="btn secondary">Перейти в Telegram-канал</a>
+            <a href="https://youtube.com/@evocoders" class="btn secondary">Перейти на YouTube</a>
+            <a href="https://github.com/it-beard/evocoders" class="btn secondary">Перейти в GitHub</a>
+        </div>
+    </section>
+
+    <section class="cta fade-in">
+        <div class="container">
+            <h2>Как вступить в клуб?</h2>
+            <p>
+                Получить доступ к клубу можно через ежемесячную и ежегодную подписки. Оплатить членство в клубе можно 
+                через любую банковскую карту, либо криптой (USDT). Для организации оплаты используется сервис Tribute 
+                и их официальный Telegram-бот.
+            </p>
+            <a href="https://t.me/tribute_bot" class="btn">Купить подписку</a>
+            <a href="https://t.me/tribute_bot" class="btn secondary">Подарить годовую подписку</a>
+            <p style="margin-top: 30px; font-size: 1rem; color: var(--text-gray);">
+                Приобретая подписку ты соглашаешься с <a href="#" style="color: var(--accent-blue);">правилами нашего клуба</a>.
+            </p>
+        </div>
+    </section>
+
+    <section class="companies">
+        <div class="container">
+            <h2 class="fade-in">Для компаний</h2>
+            <div class="companies-content fade-in">
+                <p>
+                    Эволюция Кода предлагает уникальную возможность для компаний, которые хотят повысить 
+                    компетенции своих разработчиков в работе с ИИ.
+                </p>
+                <p style="margin-top: 25px;">
+                    Приобретая подписку на клуб, ваши разработчики получают доступ к актуальным знаниям и инструментам, 
+                    повышающим продуктивность разработки, возможность быть в курсе последних трендов в сфере ИИ и 
+                    разработки, конкурентное преимущество на рынке IT-услуг и повышение лояльности к вашей компании.
+                </p>
+            </div>
+            <div class="contact fade-in">
+                <h3>Связаться с нами</h3>
+                <div class="contact-info">
+                    <p>Telegram: <a href="https://t.me/iamitbeard" target="_blank">@iamitbeard</a></p>
+                    <p>Email: <a href="mailto:iamitbeard@gmail.com">iamitbeard@gmail.com</a></p>
+                </div>
+                <a href="https://t.me/iamitbeard" class="btn" target="_blank">Обсудить корпоративные подписки</a>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>🤖 Все курсы постоянно обновляются, как и сам AI</p>
-            <p style="margin-top: 10px;">Создано с ❤️ для сообщества разработчиков</p>
-            <p style="margin-top: 20px; opacity: 0.7;">© 2025 EvoCoders. All rights reserved.</p>
+            <p>🧬 Эволюция Кода — закрытый клуб для разработчиков</p>
+            <p>Создано с ❤️ для сообщества разработчиков</p>
+            <p style="margin-top: 20px; opacity: 0.7;">© 2025 Эволюция Кода. Все права защищены.</p>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.course-card');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, {
-                threshold: 0.1
-            });
-
-            cards.forEach(card => {
-                observer.observe(card);
-            });
-
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
-
