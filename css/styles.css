@@ -1,3 +1,12 @@
+.section-label {
+    font-size: clamp(1.1rem, 5.5vw, 2.2rem);
+    color: var(--text-primary);
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 0 0 10px var(--retro-cyan);
+    white-space: nowrap;
+}
 :root {
     --retro-purple: #9d4edd;
     --retro-blue: #3c096c;
@@ -109,6 +118,11 @@ header .container {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Prevent header from being covered by content shadow by reserving space */
+@media (max-width: 992px) {
+    header { padding: 20px 0; }
 }
 
 .logo {
@@ -283,7 +297,7 @@ header .terminal-title {
 }
 
 .mission h2 {
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 35px;
     color: var(--text-primary);
     text-shadow: 
@@ -363,7 +377,7 @@ header .terminal-title {
 
 .benefits h2 {
     text-align: center;
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 60px;
     color: var(--text-primary);
     text-shadow: 
@@ -463,7 +477,7 @@ header .terminal-title {
 
 .structure h2 {
     text-align: center;
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 40px;
     color: var(--text-primary);
     text-shadow: 
@@ -489,7 +503,7 @@ header .terminal-title {
 }
 
 .resources h2 {
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 60px;
     color: var(--text-primary);
     text-shadow: 
@@ -577,7 +591,7 @@ header .terminal-title {
 }
 
 .cta h2 {
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 30px;
     color: var(--text-primary);
     text-shadow: 
@@ -664,7 +678,7 @@ header .terminal-title {
 }
 
 .companies h2 {
-    font-size: clamp(1.2rem, 6vw, 3rem);
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
     margin-bottom: 40px;
     color: var(--text-primary);
     text-shadow: 
@@ -672,9 +686,11 @@ header .terminal-title {
         3px 3px 0px var(--retro-blue);
 }
 
-/* Prevent decorative bracket/arrow wrapping on small screens */
+/* Allow wrapping but don't break inside long words */
 .mission h2, .benefits h2, .structure h2, .resources h2, .cta h2, .companies h2 {
-    white-space: nowrap;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
 }
 
 .companies-content {
