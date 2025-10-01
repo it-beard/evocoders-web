@@ -90,17 +90,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 2000);
 
-    // Footer system uptime
-    const uptimeEl = document.getElementById('uptime');
-    if (uptimeEl) {
+    // Footer system line: READY + UPTIME HH:MM:SS
+    const systemLine = document.getElementById('system-line');
+    if (systemLine) {
         const start = Date.now();
-        const format = (seconds) => {
-            // Display as xxd (seconds), but keep nice formatting when grows
-            return `${seconds.toString().padStart(2,'0')}s`;
-        };
+        const pad = (n) => n.toString().padStart(2, '0');
         setInterval(() => {
-            const secs = Math.floor((Date.now() - start) / 1000);
-            uptimeEl.textContent = `SYSTEM UPTIME ${format(secs)}`;
+            const secsTotal = Math.floor((Date.now() - start) / 1000);
+            const h = Math.floor(secsTotal / 3600);
+            const m = Math.floor((secsTotal % 3600) / 60);
+            const s = secsTotal % 60;
+            const timeStr = `${pad(h)}:${pad(m)}:${pad(s)}`;
+            systemLine.textContent = `SYSTEM READY | SYSTEM UPTIME ${timeStr}`;
         }, 1000);
     }
 });
