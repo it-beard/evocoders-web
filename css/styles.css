@@ -7,6 +7,12 @@
     text-shadow: 0 0 10px var(--retro-cyan);
     white-space: nowrap;
 }
+
+@media (max-width: 768px) {
+    .section-label {
+        white-space: normal;
+    }
+}
 :root {
     --retro-purple: #9d4edd;
     --retro-blue: #3c096c;
@@ -45,6 +51,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    word-spacing: -0.05em;
 }
 
 body::before {
@@ -102,6 +109,7 @@ p, span, div {
     padding: 0 20px;
     position: relative;
     z-index: 1;
+    overflow-x: hidden;
 }
 
 header {
@@ -229,6 +237,9 @@ header .terminal-title {
     margin-left: auto;
     margin-right: auto;
     text-shadow: 0 0 10px rgba(157, 76, 237, 0.8);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center;
 }
 
 .hero .subtitle {
@@ -237,6 +248,8 @@ header .terminal-title {
     max-width: 800px;
     margin: 0 auto 40px;
     line-height: 1.8;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .pixel-box {
@@ -815,9 +828,13 @@ footer p {
 @media (max-width: 768px) {
     .hero { padding: 70px 20px 0px 20px; }
     .hero h1 { font-size: 2.5rem; }
-    .hero p { font-size: 1.3rem; }
+    .hero p { 
+        font-size: 1.3rem;
+        white-space: normal;
+        word-break: keep-all;
+    }
     .mission, .structure, .cta, .contact {
-        padding: 30px 24px; /* small inner gap from frame on mobile */
+        padding: 30px 24px;
         margin: 40px 15px;
     }
     .structure-content ol { padding-left: 1.2rem; }
@@ -834,8 +851,14 @@ footer p {
         width: 80%;
         max-width: 300px;
     }
-    /* Justify body text on mobile */
-    .hero p,
+    .btn::before,
+    .btn::after {
+        content: '';
+        margin: 0;
+    }
+    .hero p:first-of-type {
+        text-align: center;
+    }
     .hero .subtitle,
     .mission p,
     .structure-content,
@@ -847,6 +870,23 @@ footer p {
         text-justify: inter-word;
         hyphens: auto;
     }
+    .mission h2,
+    .benefits h2,
+    .structure h2,
+    .resources h2,
+    .cta h2,
+    .companies h2 {
+        word-break: keep-all;
+        overflow-wrap: normal;
+    }
+    .container {
+        padding: 0 10px;
+        max-width: 100%;
+    }
+    section {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
 }
 
 @media (max-width: 480px) {
@@ -856,7 +896,9 @@ footer p {
         font-size: 2rem;
     }
     .container { padding: 0 15px; }
-    .hero p,
+    .hero p:first-of-type {
+        text-align: center;
+    }
     .hero .subtitle,
     .mission p,
     .structure-content,
@@ -864,6 +906,11 @@ footer p {
     .cta p,
     .benefit-card p,
     .resource-card p { text-align: justify; }
+    .btn::before,
+    .btn::after {
+        content: '';
+        margin: 0;
+    }
 }
 
 .floating {
