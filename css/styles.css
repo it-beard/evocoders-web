@@ -1047,13 +1047,13 @@ footer p {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    position: relative;
 }
 
 .carousel-container {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 20px;
     flex: 1;
     min-height: 0;
 }
@@ -1065,6 +1065,7 @@ footer p {
     min-height: 0;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .carousel-track {
@@ -1078,12 +1079,7 @@ footer p {
     min-width: 100%;
     opacity: 0;
     transition: opacity 0.5s ease;
-    background: var(--card-bg);
-    border: 3px solid var(--border-color);
     padding: 20px;
-    box-shadow: 
-        0 0 20px rgba(157, 76, 237, 0.4),
-        inset 0 0 20px rgba(0, 245, 212, 0.08);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1092,26 +1088,6 @@ footer p {
 
 .carousel-slide.active {
     opacity: 1;
-}
-
-.carousel-slide::before {
-    content: '▓▒░';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: var(--retro-cyan);
-    font-size: 1.2rem;
-    text-shadow: 0 0 10px var(--retro-cyan);
-}
-
-.carousel-slide::after {
-    content: '░▒▓';
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: var(--retro-green);
-    font-size: 1.2rem;
-    text-shadow: 0 0 10px var(--retro-green);
 }
 
 .carousel-image-link {
@@ -1145,14 +1121,14 @@ footer p {
     max-height: calc(90vh - 300px);
     object-fit: contain;
     display: block;
-    border: 2px solid var(--retro-purple);
-    box-shadow: 0 0 15px rgba(157, 76, 237, 0.5);
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
 
 .carousel-slide iframe {
     width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
     height: auto;
     max-height: calc(90vh - 300px);
     aspect-ratio: 16/9;
@@ -1165,22 +1141,6 @@ footer p {
 
 .carousel-image-link:hover img {
     transform: scale(1.02);
-    border-color: var(--retro-cyan);
-    box-shadow: 0 0 25px rgba(0, 245, 212, 0.7);
-}
-
-.carousel-slide.active img {
-    animation: imageGlow 2s ease-in-out infinite;
-}
-
-.carousel-slide:hover iframe {
-    transform: scale(1.02);
-    border-color: var(--retro-cyan);
-    box-shadow: 0 0 25px rgba(0, 245, 212, 0.7);
-}
-
-.carousel-slide.active iframe {
-    animation: imageGlow 2s ease-in-out infinite;
 }
 
 @keyframes imageGlow {
@@ -1194,6 +1154,7 @@ footer p {
 
 .gallery-caption {
     margin-top: 15px;
+    margin-bottom: 80px;
     font-size: 1.1rem;
     color: var(--text-white);
     line-height: 1.5;
@@ -1209,16 +1170,26 @@ footer p {
     background: var(--card-bg);
     border: 3px solid var(--border-color);
     color: var(--text-primary);
-    font-size: 2rem;
-    width: 60px;
-    height: 60px;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 15px rgba(157, 76, 237, 0.4);
-    flex-shrink: 0;
+    position: absolute;
+    bottom: 10px;
+    z-index: 10;
+}
+
+.carousel-btn-prev {
+    left: 30px;
+}
+
+.carousel-btn-next {
+    right: 30px;
 }
 
 .carousel-btn:hover {
@@ -1233,22 +1204,19 @@ footer p {
 }
 
 .carousel-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    border-color: var(--border-color);
-    color: var(--text-secondary);
+    display: none;
 }
 
-.carousel-btn:disabled:hover {
-    transform: scale(1);
-    box-shadow: 0 0 15px rgba(157, 76, 237, 0.4);
-}
 
 .carousel-indicators {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-top: 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
     flex-shrink: 0;
 }
 
@@ -1276,11 +1244,14 @@ footer p {
 
 .carousel-counter {
     text-align: center;
-    margin-top: 15px;
-    margin-bottom: 10px;
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 1.2rem;
     color: var(--text-primary);
     text-shadow: 0 0 10px var(--retro-cyan);
+    z-index: 10;
     flex-shrink: 0;
 }
 
@@ -1314,13 +1285,23 @@ footer p {
     }
     
     .carousel-container {
-        gap: 10px;
+        /* gap removed - buttons are now positioned absolutely inside */
+        display: flex;
     }
     
     .carousel-btn {
         width: 40px;
         height: 40px;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        bottom: 10px;
+    }
+    
+    .carousel-btn-prev {
+        left: 20px;
+    }
+    
+    .carousel-btn-next {
+        right: 20px;
     }
     
     .carousel-slide {
@@ -1340,13 +1321,13 @@ footer p {
         text-align: justify;
         padding: 10px;
         margin-top: 10px;
+        margin-bottom: 70px;
         line-height: 1.4;
     }
     
     .carousel-counter {
         font-size: 1.1rem;
-        margin-top: 10px;
-        margin-bottom: 5px;
+        bottom: 35px;
     }
     
     .carousel-counter .current-slide {
@@ -1354,7 +1335,7 @@ footer p {
     }
     
     .carousel-indicators {
-        margin-top: 10px;
+        bottom: 10px;
         gap: 12px;
     }
 }
@@ -1404,16 +1385,16 @@ footer p {
         font-size: 1rem;
         padding: 8px;
         margin-top: 10px;
+        margin-bottom: 70px;
         line-height: 1.4;
     }
     
     .carousel-counter {
         font-size: 1.1rem;
-        margin-top: 10px;
-        margin-bottom: 5px;
+        bottom: 35px;
     }
     
     .carousel-indicators {
-        margin-top: 10px;
+        bottom: 10px;
     }
 }

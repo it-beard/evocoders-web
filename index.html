@@ -97,36 +97,36 @@
         <div class="container">
             <h2 class="fade-in">[&nbsp;ЧТО&nbsp;ДАЁТ&nbsp;КЛУБ?&nbsp;]</h2>
             <div class="benefits-grid">
-                <div class="benefit-card fade-in">
-                    <h3><i class="fas fa-users"></i> Сообщество 800+ разработчиков</h3>
-                    <p>Новые контакты и возможности для развития и сотрудничества с неравнодушными к ИИ разработчиками</p>
-                </div>
                 <div class="benefit-card fade-in content-card" id="content-card" style="cursor: pointer;">
                     <h3><i class="fas fa-video"></i> Эксклюзивный контент</h3>
-                    <p>200+ часов материалов: лекции, воркшопы, интервью, доклады, обзоры и созвоны</p>
+                    <p>200+ часов материалов: лекции, воркшопы, интервью, доклады, обзоры и созвоны. Новый контент постоянннно добавляется</p>
                     <div style="margin-top: 15px; font-size: 0.9rem; color: var(--retro-green); text-shadow: 0 0 10px var(--retro-green);">
-                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть галерею
+                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть примеры контента
                     </div>
                 </div>
 
                 <div class="benefit-card fade-in courses-card" id="courses-card" style="cursor: pointer;">
                     <h3><i class="fas fa-graduation-cap"></i> Обучающие курсы</h3>
-                    <p>Курсы по базам ИИ, по программированию с ИИ и по моделям с ИИ для глубокого погружения в тему</p>
+                    <p>Курсы по базам ИИ, по программированию с ИИ, как выбрать модель для разработки, всё в удобном виде на собственной платформе</p>
                     <div style="margin-top: 15px; font-size: 0.9rem; color: var(--retro-green); text-shadow: 0 0 10px var(--retro-green);">
-                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть галерею
+                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть как выглядят наши курсы
                     </div>
                 </div>
                 <div class="benefit-card fade-in">
                     <h3><i class="fas fa-newspaper"></i> Новостные дайджесты</h3>
-                    <p>Еженедельные обзоры самых актуальных новостей из мира ИИ и разработки (аудио и текст)</p>
+                    <p>Два раза в месяц ты будешь получать обзоры самых актуальных новостей из мира ИИ и разработки, в аудио и текстовом формате</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <h3><i class="fas fa-tools"></i> 450+ ИИ-инструментов</h3>
-                    <p>Ссылки на 400+ инструментов для программирования с ИИ и 70+ новостных ресурсов с рекомендациями</p>
+                    <h3><i class="fas fa-users"></i> 800+ разработчиков</h3>
+                    <p>Новые контакты и возможности для развития и сотрудничества с неравнодушными к ИИ разработчиками</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <h3><i class="fas fa-question-circle"></i> Экспертные ответы</h3>
-                    <p>Возможность получать ответы на свои вопросы от экспертов и делиться знаниями с единомышленниками</p>
+                    <h3><i class="fas fa-tools"></i> 450+ инструментов</h3>
+                    <p>В клубе ты найдешь ссылки на 450+ полезных ИИ-инструментов для разработки, более 70 новостных источников информации и кучу полезных ссылок</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <h3><i class="fas fa-robot"></i>ИИ-боты</h3>
+                    <p>Мы используем собственые ИИ-боты для помощи в обслуживании клуба: интеллектуальный поиск информации, формирование пар для слепых созвонов, ежедневная саммаризация основных топиков из сообщества и др.</p>
                 </div>
             </div>
         </div>
@@ -223,10 +223,6 @@
             </div>
             <div class="modal-body">
                 <div class="carousel-container">
-                    <button class="carousel-btn carousel-btn-prev" id="carousel-prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    
                     <div class="carousel">
                         <div class="carousel-track" id="carousel-track">
                             <div class="carousel-slide active">
@@ -249,11 +245,14 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <button class="carousel-btn carousel-btn-next" id="carousel-next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
+                
+                <button class="carousel-btn carousel-btn-prev" id="carousel-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-btn-next" id="carousel-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
                 
                 <div class="carousel-indicators" id="carousel-indicators">
                     <span class="indicator active" data-slide="0"></span>
@@ -276,10 +275,6 @@
             </div>
             <div class="modal-body">
                 <div class="carousel-container">
-                    <button class="carousel-btn carousel-btn-prev" id="content-carousel-prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    
                     <div class="carousel">
                         <div class="carousel-track" id="content-carousel-track">
                             <div class="carousel-slide active">
@@ -293,6 +288,23 @@
                                     <img src="images/content/2.jpg" alt="Пример эксклюзивного контента клуба: клубные созвоны 2025">
                                 </a>
                                 <p class="gallery-caption">Пример эксклюзивного контента клуба: клубные созвоны 2025</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/35UoBDSZF3s?si=eXYgXp7lgsPO_lza" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <p class="gallery-caption">Интервью с Гришей Бакуновым</p>
+                            </div>
+
+                            <div class="carousel-slide">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/PqXE6hpY7zE?si=H5Zo_hj53h7UIp-R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <p class="gallery-caption">Воркшоп "Cursor vs Claude Code" </p>
+                            </div>
+                            <div class="carousel-slide">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/WprKkiGlx1Q?si=E_KPAAE4iZlJXBxD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <p class="gallery-caption">Интервью с Байрамом Аннаковым</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/Q3TRQM_jo8w?si=D64oSJ1Jy_9WFeIC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <p class="gallery-caption">Часть клубного созвона про Cursor Background Agents</p>
                             </div>
                             <div class="carousel-slide">
                                 <a href="images/content/3.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
@@ -318,29 +330,16 @@
                                 </a>
                                 <p class="gallery-caption">Пример поста с контентом: воркшоп по Kiro IDE</p>
                             </div>
-                            <div class="carousel-slide">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/WprKkiGlx1Q?si=E_KPAAE4iZlJXBxD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                <p class="gallery-caption">Эксклюзивное видео клуба</p>
-                            </div>
-                            <div class="carousel-slide">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/35UoBDSZF3s?si=eXYgXp7lgsPO_lza" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                <p class="gallery-caption">Эксклюзивное видео клуба</p>
-                            </div>
-                            <div class="carousel-slide">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/35UoBDSZF3s?si=eXYgXp7lgsPO_lza" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                <p class="gallery-caption">Эксклюзивное видео клуба</p>
-                            </div>
-                            <div class="carousel-slide">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/Q3TRQM_jo8w?si=D64oSJ1Jy_9WFeIC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                <p class="gallery-caption">Эксклюзивное видео клуба</p>
-                            </div>
                         </div>
                     </div>
-                    
-                    <button class="carousel-btn carousel-btn-next" id="content-carousel-next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
+                
+                <button class="carousel-btn carousel-btn-prev" id="content-carousel-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-btn-next" id="content-carousel-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
                 
                 <div class="carousel-indicators" id="content-carousel-indicators">
                     <span class="indicator active" data-slide="0"></span>
