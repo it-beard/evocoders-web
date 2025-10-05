@@ -153,8 +153,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const contentModal = document.getElementById('content-modal');
     const contentModalClose = document.getElementById('content-modal-close');
     
+    const digestsCard = document.getElementById('digests-card');
+    const digestsModal = document.getElementById('digests-modal');
+    const digestsModalClose = document.getElementById('digests-modal-close');
+    
     let currentSlide = 0;
     let currentContentSlide = 0;
+    let currentDigestsSlide = 0;
     
     const slides = document.querySelectorAll('#carousel-track .carousel-slide');
     const indicators = document.querySelectorAll('#carousel-indicators .indicator');
@@ -171,6 +176,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const contentCarouselTrack = document.getElementById('content-carousel-track');
     const currentContentSlideEl = document.querySelector('#content-carousel-counter .current-slide');
     const totalContentSlidesEl = document.querySelector('#content-carousel-counter .total-slides');
+    
+    const digestsSlides = document.querySelectorAll('#digests-carousel-track .carousel-slide');
+    const digestsIndicators = document.querySelectorAll('#digests-carousel-indicators .indicator');
+    const digestsPrevBtn = document.getElementById('digests-carousel-prev');
+    const digestsNextBtn = document.getElementById('digests-carousel-next');
+    const digestsCarouselTrack = document.getElementById('digests-carousel-track');
+    const currentDigestsSlideEl = document.querySelector('#digests-carousel-counter .current-slide');
+    const totalDigestsSlidesEl = document.querySelector('#digests-carousel-counter .total-slides');
     
     function updateCarousel() {
         if (!carouselTrack) return;
@@ -282,6 +295,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { passive: true });
     }
     
+    if (contentModal) {
+        contentModal.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        contentModal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+    }
+    
+    if (digestsModal) {
+        digestsModal.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        digestsModal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+    }
+    
     function handleSwipe() {
         const swipeThreshold = 50;
         const diff = touchStartX - touchEndX;
@@ -292,12 +327,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     nextSlide();
                 } else if (contentModal && contentModal.classList.contains('active')) {
                     nextContentSlide();
+                } else if (digestsModal && digestsModal.classList.contains('active')) {
+                    nextDigestsSlide();
                 }
             } else {
                 if (coursesModal && coursesModal.classList.contains('active')) {
                     prevSlide();
                 } else if (contentModal && contentModal.classList.contains('active')) {
                     prevContentSlide();
+                } else if (digestsModal && digestsModal.classList.contains('active')) {
+                    prevDigestsSlide();
                 }
             }
         }
@@ -347,6 +386,50 @@ document.addEventListener('DOMContentLoaded', function() {
         updateContentCarousel();
     }
     
+    function updateDigestsCarousel() {
+        if (!digestsCarouselTrack) return;
+        
+        digestsCarouselTrack.style.transform = `translateX(-${currentDigestsSlide * 100}%)`;
+        
+        digestsSlides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentDigestsSlide);
+        });
+        
+        digestsIndicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentDigestsSlide);
+        });
+        
+        if (currentDigestsSlideEl) {
+            currentDigestsSlideEl.textContent = currentDigestsSlide + 1;
+        }
+        
+        if (digestsPrevBtn) {
+            digestsPrevBtn.disabled = currentDigestsSlide === 0;
+        }
+        if (digestsNextBtn) {
+            digestsNextBtn.disabled = currentDigestsSlide === digestsSlides.length - 1;
+        }
+    }
+    
+    function nextDigestsSlide() {
+        if (currentDigestsSlide < digestsSlides.length - 1) {
+            currentDigestsSlide++;
+            updateDigestsCarousel();
+        }
+    }
+    
+    function prevDigestsSlide() {
+        if (currentDigestsSlide > 0) {
+            currentDigestsSlide--;
+            updateDigestsCarousel();
+        }
+    }
+    
+    function goToDigestsSlide(index) {
+        currentDigestsSlide = index;
+        updateDigestsCarousel();
+    }
+    
     if (contentNextBtn) {
         contentNextBtn.addEventListener('click', nextContentSlide);
     }
@@ -359,12 +442,33 @@ document.addEventListener('DOMContentLoaded', function() {
         indicator.addEventListener('click', () => goToContentSlide(index));
     });
     
+    if (digestsNextBtn) {
+        digestsNextBtn.addEventListener('click', nextDigestsSlide);
+    }
+    
+    if (digestsPrevBtn) {
+        digestsPrevBtn.addEventListener('click', prevDigestsSlide);
+    }
+    
+    digestsIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => goToDigestsSlide(index));
+    });
+    
     if (contentCard && contentModal) {
         contentCard.addEventListener('click', () => {
             contentModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             currentContentSlide = 0;
             updateContentCarousel();
+        });
+    }
+    
+    if (digestsCard && digestsModal) {
+        digestsCard.addEventListener('click', () => {
+            digestsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentDigestsSlide = 0;
+            updateDigestsCarousel();
         });
     }
     
@@ -375,14 +479,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    function closeDigestsModal() {
+        if (digestsModal) {
+            digestsModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+    
     if (contentModalClose) {
         contentModalClose.addEventListener('click', closeContentModal);
+    }
+    
+    if (digestsModalClose) {
+        digestsModalClose.addEventListener('click', closeDigestsModal);
     }
     
     if (contentModal) {
         contentModal.addEventListener('click', (e) => {
             if (e.target === contentModal) {
                 closeContentModal();
+            }
+        });
+    }
+    
+    if (digestsModal) {
+        digestsModal.addEventListener('click', (e) => {
+            if (e.target === digestsModal) {
+                closeDigestsModal();
             }
         });
     }
@@ -395,6 +518,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 prevContentSlide();
             } else if (e.key === 'ArrowRight') {
                 nextContentSlide();
+            }
+        } else if (digestsModal && digestsModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeDigestsModal();
+            } else if (e.key === 'ArrowLeft') {
+                prevDigestsSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextDigestsSlide();
             }
         }
     });

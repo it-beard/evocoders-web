@@ -111,9 +111,12 @@
                         <i class="fas fa-images"></i> Нажмите, чтобы посмотреть как выглядят наши курсы
                     </div>
                 </div>
-                <div class="benefit-card fade-in">
+                <div class="benefit-card fade-in digests-card" id="digests-card" style="cursor: pointer;">
                     <h3><i class="fas fa-newspaper"></i>Новостные дайджесты</h3>
                     <p>Два раза в месяц ты будешь получать обзоры самых актуальных новостей из мира ИИ и разработки, в аудио и текстовом формате</p>
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: var(--retro-green); text-shadow: 0 0 10px var(--retro-green);">
+                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть примеры дайджестов
+                    </div>
                 </div>
                 <div class="benefit-card fade-in">
                     <h3><i class="fas fa-users"></i>800+ разработчиков</h3>
@@ -354,6 +357,56 @@
                 
                 <div class="carousel-counter" id="content-carousel-counter">
                     <span class="current-slide">1</span> / <span class="total-slides">10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="digests-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-newspaper"></i> Новостные дайджесты</h2>
+                <span class="modal-close" id="digests-modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="carousel-container">
+                    <div class="carousel">
+                        <div class="carousel-track" id="digests-carousel-track">
+                            <div class="carousel-slide active">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/8f_HTzlFhDA?si=MV2uFaFq8yOEd55e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <p class="gallery-caption">Пример новостного дайджеста (аудио, залитое на YouTube)</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/digests/2.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/digests/2.jpg" alt="Пример начала поста с новостным дайджестом в текстовом формате">
+                                </a>
+                                <p class="gallery-caption">Пример начала поста с новостным дайджестом в текстовом формате в Телеграме</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/digests/1.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/digests/1.jpg" alt="Пост с аудио-версией новостного дайджеста">
+                                </a>
+                                <p class="gallery-caption">Пост с аудио-версией новостного дайджеста в Телеграме</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="carousel-btn carousel-btn-prev" id="digests-carousel-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-btn-next" id="digests-carousel-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-indicators" id="digests-carousel-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                </div>
+                
+                <div class="carousel-counter" id="digests-carousel-counter">
+                    <span class="current-slide">1</span> / <span class="total-slides">3</span>
                 </div>
             </div>
         </div>
