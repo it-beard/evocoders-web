@@ -1151,6 +1151,18 @@ footer p {
     flex-shrink: 0;
 }
 
+.carousel-slide iframe {
+    width: 100%;
+    height: auto;
+    max-height: calc(90vh - 300px);
+    aspect-ratio: 16/9;
+    border: 2px solid var(--retro-purple);
+    box-shadow: 0 0 15px rgba(157, 76, 237, 0.5);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: block;
+}
+
 .carousel-image-link:hover img {
     transform: scale(1.02);
     border-color: var(--retro-cyan);
@@ -1158,6 +1170,16 @@ footer p {
 }
 
 .carousel-slide.active img {
+    animation: imageGlow 2s ease-in-out infinite;
+}
+
+.carousel-slide:hover iframe {
+    transform: scale(1.02);
+    border-color: var(--retro-cyan);
+    box-shadow: 0 0 25px rgba(0, 245, 212, 0.7);
+}
+
+.carousel-slide.active iframe {
     animation: imageGlow 2s ease-in-out infinite;
 }
 
@@ -1309,6 +1331,10 @@ footer p {
         max-height: calc(95vh - 280px);
     }
     
+    .carousel-slide iframe {
+        max-height: calc(95vh - 280px);
+    }
+    
     .gallery-caption {
         font-size: 1rem;
         text-align: justify;
@@ -1337,10 +1363,18 @@ footer p {
     .carousel-slide img {
         max-height: calc(95vh - 280px);
     }
+    
+    .carousel-slide iframe {
+        max-height: calc(95vh - 280px);
+    }
 }
 
 @media (orientation: landscape) and (min-width: 769px) {
     .carousel-slide img {
+        max-height: calc(90vh - 280px);
+    }
+    
+    .carousel-slide iframe {
         max-height: calc(90vh - 280px);
     }
 }
@@ -1359,6 +1393,10 @@ footer p {
     }
     
     .carousel-slide img {
+        max-height: calc(90vh - 250px);
+    }
+    
+    .carousel-slide iframe {
         max-height: calc(90vh - 250px);
     }
     
