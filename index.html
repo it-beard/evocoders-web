@@ -101,9 +101,12 @@
                     <h3><i class="fas fa-users"></i> Сообщество 800+ разработчиков</h3>
                     <p>Новые контакты и возможности для развития и сотрудничества с неравнодушными к ИИ разработчиками</p>
                 </div>
-                <div class="benefit-card fade-in">
+                <div class="benefit-card fade-in content-card" id="content-card" style="cursor: pointer;">
                     <h3><i class="fas fa-video"></i> Эксклюзивный контент</h3>
                     <p>200+ часов материалов: лекции, воркшопы, интервью, доклады, обзоры и созвоны</p>
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: var(--retro-green); text-shadow: 0 0 10px var(--retro-green);">
+                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть галерею
+                    </div>
                 </div>
 
                 <div class="benefit-card fade-in courses-card" id="courses-card" style="cursor: pointer;">
@@ -260,6 +263,80 @@
                 
                 <div class="carousel-counter" id="carousel-counter">
                     <span class="current-slide">1</span> / <span class="total-slides">3</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-video"></i> Эксклюзивный контент</h2>
+                <span class="modal-close" id="content-modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="carousel-container">
+                    <button class="carousel-btn carousel-btn-prev" id="content-carousel-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="carousel">
+                        <div class="carousel-track" id="content-carousel-track">
+                            <div class="carousel-slide active">
+                                <a href="images/content/1.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/1.jpg" alt="Пример эксклюзивного контента клуба: Воркшопы 2025">
+                                </a>
+                                <p class="gallery-caption">Пример эксклюзивного контента клуба: Воркшопы 2025</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/content/2.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/2.jpg" alt="Пример эксклюзивного контента клуба: клубные созвоны 2025">
+                                </a>
+                                <p class="gallery-caption">Пример эксклюзивного контента клуба: клубные созвоны 2025</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/content/3.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/3.jpg" alt="Пример поста с контентом: Клубный созвон №19">
+                                </a>
+                                <p class="gallery-caption">Пример поста с контентом: Клубный созвон №19</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/content/4.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/4.jpg" alt="Пример поста с контентом: воркшоп по Context Engineering">
+                                </a>
+                                <p class="gallery-caption">Пример поста с контентом: воркшоп по Context Engineering</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/content/5.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/5.jpg" alt="Пример поста с контентом: обзор Qoder IDE">
+                                </a>
+                                <p class="gallery-caption">Пример поста с контентом: обзор Qoder IDE</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/content/6.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/content/6.jpg" alt="Пример поста с контентом: воркшоп по Kiro IDE">
+                                </a>
+                                <p class="gallery-caption">Пример поста с контентом: воркшоп по Kiro IDE</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="carousel-btn carousel-btn-next" id="content-carousel-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="carousel-indicators" id="content-carousel-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                    <span class="indicator" data-slide="4"></span>
+                    <span class="indicator" data-slide="5"></span>
+                </div>
+                
+                <div class="carousel-counter" id="content-carousel-counter">
+                    <span class="current-slide">1</span> / <span class="total-slides">6</span>
                 </div>
             </div>
         </div>

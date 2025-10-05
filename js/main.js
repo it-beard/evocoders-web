@@ -149,14 +149,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const coursesModal = document.getElementById('courses-modal');
     const modalClose = document.getElementById('modal-close');
     
+    const contentCard = document.getElementById('content-card');
+    const contentModal = document.getElementById('content-modal');
+    const contentModalClose = document.getElementById('content-modal-close');
+    
     let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const indicators = document.querySelectorAll('.indicator');
+    let currentContentSlide = 0;
+    
+    const slides = document.querySelectorAll('#carousel-track .carousel-slide');
+    const indicators = document.querySelectorAll('#carousel-indicators .indicator');
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
     const carouselTrack = document.getElementById('carousel-track');
-    const currentSlideEl = document.querySelector('.current-slide');
-    const totalSlidesEl = document.querySelector('.total-slides');
+    const currentSlideEl = document.querySelector('#carousel-counter .current-slide');
+    const totalSlidesEl = document.querySelector('#carousel-counter .total-slides');
+    
+    const contentSlides = document.querySelectorAll('#content-carousel-track .carousel-slide');
+    const contentIndicators = document.querySelectorAll('#content-carousel-indicators .indicator');
+    const contentPrevBtn = document.getElementById('content-carousel-prev');
+    const contentNextBtn = document.getElementById('content-carousel-next');
+    const contentCarouselTrack = document.getElementById('content-carousel-track');
+    const currentContentSlideEl = document.querySelector('#content-carousel-counter .current-slide');
+    const totalContentSlidesEl = document.querySelector('#content-carousel-counter .total-slides');
     
     function updateCarousel() {
         if (!carouselTrack) return;
@@ -274,10 +288,114 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
-                nextSlide();
+                if (coursesModal && coursesModal.classList.contains('active')) {
+                    nextSlide();
+                } else if (contentModal && contentModal.classList.contains('active')) {
+                    nextContentSlide();
+                }
             } else {
-                prevSlide();
+                if (coursesModal && coursesModal.classList.contains('active')) {
+                    prevSlide();
+                } else if (contentModal && contentModal.classList.contains('active')) {
+                    prevContentSlide();
+                }
             }
         }
     }
+    
+    function updateContentCarousel() {
+        if (!contentCarouselTrack) return;
+        
+        contentCarouselTrack.style.transform = `translateX(-${currentContentSlide * 100}%)`;
+        
+        contentSlides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentContentSlide);
+        });
+        
+        contentIndicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentContentSlide);
+        });
+        
+        if (currentContentSlideEl) {
+            currentContentSlideEl.textContent = currentContentSlide + 1;
+        }
+        
+        if (contentPrevBtn) {
+            contentPrevBtn.disabled = currentContentSlide === 0;
+        }
+        if (contentNextBtn) {
+            contentNextBtn.disabled = currentContentSlide === contentSlides.length - 1;
+        }
+    }
+    
+    function nextContentSlide() {
+        if (currentContentSlide < contentSlides.length - 1) {
+            currentContentSlide++;
+            updateContentCarousel();
+        }
+    }
+    
+    function prevContentSlide() {
+        if (currentContentSlide > 0) {
+            currentContentSlide--;
+            updateContentCarousel();
+        }
+    }
+    
+    function goToContentSlide(index) {
+        currentContentSlide = index;
+        updateContentCarousel();
+    }
+    
+    if (contentNextBtn) {
+        contentNextBtn.addEventListener('click', nextContentSlide);
+    }
+    
+    if (contentPrevBtn) {
+        contentPrevBtn.addEventListener('click', prevContentSlide);
+    }
+    
+    contentIndicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => goToContentSlide(index));
+    });
+    
+    if (contentCard && contentModal) {
+        contentCard.addEventListener('click', () => {
+            contentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentContentSlide = 0;
+            updateContentCarousel();
+        });
+    }
+    
+    function closeContentModal() {
+        if (contentModal) {
+            contentModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+    
+    if (contentModalClose) {
+        contentModalClose.addEventListener('click', closeContentModal);
+    }
+    
+    if (contentModal) {
+        contentModal.addEventListener('click', (e) => {
+            if (e.target === contentModal) {
+                closeContentModal();
+            }
+        });
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (contentModal && contentModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeContentModal();
+            } else if (e.key === 'ArrowLeft') {
+                prevContentSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextContentSlide();
+            }
+        }
+    });
 });
