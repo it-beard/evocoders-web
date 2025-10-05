@@ -1318,7 +1318,7 @@ footer p {
     
     .gallery-caption {
         font-size: 1rem;
-        text-align: justify;
+        text-align: left;
         padding: 10px;
         margin-top: 10px;
         margin-bottom: 70px;
