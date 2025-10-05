@@ -20,12 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeBattleCity() {
         battleCityModal.classList.remove('active');
         document.body.style.overflow = '';
-        
-        if (battleCityGame && !battleCityGame.isGameOver && !battleCityGame.isVictory) {
-            if (!battleCityGame.isPaused) {
-                battleCityGame.togglePause();
-            }
-        }
+        // Do not auto-save mid-level state; simply hide modal
     }
 
     battleCityTriggers.forEach(trigger => {

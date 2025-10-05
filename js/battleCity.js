@@ -44,25 +44,17 @@ class BattleCity {
         this.container.appendChild(this.canvas);
         this.createUI();
         
-        const hasSavedProgress = this.checkForSavedProgress();
         this.loadLevel(this.currentLevel);
         this.updateUI();
         this.lastTime = performance.now();
-        
-        if (hasSavedProgress) {
-            this.isPaused = true;
-            this.render();
-            this.drawPauseScreen();
-        } else {
-            this.showStageScreen(() => {
-                const musicDuration = this.sounds.playStartMusic();
-                setTimeout(() => {
-                    if (!this.isPaused && !this.isGameOver) {
-                        this.gameLoop();
-                    }
-                }, musicDuration || 4000);
-            });
-        }
+        this.showStageScreen(() => {
+            const musicDuration = this.sounds.playStartMusic();
+            setTimeout(() => {
+                if (!this.isPaused && !this.isGameOver) {
+                    this.gameLoop();
+                }
+            }, musicDuration || 4000);
+        });
     }
 
     createUI() {
@@ -107,28 +99,37 @@ class BattleCity {
 
     initControls() {
         document.addEventListener('keydown', (e) => {
-            this.keys[e.key.toLowerCase()] = true;
+            // Layout-independent handling for letter keys
+            const keyLower = (e.key || '').toLowerCase();
+            this.keys[keyLower] = true;
             
-            if (e.key.toLowerCase() === 'p') {
+            if (e.code === 'KeyP' || keyLower === 'p') {
+                e.preventDefault();
+                e.stopPropagation();
                 this.togglePause();
+                return;
             }
-            if (e.key.toLowerCase() === 'r') {
-                if (this.messageCallback) {
+            if (e.code === 'KeyR' || keyLower === 'r') {
+                if (this.messageCallback || this.isGameOver || this.isVictory) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     this.restart();
-                } else if (this.isGameOver || this.isVictory) {
-                    this.restart();
+                    return;
                 }
             }
-            if (e.key === ' ') {
+            if (e.code === 'Space' || e.key === ' ') {
                 e.preventDefault();
+                e.stopPropagation();
                 if (this.player && !this.isPaused && !this.isGameOver) {
                     this.player.shoot();
                 }
+                return;
             }
         });
 
         document.addEventListener('keyup', (e) => {
-            this.keys[e.key.toLowerCase()] = false;
+            const keyLower = (e.key || '').toLowerCase();
+            this.keys[keyLower] = false;
         });
     }
 
@@ -713,9 +714,9 @@ class BattleCity {
         this.ctx.fillText('PAUSED', this.canvas.width / 2, this.canvas.height / 2 - 30);
         this.ctx.font = '10px "Press Start 2P", monospace';
         this.ctx.fillStyle = '#00ff41';
-        this.ctx.fillText('Progress Saved', this.canvas.width / 2, this.canvas.height / 2 + 10);
+        this.ctx.fillText('Press P to Resume', this.canvas.width / 2, this.canvas.height / 2 + 10);
         this.ctx.fillStyle = '#9d4edd';
-        this.ctx.fillText('Press P to Resume', this.canvas.width / 2, this.canvas.height / 2 + 30);
+        this.ctx.fillText('Press R to Restart', this.canvas.width / 2, this.canvas.height / 2 + 30);
     }
 
     togglePause() {
@@ -727,7 +728,6 @@ class BattleCity {
                 this.gameLoop();
             }
         } else {
-            this.saveProgress();
             this.render();
             this.drawPauseScreen();
         }
@@ -741,10 +741,10 @@ class BattleCity {
         if (this.currentLevel < 10) {
             this.showLevelTransition(() => {
                 this.currentLevel++;
+                this.saveLevelOnly(this.currentLevel);
                 this.isVictory = false;
                 this.loadLevel(this.currentLevel);
                 this.updateUI();
-                this.saveProgress();
                 
                 this.showStageScreen(() => {
                     this.lastTime = performance.now();
@@ -759,7 +759,6 @@ class BattleCity {
         } else {
             this.showRestartButton();
             this.showMessage('YOU WIN! GAME COMPLETE!', () => {
-                localStorage.removeItem('battleCityProgress');
                 this.saveBestScore();
             });
         }
@@ -772,7 +771,7 @@ class BattleCity {
         this.saveBestScore();
         this.showRestartButton();
         this.showMessage('GAME OVER', () => {
-            localStorage.removeItem('battleCityProgress');
+            // Allow R to restart even if focus is outside canvas
         });
     }
 
@@ -859,48 +858,21 @@ class BattleCity {
     }
 
     saveProgress() {
-        if (!this.isPaused || this.isGameOver || this.isVictory) return;
-        
-        const progress = {
-            level: this.currentLevel,
-            score: this.score,
-            lives: this.lives,
-            enemiesKilled: this.enemiesKilled,
-            enemySpawnQueue: this.enemySpawnQueue,
-            timestamp: Date.now()
-        };
-        localStorage.setItem('battleCityProgress', JSON.stringify(progress));
-    }
-
-    checkForSavedProgress() {
-        const saved = localStorage.getItem('battleCityProgress');
-        if (saved) {
-            try {
-                const progress = JSON.parse(saved);
-                const hourAgo = Date.now() - (60 * 60 * 1000);
-                return progress.timestamp > hourAgo;
-            } catch (e) {
-                return false;
-            }
-        }
-        return false;
+        // Deprecated: mid-level progress saving removed by design
+        return;
     }
 
     loadProgress() {
-        const saved = localStorage.getItem('battleCityProgress');
-        if (saved) {
-            try {
-                const progress = JSON.parse(saved);
-                const hourAgo = Date.now() - (60 * 60 * 1000);
-                if (progress.timestamp > hourAgo) {
-                    this.currentLevel = progress.level || 1;
-                    this.score = progress.score || 0;
-                    this.lives = progress.lives || 3;
-                }
-            } catch (e) {
-                console.error('Failed to load progress:', e);
-            }
+        const savedLevel = parseInt(localStorage.getItem('battleCityLevel') || '0');
+        if (!Number.isNaN(savedLevel) && savedLevel > 0) {
+            this.currentLevel = Math.min(10, Math.max(1, savedLevel));
         }
+    }
+
+    saveLevelOnly(level) {
+        try {
+            localStorage.setItem('battleCityLevel', String(level));
+        } catch (_) {}
     }
 
     saveBestScore() {
