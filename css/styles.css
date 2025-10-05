@@ -388,6 +388,14 @@ header .terminal-title {
     padding: 80px 20px;
 }
 
+/* Prevent phantom inner scrolling in benefits section */
+.benefits,
+.benefits .container,
+.benefits .benefits-grid {
+    overflow: visible !important;
+    overscroll-behavior: none;
+}
+
 .benefits h2 {
     text-align: center;
     font-size: clamp(1.1rem, 5.5vw, 2.4rem);
