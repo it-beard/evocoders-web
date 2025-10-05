@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!battleCityGame) {
             battleCityGame = new BattleCity('battle-city-game');
             battleCityGame.init();
+        } else if (battleCityGame.isPaused && !battleCityGame.isGameOver && !battleCityGame.isVictory) {
+            battleCityGame.render();
+            battleCityGame.drawPauseScreen();
         }
     }
 

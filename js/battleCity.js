@@ -33,6 +33,8 @@ class BattleCity {
         this.animationId = null;
         this.lastTime = 0;
         
+        this.sounds = new BattleCitySounds();
+        
         this.loadProgress();
         this.initControls();
     }
@@ -41,9 +43,20 @@ class BattleCity {
         this.container.innerHTML = '';
         this.container.appendChild(this.canvas);
         this.createUI();
+        
+        const hasSavedProgress = this.checkForSavedProgress();
         this.loadLevel(this.currentLevel);
+        this.updateUI();
         this.lastTime = performance.now();
-        this.gameLoop();
+        
+        if (hasSavedProgress) {
+            this.isPaused = true;
+            this.render();
+            this.drawPauseScreen();
+        } else {
+            this.sounds.playStartMusic();
+            this.gameLoop();
+        }
     }
 
     createUI() {
@@ -56,12 +69,19 @@ class BattleCity {
                 <div class="bc-stat">LIVES: <span id="bc-lives">${this.lives}</span></div>
                 <div class="bc-stat">LEFT: <span id="bc-enemies">${this.enemiesLeft}</span> | KILLED: <span id="bc-killed">${this.enemiesKilled}</span></div>
                 <div class="bc-stat">BEST: <span id="bc-best">${this.getBestScore()}</span></div>
+                <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 SOUND ON</div>
             </div>
             <div class="bc-controls">
                 <div class="bc-help">WASD/Arrows - Move, SPACE - Fire, P - Pause, R - Restart</div>
             </div>
         `;
         this.container.appendChild(ui);
+        
+        const soundToggle = document.getElementById('bc-sound-toggle');
+        soundToggle.addEventListener('click', () => {
+            const enabled = this.sounds.toggle();
+            soundToggle.textContent = enabled ? '🔊 SOUND ON' : '🔇 SOUND OFF';
+        });
     }
 
     initControls() {
@@ -486,7 +506,7 @@ class BattleCity {
 
             this.bullets.slice(index + 1).forEach(otherBullet => {
                 if (otherBullet.destroyed) return;
-                if (bullet.owner !== otherBullet.owner && this.checkRectCollision(bullet, otherBullet)) {
+                if (bullet.owner.isPlayer !== otherBullet.owner.isPlayer && this.checkRectCollision(bullet, otherBullet)) {
                     bullet.destroyed = true;
                     otherBullet.destroyed = true;
                 }
@@ -498,6 +518,7 @@ class BattleCity {
                 if (wall.destroyed) return;
                 if (this.checkRectCollision(bullet, wall)) {
                     bullet.destroyed = true;
+                    this.sounds.playHitWallSound();
                     if (wall.type === 'brick') {
                         wall.hit();
                     }
@@ -505,13 +526,13 @@ class BattleCity {
             });
 
             if (this.eagle && !this.eagle.destroyed && this.checkRectCollision(bullet, this.eagle)) {
-                if (bullet.owner !== this.player) {
+                if (!bullet.owner.isPlayer) {
                     bullet.destroyed = true;
                     this.eagle.destroyed = true;
                 }
             }
 
-            if (bullet.owner === this.player) {
+            if (bullet.owner.isPlayer) {
                 this.enemies.forEach(enemy => {
                     if (enemy.destroyed) return;
                     if (this.checkRectCollision(bullet, enemy)) {
@@ -618,15 +639,20 @@ class BattleCity {
         this.isPaused = !this.isPaused;
         if (!this.isPaused) {
             this.lastTime = performance.now();
-            this.gameLoop();
+            if (!this.animationId) {
+                this.gameLoop();
+            }
         } else {
             this.saveProgress();
+            this.render();
+            this.drawPauseScreen();
         }
     }
 
     levelComplete() {
         this.isVictory = true;
         cancelAnimationFrame(this.animationId);
+        this.sounds.playLevelCompleteSound();
         
         if (this.currentLevel < 10) {
             this.showMessage('LEVEL COMPLETE!', () => {
@@ -636,6 +662,7 @@ class BattleCity {
                 this.updateUI();
                 this.saveProgress();
                 this.lastTime = performance.now();
+                this.sounds.playStartMusic();
                 this.gameLoop();
             });
         } else {
@@ -649,6 +676,7 @@ class BattleCity {
     gameOver() {
         this.isGameOver = true;
         cancelAnimationFrame(this.animationId);
+        this.sounds.playGameOverSound();
         this.saveBestScore();
         this.showMessage('GAME OVER', () => {
             localStorage.removeItem('battleCityProgress');
@@ -707,6 +735,20 @@ class BattleCity {
             timestamp: Date.now()
         };
         localStorage.setItem('battleCityProgress', JSON.stringify(progress));
+    }
+
+    checkForSavedProgress() {
+        const saved = localStorage.getItem('battleCityProgress');
+        if (saved) {
+            try {
+                const progress = JSON.parse(saved);
+                const hourAgo = Date.now() - (60 * 60 * 1000);
+                return progress.timestamp > hourAgo;
+            } catch (e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     loadProgress() {
@@ -820,6 +862,10 @@ class Tank {
             this.x += this.speed * deltaTime;
             moving = true;
         }
+
+        if (moving && Math.random() < 0.1) {
+            this.game.sounds.playMoveSound();
+        }
     }
 
     handleAI(deltaTime) {
@@ -865,6 +911,7 @@ class Tank {
         }
 
         this.game.bullets.push(new Bullet(bx, by, this.direction, this));
+        this.game.sounds.playShootSound();
         this.lastShot = now;
     }
 
@@ -872,6 +919,7 @@ class Tank {
         this.hp--;
         if (this.hp <= 0) {
             this.destroyed = true;
+            this.game.sounds.playExplosionSound();
         }
     }
 

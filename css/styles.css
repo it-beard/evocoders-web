@@ -943,6 +943,7 @@ footer i.battle-city {
     .mission .mission-text {
         font-size: 1.5rem;
         border-left: none;
+        padding-left: 0;
     }
 }
 

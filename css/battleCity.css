@@ -72,6 +72,8 @@
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
     image-rendering: crisp-edges;
+    margin: 0 auto;
+    display: block;
 }
 
 .battle-city-ui {
@@ -88,6 +90,7 @@
     padding: 15px;
     background: rgba(0, 0, 0, 0.5);
     border: 2px solid var(--retro-purple);
+    margin-top: 20px;
 }
 
 .bc-stat {
@@ -99,6 +102,18 @@
 .bc-stat span {
     color: var(--retro-green);
     text-shadow: 0 0 10px var(--retro-green);
+}
+
+.bc-sound-toggle {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.bc-sound-toggle:hover {
+    color: var(--retro-cyan);
+    text-shadow: 0 0 10px var(--retro-cyan);
+    transform: scale(1.05);
 }
 
 .bc-controls {
