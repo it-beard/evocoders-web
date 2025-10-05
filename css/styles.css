@@ -198,7 +198,7 @@ header .terminal-title {
 
 .hero {
     text-align: center;
-    padding: 100px 20px 0px 20px;
+    padding: 60px 20px 0px 20px;
     color: var(--text-white);
     position: relative;
     overflow: hidden;
@@ -558,6 +558,10 @@ header .terminal-title {
         0 0 15px rgba(157, 76, 237, 0.3),
         inset 0 0 15px rgba(0, 245, 212, 0.05);
     position: relative;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
 }
 
 .resource-card::before {
@@ -576,6 +580,8 @@ header .terminal-title {
     box-shadow: 
         0 0 30px rgba(0, 245, 212, 0.6),
         inset 0 0 20px rgba(0, 245, 212, 0.1);
+    text-decoration: none;
+    color: inherit;
 }
 
 .resource-card h3 {
@@ -595,6 +601,15 @@ header .terminal-title {
     font-size: 1.3rem;
     color: var(--text-white);
     line-height: 1.7;
+}
+
+.resource-card:active {
+    transform: translateY(-2px);
+}
+
+.resource-card:focus {
+    outline: 2px solid var(--retro-cyan);
+    outline-offset: 2px;
 }
 
 .cta {
@@ -725,7 +740,7 @@ header .terminal-title {
 
 .companies-content {
     max-width: 800px;
-    margin: 0 auto 50px;
+    margin: 0 auto 80px;
     line-height: 1.9;
     font-size: 1.4rem;
     color: var(--text-white);
@@ -733,6 +748,10 @@ header .terminal-title {
 
 .companies-content p {
     margin-bottom: 25px;
+}
+
+.companies-content .btn {
+    text-align: center !important;
 }
 
 .contact {
@@ -768,7 +787,7 @@ header .terminal-title {
 .contact-info {
     font-size: 1.4rem;
     color: var(--text-white);
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 }
 
 .contact-info a {
@@ -840,7 +859,7 @@ footer p {
 }
 
 @media (max-width: 768px) {
-    .hero { padding: 70px 20px 0px 20px; }
+    .hero { padding: 50px 20px 0px 20px; }
     .hero h1 { font-size: 2.5rem; }
     .hero p { 
         font-size: 1.3rem;
