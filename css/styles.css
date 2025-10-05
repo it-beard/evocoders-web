@@ -815,6 +815,19 @@ footer p {
     margin-bottom: 15px;
 }
 
+footer a.system-code {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 10px var(--retro-cyan);
+}
+
+footer i.battle-city {
+    text-shadow: 0 0 10px var(--retro-green);
+    font-style: normal;
+    cursor:crosshair
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
