@@ -819,6 +819,12 @@ footer p {
 /* On rules page, disable scroll-triggered delay to avoid first-paint issues */
 .rules-page .fade-in { opacity: 1; transform: none; }
 
+@media (max-width: 992px) and (min-width: 769px) {
+    .thesis:nth-child(3):last-child {
+        grid-column: 1 / -1;
+    }
+}
+
 @media (max-width: 992px) {
     .hero h1 { font-size: 3rem; }
     .hero p { font-size: 1.5rem; }
