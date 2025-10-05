@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Эволюция Кода - Приватный клуб об ИИ в программировании</title>
-    <meta name="description" content="Приватный клуб разработчиков об ИИ: курсы, сообщество 800+, дайджесты, инструменты и события. Прокачай продуктивность и навыки работы с AI.">тн
+    <meta name="description" content="Приватный клуб разработчиков об ИИ: курсы, сообщество 800+, дайджесты, инструменты и события. Прокачай продуктивность и навыки работы с AI.">
     <meta name="keywords" content="Эволюция Кода, AI, ИИ, разработка, сообщество, курсы, продуктивность, нейросети">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://evocoders.ai/">
@@ -12,11 +12,17 @@
     <meta property="og:title" content="Эволюция Кода — закрытый клуб разработчиков об ИИ">
     <meta property="og:description" content="Сообщество 800+ разработчиков. Курсы по ИИ, дайджесты, инструменты, события и поддержка.">
     <meta property="og:url" content="https://evocoders.ai/">
+    <meta property="og:site_name" content="Эволюция Кода">
     <meta property="og:image" content="https://evocoders.ai/images/thumbnail.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:secure_url" content="https://evocoders.ai/images/thumbnail.jpg">
+    <meta property="og:image:type" content="image/jpg">
+    <meta property="og:image:width" content="1000">
+    <meta property="og:image:height" content="540">
+    <meta property="og:image:alt" content="Эволюция Кода - Закрытый клуб разработчиков об ИИ">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://evocoders.ai/images/thumbnail.png">
+    <meta name="twitter:image" content="https://evocoders.ai/images/thumbnail.jpg">
+    <meta name="twitter:title" content="Эволюция Кода — закрытый клуб разработчиков об ИИ">
+    <meta name="twitter:description" content="Сообщество 800+ разработчиков. Курсы по ИИ, дайджесты, инструменты, события и поддержка.">
     <meta name="theme-color" content="#0a0e27">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧬</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,9 +106,12 @@
                     <p>200+ часов материалов: лекции, воркшопы, интервью, доклады, обзоры и созвоны</p>
                 </div>
 
-                <div class="benefit-card fade-in">
+                <div class="benefit-card fade-in courses-card" id="courses-card" style="cursor: pointer;">
                     <h3><i class="fas fa-graduation-cap"></i> Обучающие курсы</h3>
                     <p>Курсы по базам ИИ, по программированию с ИИ и по моделям с ИИ для глубокого погружения в тему</p>
+                    <div style="margin-top: 15px; font-size: 0.9rem; color: var(--retro-green); text-shadow: 0 0 10px var(--retro-green);">
+                        <i class="fas fa-images"></i> Нажмите, чтобы посмотреть галерею
+                    </div>
                 </div>
                 <div class="benefit-card fade-in">
                     <h3><i class="fas fa-newspaper"></i> Новостные дайджесты</h3>
@@ -202,6 +211,31 @@
             </div>
         </div>
     </section>
+
+    <div id="courses-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-graduation-cap"></i> Обучающие курсы</h2>
+                <span class="modal-close" id="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="images/course-2.jpg" alt="Учебный курс по ИИ">
+                        <p class="gallery-caption">Главная страница клубного образовательного портала - Базы знаний Эвлюции Кода</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/course-1.jpg" alt="Базовая теория">
+                        <p class="gallery-caption">Вводная лекция курса "Базовая теория"</p>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="images/course-3.jpg" alt="Модели для разработки">
+                        <p class="gallery-caption">Первая глава курса "Модели для разработки"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">

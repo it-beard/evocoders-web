@@ -144,4 +144,38 @@ document.addEventListener('DOMContentLoaded', function() {
             systemLine.textContent = `SYSTEM READY | SYSTEM UPTIME ${timeStr}`;
         }, 1000);
     }
+
+    const coursesCard = document.getElementById('courses-card');
+    const coursesModal = document.getElementById('courses-modal');
+    const modalClose = document.getElementById('modal-close');
+    
+    if (coursesCard && coursesModal) {
+        coursesCard.addEventListener('click', () => {
+            coursesModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (modalClose && coursesModal) {
+        modalClose.addEventListener('click', () => {
+            coursesModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    if (coursesModal) {
+        coursesModal.addEventListener('click', (e) => {
+            if (e.target === coursesModal) {
+                coursesModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && coursesModal && coursesModal.classList.contains('active')) {
+            coursesModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 });
