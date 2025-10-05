@@ -127,7 +127,114 @@
     line-height: 1.5;
 }
 
+.bc-mobile-controls {
+    display: none;
+    width: 100%;
+    padding: 20px;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bc-dpad {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 2px;
+}
+
+.bc-dpad .bc-btn {
+    background: rgba(0, 245, 212, 0.2);
+    border: 2px solid var(--retro-cyan);
+    color: var(--retro-cyan);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bc-up {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.bc-left {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.bc-down {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.bc-right {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.bc-action-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bc-action-btns .bc-btn {
+    background: rgba(255, 0, 110, 0.2);
+    border: 3px solid var(--retro-pink);
+    color: var(--retro-pink);
+    padding: 20px 30px;
+    font-size: 0.8rem;
+    font-family: 'Press Start 2P', monospace;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    text-shadow: 0 0 10px var(--retro-pink);
+}
+
+.bc-mobile-controls .bc-btn:active,
+.bc-mobile-controls .bc-btn.active {
+    transform: scale(0.95);
+    box-shadow: 
+        0 0 20px var(--retro-cyan),
+        inset 0 0 10px var(--retro-cyan);
+}
+
+.bc-action-btns .bc-btn:active,
+.bc-action-btns .bc-btn.active {
+    background: var(--retro-pink);
+    color: var(--retro-dark);
+    box-shadow: 
+        0 0 20px var(--retro-pink),
+        inset 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.bc-restart {
+    background: rgba(0, 255, 65, 0.2) !important;
+    border-color: var(--retro-green) !important;
+    color: var(--retro-green) !important;
+    text-shadow: 0 0 10px var(--retro-green) !important;
+}
+
+.bc-restart:active {
+    background: var(--retro-green) !important;
+    color: var(--retro-dark) !important;
+}
+
 @media (max-width: 768px) {
+    .bc-mobile-controls {
+        display: flex;
+    }
+
     .battle-city-container {
         padding: 15px;
         max-width: 95%;

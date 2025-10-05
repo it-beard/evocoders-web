@@ -54,8 +54,14 @@ class BattleCity {
             this.render();
             this.drawPauseScreen();
         } else {
-            this.sounds.playStartMusic();
-            this.gameLoop();
+            this.showStageScreen(() => {
+                const musicDuration = this.sounds.playStartMusic();
+                setTimeout(() => {
+                    if (!this.isPaused && !this.isGameOver) {
+                        this.gameLoop();
+                    }
+                }, musicDuration || 4000);
+            });
         }
     }
 
@@ -74,6 +80,19 @@ class BattleCity {
             <div class="bc-controls">
                 <div class="bc-help">WASD/Arrows - Move, SPACE - Fire, P - Pause, R - Restart</div>
             </div>
+            <div class="bc-mobile-controls" id="bc-mobile-controls">
+                <div class="bc-dpad">
+                    <button class="bc-btn bc-up" data-key="arrowup">▲</button>
+                    <button class="bc-btn bc-left" data-key="arrowleft">◄</button>
+                    <button class="bc-btn bc-down" data-key="arrowdown">▼</button>
+                    <button class="bc-btn bc-right" data-key="arrowright">►</button>
+                </div>
+                <div class="bc-action-btns">
+                    <button class="bc-btn bc-fire" data-key=" ">FIRE</button>
+                    <button class="bc-btn bc-pause" data-key="p">PAUSE</button>
+                    <button class="bc-btn bc-restart" id="bc-restart-btn" style="display: none;">RESTART</button>
+                </div>
+            </div>
         `;
         this.container.appendChild(ui);
         
@@ -82,6 +101,8 @@ class BattleCity {
             const enabled = this.sounds.toggle();
             soundToggle.textContent = enabled ? '🔊 SOUND ON' : '🔇 SOUND OFF';
         });
+
+        this.initMobileControls();
     }
 
     initControls() {
@@ -91,8 +112,12 @@ class BattleCity {
             if (e.key.toLowerCase() === 'p') {
                 this.togglePause();
             }
-            if (e.key.toLowerCase() === 'r' && (this.isGameOver || this.isVictory)) {
-                this.restart();
+            if (e.key.toLowerCase() === 'r') {
+                if (this.messageCallback) {
+                    this.restart();
+                } else if (this.isGameOver || this.isVictory) {
+                    this.restart();
+                }
             }
             if (e.key === ' ') {
                 e.preventDefault();
@@ -105,6 +130,65 @@ class BattleCity {
         document.addEventListener('keyup', (e) => {
             this.keys[e.key.toLowerCase()] = false;
         });
+    }
+
+    initMobileControls() {
+        const buttons = document.querySelectorAll('.bc-mobile-controls .bc-btn');
+        const restartBtn = document.getElementById('bc-restart-btn');
+        
+        buttons.forEach(btn => {
+            const key = btn.getAttribute('data-key');
+            
+            if (key) {
+                const handlePress = (e) => {
+                    e.preventDefault();
+                    this.keys[key] = true;
+                    btn.classList.add('active');
+                    
+                    if (key === ' ' && this.player && !this.isPaused && !this.isGameOver) {
+                        this.player.shoot();
+                    }
+                    if (key === 'p') {
+                        this.togglePause();
+                    }
+                };
+                
+                const handleRelease = (e) => {
+                    e.preventDefault();
+                    this.keys[key] = false;
+                    btn.classList.remove('active');
+                };
+                
+                btn.addEventListener('touchstart', handlePress, { passive: false });
+                btn.addEventListener('touchend', handleRelease, { passive: false });
+                btn.addEventListener('touchcancel', handleRelease, { passive: false });
+                
+                btn.addEventListener('mousedown', handlePress);
+                btn.addEventListener('mouseup', handleRelease);
+                btn.addEventListener('mouseleave', handleRelease);
+            }
+        });
+
+        if (restartBtn) {
+            restartBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.restart();
+            });
+        }
+    }
+
+    showRestartButton() {
+        const restartBtn = document.getElementById('bc-restart-btn');
+        if (restartBtn) {
+            restartBtn.style.display = 'block';
+        }
+    }
+
+    hideRestartButton() {
+        const restartBtn = document.getElementById('bc-restart-btn');
+        if (restartBtn) {
+            restartBtn.style.display = 'none';
+        }
     }
 
     loadLevel(levelNum) {
@@ -655,17 +739,25 @@ class BattleCity {
         this.sounds.playLevelCompleteSound();
         
         if (this.currentLevel < 10) {
-            this.showMessage('LEVEL COMPLETE!', () => {
+            this.showLevelTransition(() => {
                 this.currentLevel++;
                 this.isVictory = false;
                 this.loadLevel(this.currentLevel);
                 this.updateUI();
                 this.saveProgress();
-                this.lastTime = performance.now();
-                this.sounds.playStartMusic();
-                this.gameLoop();
+                
+                this.showStageScreen(() => {
+                    this.lastTime = performance.now();
+                    const musicDuration = this.sounds.playStartMusic();
+                    setTimeout(() => {
+                        if (!this.isPaused && !this.isGameOver) {
+                            this.gameLoop();
+                        }
+                    }, musicDuration || 4000);
+                });
             });
         } else {
+            this.showRestartButton();
             this.showMessage('YOU WIN! GAME COMPLETE!', () => {
                 localStorage.removeItem('battleCityProgress');
                 this.saveBestScore();
@@ -678,9 +770,43 @@ class BattleCity {
         cancelAnimationFrame(this.animationId);
         this.sounds.playGameOverSound();
         this.saveBestScore();
+        this.showRestartButton();
         this.showMessage('GAME OVER', () => {
             localStorage.removeItem('battleCityProgress');
         });
+    }
+
+    showStageScreen(callback) {
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = '#00f5d4';
+        this.ctx.font = '24px "Press Start 2P", monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('STAGE', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.font = '32px "Press Start 2P", monospace';
+        this.ctx.fillStyle = '#00ff41';
+        this.ctx.fillText(this.currentLevel.toString(), this.canvas.width / 2, this.canvas.height / 2 + 20);
+        
+        setTimeout(() => {
+            if (callback) callback();
+        }, 1500);
+    }
+
+    showLevelTransition(callback) {
+        this.render();
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = '#00f5d4';
+        this.ctx.font = '20px "Press Start 2P", monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('STAGE ' + this.currentLevel, this.canvas.width / 2, this.canvas.height / 2 - 20);
+        this.ctx.font = '14px "Press Start 2P", monospace';
+        this.ctx.fillStyle = '#00ff41';
+        this.ctx.fillText('COMPLETE!', this.canvas.width / 2, this.canvas.height / 2 + 20);
+        
+        setTimeout(() => {
+            if (callback) callback();
+        }, 2000);
     }
 
     showMessage(text, callback) {
@@ -699,6 +825,7 @@ class BattleCity {
     }
 
     restart() {
+        this.hideRestartButton();
         if (this.messageCallback) {
             this.messageCallback();
             this.messageCallback = null;
@@ -710,8 +837,16 @@ class BattleCity {
             this.isVictory = false;
             this.loadLevel(this.currentLevel);
             this.updateUI();
-            this.lastTime = performance.now();
-            this.gameLoop();
+            
+            this.showStageScreen(() => {
+                this.lastTime = performance.now();
+                const musicDuration = this.sounds.playStartMusic();
+                setTimeout(() => {
+                    if (!this.isPaused && !this.isGameOver) {
+                        this.gameLoop();
+                    }
+                }, musicDuration || 4000);
+            });
         }
     }
 

@@ -24,23 +24,41 @@ class BattleCitySounds {
         const ctx = this.audioContext;
         const now = ctx.currentTime;
         
-        const notes = [
-            { freq: 523.25, time: 0.0, duration: 0.15 },
-            { freq: 659.25, time: 0.15, duration: 0.15 },
-            { freq: 783.99, time: 0.3, duration: 0.15 },
-            { freq: 1046.50, time: 0.45, duration: 0.3 },
-            { freq: 783.99, time: 0.75, duration: 0.15 },
-            { freq: 1046.50, time: 0.9, duration: 0.45 }
+        const melody = [
+            { freq: 659.25, time: 0.0, duration: 0.12 },
+            { freq: 659.25, time: 0.14, duration: 0.12 },
+            { freq: 659.25, time: 0.28, duration: 0.12 },
+            { freq: 523.25, time: 0.42, duration: 0.09 },
+            { freq: 659.25, time: 0.53, duration: 0.12 },
+            { freq: 783.99, time: 0.67, duration: 0.24 },
+            { freq: 392.00, time: 0.93, duration: 0.24 },
+            { freq: 523.25, time: 1.19, duration: 0.18 },
+            { freq: 392.00, time: 1.39, duration: 0.18 },
+            { freq: 329.63, time: 1.59, duration: 0.18 },
+            { freq: 440.00, time: 1.79, duration: 0.15 },
+            { freq: 493.88, time: 1.96, duration: 0.15 },
+            { freq: 466.16, time: 2.13, duration: 0.09 },
+            { freq: 440.00, time: 2.24, duration: 0.18 },
+            { freq: 392.00, time: 2.44, duration: 0.12 },
+            { freq: 659.25, time: 2.58, duration: 0.12 },
+            { freq: 783.99, time: 2.72, duration: 0.12 },
+            { freq: 880.00, time: 2.86, duration: 0.18 },
+            { freq: 698.46, time: 3.06, duration: 0.09 },
+            { freq: 783.99, time: 3.17, duration: 0.18 },
+            { freq: 659.25, time: 3.37, duration: 0.12 },
+            { freq: 523.25, time: 3.51, duration: 0.12 },
+            { freq: 587.33, time: 3.65, duration: 0.12 },
+            { freq: 493.88, time: 3.79, duration: 0.24 }
         ];
 
-        notes.forEach(note => {
+        melody.forEach(note => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             
             osc.type = 'square';
             osc.frequency.value = note.freq;
             
-            gain.gain.setValueAtTime(0.2, now + note.time);
+            gain.gain.setValueAtTime(0.15, now + note.time);
             gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.duration);
             
             osc.connect(gain);
@@ -49,6 +67,8 @@ class BattleCitySounds {
             osc.start(now + note.time);
             osc.stop(now + note.time + note.duration);
         });
+        
+        return 4000;
     }
 
     playShootSound() {
