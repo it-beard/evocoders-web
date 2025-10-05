@@ -971,9 +971,11 @@ footer p {
     max-width: 1200px;
     width: 90%;
     max-height: 90vh;
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
     animation: slideIn 0.4s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes slideIn {
@@ -1039,67 +1041,232 @@ footer p {
 }
 
 .modal-body {
-    padding: 40px;
+    padding: 30px;
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
 }
 
-.gallery-item {
+.carousel {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    flex: 1;
+    min-height: 0;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
     background: var(--card-bg);
     border: 3px solid var(--border-color);
     padding: 20px;
-    transition: all 0.4s ease;
     box-shadow: 
-        0 0 15px rgba(157, 76, 237, 0.3),
-        inset 0 0 15px rgba(0, 245, 212, 0.05);
+        0 0 20px rgba(157, 76, 237, 0.4),
+        inset 0 0 20px rgba(0, 245, 212, 0.08);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.gallery-item::before {
-    content: '▓';
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide::before {
+    content: '▓▒░';
     position: absolute;
     top: 10px;
     left: 10px;
     color: var(--retro-cyan);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-shadow: 0 0 10px var(--retro-cyan);
 }
 
-.gallery-item:hover {
-    transform: translateY(-10px);
-    border-color: var(--retro-cyan);
-    box-shadow: 
-        0 0 30px rgba(0, 245, 212, 0.6),
-        inset 0 0 20px rgba(0, 245, 212, 0.1);
+.carousel-slide::after {
+    content: '░▒▓';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: var(--retro-green);
+    font-size: 1.2rem;
+    text-shadow: 0 0 10px var(--retro-green);
 }
 
-.gallery-item img {
-    width: 100%;
-    height: auto;
+.carousel-image-link {
     display: block;
-    border: 2px solid var(--retro-purple);
-    box-shadow: 0 0 10px rgba(157, 76, 237, 0.5);
+    cursor: zoom-in;
+    position: relative;
     transition: all 0.3s ease;
 }
 
-.gallery-item:hover img {
+.carousel-image-link::after {
+    content: '🔍';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.carousel-image-link:hover::after {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: auto;
+    max-height: calc(90vh - 300px);
+    object-fit: contain;
+    display: block;
+    border: 2px solid var(--retro-purple);
+    box-shadow: 0 0 15px rgba(157, 76, 237, 0.5);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.carousel-image-link:hover img {
+    transform: scale(1.02);
     border-color: var(--retro-cyan);
-    box-shadow: 0 0 20px rgba(0, 245, 212, 0.7);
+    box-shadow: 0 0 25px rgba(0, 245, 212, 0.7);
+}
+
+.carousel-slide.active img {
+    animation: imageGlow 2s ease-in-out infinite;
+}
+
+@keyframes imageGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(157, 76, 237, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 245, 212, 0.6);
+    }
 }
 
 .gallery-caption {
-    margin-top: 20px;
-    font-size: 1.2rem;
+    margin-top: 15px;
+    font-size: 1.1rem;
     color: var(--text-white);
-    line-height: 1.6;
+    line-height: 1.5;
     text-align: center;
-    padding: 15px;
+    padding: 12px;
     background: rgba(0, 0, 0, 0.5);
     border-left: 3px solid var(--retro-cyan);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.carousel-btn {
+    background: var(--card-bg);
+    border: 3px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(157, 76, 237, 0.4);
+    flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+    border-color: var(--retro-cyan);
+    color: var(--retro-cyan);
+    box-shadow: 0 0 25px rgba(0, 245, 212, 0.7);
+    transform: scale(1.1);
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+.carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+}
+
+.carousel-btn:disabled:hover {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(157, 76, 237, 0.4);
+}
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-shrink: 0;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(157, 76, 237, 0.3);
+}
+
+.indicator:hover {
+    border-color: var(--retro-cyan);
+    box-shadow: 0 0 15px rgba(0, 245, 212, 0.6);
+    transform: scale(1.2);
+}
+
+.indicator.active {
+    background: var(--retro-cyan);
+    border-color: var(--retro-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.8);
+}
+
+.carousel-counter {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--retro-cyan);
+    flex-shrink: 0;
+}
+
+.carousel-counter .current-slide {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--retro-green);
+    text-shadow: 0 0 10px var(--retro-green);
 }
 
 @media (max-width: 768px) {
@@ -1109,11 +1276,11 @@ footer p {
     }
     
     .modal-header {
-        padding: 20px 25px;
+        padding: 15px 20px;
     }
     
     .modal-header h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
     
     .modal-close {
@@ -1121,16 +1288,94 @@ footer p {
     }
     
     .modal-body {
-        padding: 25px 20px;
+        padding: 20px 15px;
     }
     
-    .gallery {
-        grid-template-columns: 1fr;
-        gap: 30px;
+    .carousel-container {
+        gap: 10px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+    
+    .carousel-slide {
+        padding: 15px;
+    }
+    
+    .carousel-slide img {
+        max-height: calc(95vh - 280px);
     }
     
     .gallery-caption {
-        font-size: 1.1rem;
+        font-size: 1rem;
         text-align: justify;
+        padding: 10px;
+        margin-top: 10px;
+        line-height: 1.4;
+    }
+    
+    .carousel-counter {
+        font-size: 1.1rem;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .carousel-counter .current-slide {
+        font-size: 1.3rem;
+    }
+    
+    .carousel-indicators {
+        margin-top: 10px;
+        gap: 12px;
+    }
+}
+
+@media (orientation: portrait) and (max-width: 768px) {
+    .carousel-slide img {
+        max-height: calc(95vh - 280px);
+    }
+}
+
+@media (orientation: landscape) and (min-width: 769px) {
+    .carousel-slide img {
+        max-height: calc(90vh - 280px);
+    }
+}
+
+@media (orientation: landscape) and (max-height: 700px) {
+    .modal-header {
+        padding: 15px 30px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .carousel-slide {
+        padding: 15px;
+    }
+    
+    .carousel-slide img {
+        max-height: calc(90vh - 250px);
+    }
+    
+    .gallery-caption {
+        font-size: 1rem;
+        padding: 8px;
+        margin-top: 10px;
+        line-height: 1.4;
+    }
+    
+    .carousel-counter {
+        font-size: 1.1rem;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .carousel-indicators {
+        margin-top: 10px;
     }
 }

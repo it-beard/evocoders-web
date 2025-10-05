@@ -219,19 +219,47 @@
                 <span class="modal-close" id="modal-close">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="gallery">
-                    <div class="gallery-item">
-                        <img src="images/course-2.jpg" alt="Учебный курс по ИИ">
-                        <p class="gallery-caption">Главная страница клубного образовательного портала - Базы знаний Эвлюции Кода</p>
+                <div class="carousel-container">
+                    <button class="carousel-btn carousel-btn-prev" id="carousel-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div class="carousel">
+                        <div class="carousel-track" id="carousel-track">
+                            <div class="carousel-slide active">
+                                <a href="images/course-2.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/course-2.jpg" alt="Учебный курс по ИИ">
+                                </a>
+                                <p class="gallery-caption">Главная страница клубного образовательного портала - Базы знаний Эвлюции Кода</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/course-1.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/course-1.jpg" alt="Базовая теория">
+                                </a>
+                                <p class="gallery-caption">Вводная лекция курса "Базовая теория"</p>
+                            </div>
+                            <div class="carousel-slide">
+                                <a href="images/course-3.jpg" target="_blank" rel="noopener noreferrer" class="carousel-image-link">
+                                    <img src="images/course-3.jpg" alt="Модели для разработки">
+                                </a>
+                                <p class="gallery-caption">Первая глава курса "Модели для разработки"</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="gallery-item">
-                        <img src="images/course-1.jpg" alt="Базовая теория">
-                        <p class="gallery-caption">Вводная лекция курса "Базовая теория"</p>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="images/course-3.jpg" alt="Модели для разработки">
-                        <p class="gallery-caption">Первая глава курса "Модели для разработки"</p>
-                    </div>
+                    
+                    <button class="carousel-btn carousel-btn-next" id="carousel-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="carousel-indicators" id="carousel-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                </div>
+                
+                <div class="carousel-counter" id="carousel-counter">
+                    <span class="current-slide">1</span> / <span class="total-slides">3</span>
                 </div>
             </div>
         </div>

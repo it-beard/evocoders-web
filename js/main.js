@@ -149,33 +149,135 @@ document.addEventListener('DOMContentLoaded', function() {
     const coursesModal = document.getElementById('courses-modal');
     const modalClose = document.getElementById('modal-close');
     
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const carouselTrack = document.getElementById('carousel-track');
+    const currentSlideEl = document.querySelector('.current-slide');
+    const totalSlidesEl = document.querySelector('.total-slides');
+    
+    function updateCarousel() {
+        if (!carouselTrack) return;
+        
+        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentSlide);
+        });
+        
+        if (currentSlideEl) {
+            currentSlideEl.textContent = currentSlide + 1;
+        }
+        
+        if (prevBtn) {
+            prevBtn.disabled = currentSlide === 0;
+        }
+        if (nextBtn) {
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+    }
+    
+    function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateCarousel();
+        }
+    }
+    
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateCarousel();
+        }
+    }
+    
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
+    
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => goToSlide(index));
+    });
+    
     if (coursesCard && coursesModal) {
         coursesCard.addEventListener('click', () => {
             coursesModal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            currentSlide = 0;
+            updateCarousel();
         });
     }
     
-    if (modalClose && coursesModal) {
-        modalClose.addEventListener('click', () => {
+    function closeModal() {
+        if (coursesModal) {
             coursesModal.classList.remove('active');
             document.body.style.overflow = '';
-        });
+        }
+    }
+    
+    if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
     }
     
     if (coursesModal) {
         coursesModal.addEventListener('click', (e) => {
             if (e.target === coursesModal) {
-                coursesModal.classList.remove('active');
-                document.body.style.overflow = '';
+                closeModal();
             }
         });
     }
     
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && coursesModal && coursesModal.classList.contains('active')) {
-            coursesModal.classList.remove('active');
-            document.body.style.overflow = '';
+        if (coursesModal && coursesModal.classList.contains('active')) {
+            if (e.key === 'Escape') {
+                closeModal();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
         }
     });
+    
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    if (coursesModal) {
+        coursesModal.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        coursesModal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+    }
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+        
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+    }
 });
