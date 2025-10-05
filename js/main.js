@@ -145,388 +145,115 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 1000);
     }
 
-    const coursesCard = document.getElementById('courses-card');
-    const coursesModal = document.getElementById('courses-modal');
-    const modalClose = document.getElementById('modal-close');
-    
-    const contentCard = document.getElementById('content-card');
-    const contentModal = document.getElementById('content-modal');
-    const contentModalClose = document.getElementById('content-modal-close');
-    
-    const digestsCard = document.getElementById('digests-card');
-    const digestsModal = document.getElementById('digests-modal');
-    const digestsModalClose = document.getElementById('digests-modal-close');
-    
-    let currentSlide = 0;
-    let currentContentSlide = 0;
-    let currentDigestsSlide = 0;
-    
-    const slides = document.querySelectorAll('#carousel-track .carousel-slide');
-    const indicators = document.querySelectorAll('#carousel-indicators .indicator');
-    const prevBtn = document.getElementById('carousel-prev');
-    const nextBtn = document.getElementById('carousel-next');
-    const carouselTrack = document.getElementById('carousel-track');
-    const currentSlideEl = document.querySelector('#carousel-counter .current-slide');
-    const totalSlidesEl = document.querySelector('#carousel-counter .total-slides');
-    
-    const contentSlides = document.querySelectorAll('#content-carousel-track .carousel-slide');
-    const contentIndicators = document.querySelectorAll('#content-carousel-indicators .indicator');
-    const contentPrevBtn = document.getElementById('content-carousel-prev');
-    const contentNextBtn = document.getElementById('content-carousel-next');
-    const contentCarouselTrack = document.getElementById('content-carousel-track');
-    const currentContentSlideEl = document.querySelector('#content-carousel-counter .current-slide');
-    const totalContentSlidesEl = document.querySelector('#content-carousel-counter .total-slides');
-    
-    const digestsSlides = document.querySelectorAll('#digests-carousel-track .carousel-slide');
-    const digestsIndicators = document.querySelectorAll('#digests-carousel-indicators .indicator');
-    const digestsPrevBtn = document.getElementById('digests-carousel-prev');
-    const digestsNextBtn = document.getElementById('digests-carousel-next');
-    const digestsCarouselTrack = document.getElementById('digests-carousel-track');
-    const currentDigestsSlideEl = document.querySelector('#digests-carousel-counter .current-slide');
-    const totalDigestsSlidesEl = document.querySelector('#digests-carousel-counter .total-slides');
-    
-    function updateCarousel() {
-        if (!carouselTrack) return;
-        
-        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-        
-        slides.forEach((slide, index) => {
-            slide.classList.toggle('active', index === currentSlide);
-        });
-        
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentSlide);
-        });
-        
-        if (currentSlideEl) {
-            currentSlideEl.textContent = currentSlide + 1;
+    function initCarousel(cfg) {
+        const track = document.querySelector(cfg.trackSelector);
+        if (!track) return null;
+        const slides = document.querySelectorAll(cfg.slidesSelector);
+        const indicators = cfg.indicatorSelector ? document.querySelectorAll(cfg.indicatorSelector) : [];
+        const prevBtn = cfg.prevSelector ? document.querySelector(cfg.prevSelector) : null;
+        const nextBtn = cfg.nextSelector ? document.querySelector(cfg.nextSelector) : null;
+        const currentEl = cfg.currentSelector ? document.querySelector(cfg.currentSelector) : null;
+        const totalEl = cfg.totalSelector ? document.querySelector(cfg.totalSelector) : null;
+        const modal = cfg.modalSelector ? document.querySelector(cfg.modalSelector) : null;
+        const openEl = cfg.openSelector ? document.querySelector(cfg.openSelector) : null;
+        const closeEl = cfg.closeSelector ? document.querySelector(cfg.closeSelector) : null;
+
+        let index = 0;
+        if (totalEl) totalEl.textContent = slides.length;
+
+        function update() {
+            track.style.transform = `translateX(-${index * 100}%)`;
+            slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+            if (indicators && indicators.forEach) {
+                indicators.forEach((ind, i) => ind.classList.toggle('active', i === index));
+            }
+            if (currentEl) currentEl.textContent = index + 1;
+            if (prevBtn) prevBtn.disabled = index === 0;
+            if (nextBtn) nextBtn.disabled = index === slides.length - 1;
         }
-        
-        if (prevBtn) {
-            prevBtn.disabled = currentSlide === 0;
+
+        function next() { if (index < slides.length - 1) { index++; update(); } }
+        function prev() { if (index > 0) { index--; update(); } }
+        function goTo(i) { index = i; update(); }
+
+        if (prevBtn) prevBtn.addEventListener('click', prev);
+        if (nextBtn) nextBtn.addEventListener('click', next);
+        if (indicators && indicators.forEach) {
+            indicators.forEach((ind, i) => ind.addEventListener('click', () => goTo(i)));
         }
-        if (nextBtn) {
-            nextBtn.disabled = currentSlide === slides.length - 1;
-        }
-    }
-    
-    function nextSlide() {
-        if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            updateCarousel();
-        }
-    }
-    
-    function prevSlide() {
-        if (currentSlide > 0) {
-            currentSlide--;
-            updateCarousel();
-        }
-    }
-    
-    function goToSlide(index) {
-        currentSlide = index;
-        updateCarousel();
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', nextSlide);
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', prevSlide);
-    }
-    
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => goToSlide(index));
-    });
-    
-    if (coursesCard && coursesModal) {
-        coursesCard.addEventListener('click', () => {
-            coursesModal.classList.add('active');
+
+        function open() {
+            if (!modal) return;
+            modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            currentSlide = 0;
-            updateCarousel();
-        });
-    }
-    
-    function closeModal() {
-        if (coursesModal) {
-            coursesModal.classList.remove('active');
+            index = 0;
+            update();
+        }
+
+        function close() {
+            if (!modal) return;
+            modal.classList.remove('active');
             document.body.style.overflow = '';
         }
-    }
-    
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-    
-    if (coursesModal) {
-        coursesModal.addEventListener('click', (e) => {
-            if (e.target === coursesModal) {
-                closeModal();
-            }
-        });
-    }
-    
-    document.addEventListener('keydown', (e) => {
-        if (coursesModal && coursesModal.classList.contains('active')) {
-            if (e.key === 'Escape') {
-                closeModal();
-            } else if (e.key === 'ArrowLeft') {
-                prevSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
-            }
+
+        if (openEl && modal) openEl.addEventListener('click', open);
+        if (closeEl && modal) closeEl.addEventListener('click', close);
+        if (modal) {
+            modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+            document.addEventListener('keydown', (e) => {
+                if (!modal.classList.contains('active')) return;
+                if (e.key === 'Escape') close();
+                else if (e.key === 'ArrowLeft') prev();
+                else if (e.key === 'ArrowRight') next();
+            });
+            let touchStartX = 0;
+            modal.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+            modal.addEventListener('touchend', (e) => {
+                const diff = touchStartX - e.changedTouches[0].screenX;
+                if (Math.abs(diff) > 50) { if (diff > 0) next(); else prev(); }
+            }, { passive: true });
         }
+
+        update();
+        return { next, prev, goTo, open, close };
+    }
+
+    initCarousel({
+        trackSelector: '#carousel-track',
+        slidesSelector: '#carousel-track .carousel-slide',
+        indicatorSelector: '#carousel-indicators .indicator',
+        prevSelector: '#carousel-prev',
+        nextSelector: '#carousel-next',
+        currentSelector: '#carousel-counter .current-slide',
+        totalSelector: '#carousel-counter .total-slides',
+        modalSelector: '#courses-modal',
+        openSelector: '#courses-card',
+        closeSelector: '#modal-close'
     });
-    
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    if (coursesModal) {
-        coursesModal.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        coursesModal.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-    }
-    
-    if (contentModal) {
-        contentModal.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        contentModal.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-    }
-    
-    if (digestsModal) {
-        digestsModal.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        digestsModal.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-    }
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                if (coursesModal && coursesModal.classList.contains('active')) {
-                    nextSlide();
-                } else if (contentModal && contentModal.classList.contains('active')) {
-                    nextContentSlide();
-                } else if (digestsModal && digestsModal.classList.contains('active')) {
-                    nextDigestsSlide();
-                }
-            } else {
-                if (coursesModal && coursesModal.classList.contains('active')) {
-                    prevSlide();
-                } else if (contentModal && contentModal.classList.contains('active')) {
-                    prevContentSlide();
-                } else if (digestsModal && digestsModal.classList.contains('active')) {
-                    prevDigestsSlide();
-                }
-            }
-        }
-    }
-    
-    function updateContentCarousel() {
-        if (!contentCarouselTrack) return;
-        
-        contentCarouselTrack.style.transform = `translateX(-${currentContentSlide * 100}%)`;
-        
-        contentSlides.forEach((slide, index) => {
-            slide.classList.toggle('active', index === currentContentSlide);
-        });
-        
-        contentIndicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentContentSlide);
-        });
-        
-        if (currentContentSlideEl) {
-            currentContentSlideEl.textContent = currentContentSlide + 1;
-        }
-        
-        if (contentPrevBtn) {
-            contentPrevBtn.disabled = currentContentSlide === 0;
-        }
-        if (contentNextBtn) {
-            contentNextBtn.disabled = currentContentSlide === contentSlides.length - 1;
-        }
-    }
-    
-    function nextContentSlide() {
-        if (currentContentSlide < contentSlides.length - 1) {
-            currentContentSlide++;
-            updateContentCarousel();
-        }
-    }
-    
-    function prevContentSlide() {
-        if (currentContentSlide > 0) {
-            currentContentSlide--;
-            updateContentCarousel();
-        }
-    }
-    
-    function goToContentSlide(index) {
-        currentContentSlide = index;
-        updateContentCarousel();
-    }
-    
-    function updateDigestsCarousel() {
-        if (!digestsCarouselTrack) return;
-        
-        digestsCarouselTrack.style.transform = `translateX(-${currentDigestsSlide * 100}%)`;
-        
-        digestsSlides.forEach((slide, index) => {
-            slide.classList.toggle('active', index === currentDigestsSlide);
-        });
-        
-        digestsIndicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentDigestsSlide);
-        });
-        
-        if (currentDigestsSlideEl) {
-            currentDigestsSlideEl.textContent = currentDigestsSlide + 1;
-        }
-        
-        if (digestsPrevBtn) {
-            digestsPrevBtn.disabled = currentDigestsSlide === 0;
-        }
-        if (digestsNextBtn) {
-            digestsNextBtn.disabled = currentDigestsSlide === digestsSlides.length - 1;
-        }
-    }
-    
-    function nextDigestsSlide() {
-        if (currentDigestsSlide < digestsSlides.length - 1) {
-            currentDigestsSlide++;
-            updateDigestsCarousel();
-        }
-    }
-    
-    function prevDigestsSlide() {
-        if (currentDigestsSlide > 0) {
-            currentDigestsSlide--;
-            updateDigestsCarousel();
-        }
-    }
-    
-    function goToDigestsSlide(index) {
-        currentDigestsSlide = index;
-        updateDigestsCarousel();
-    }
-    
-    if (contentNextBtn) {
-        contentNextBtn.addEventListener('click', nextContentSlide);
-    }
-    
-    if (contentPrevBtn) {
-        contentPrevBtn.addEventListener('click', prevContentSlide);
-    }
-    
-    contentIndicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => goToContentSlide(index));
+
+    initCarousel({
+        trackSelector: '#content-carousel-track',
+        slidesSelector: '#content-carousel-track .carousel-slide',
+        indicatorSelector: '#content-carousel-indicators .indicator',
+        prevSelector: '#content-carousel-prev',
+        nextSelector: '#content-carousel-next',
+        currentSelector: '#content-carousel-counter .current-slide',
+        totalSelector: '#content-carousel-counter .total-slides',
+        modalSelector: '#content-modal',
+        openSelector: '#content-card',
+        closeSelector: '#content-modal-close'
     });
-    
-    if (digestsNextBtn) {
-        digestsNextBtn.addEventListener('click', nextDigestsSlide);
-    }
-    
-    if (digestsPrevBtn) {
-        digestsPrevBtn.addEventListener('click', prevDigestsSlide);
-    }
-    
-    digestsIndicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => goToDigestsSlide(index));
-    });
-    
-    if (contentCard && contentModal) {
-        contentCard.addEventListener('click', () => {
-            contentModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            currentContentSlide = 0;
-            updateContentCarousel();
-        });
-    }
-    
-    if (digestsCard && digestsModal) {
-        digestsCard.addEventListener('click', () => {
-            digestsModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            currentDigestsSlide = 0;
-            updateDigestsCarousel();
-        });
-    }
-    
-    function closeContentModal() {
-        if (contentModal) {
-            contentModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-    
-    function closeDigestsModal() {
-        if (digestsModal) {
-            digestsModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-    
-    if (contentModalClose) {
-        contentModalClose.addEventListener('click', closeContentModal);
-    }
-    
-    if (digestsModalClose) {
-        digestsModalClose.addEventListener('click', closeDigestsModal);
-    }
-    
-    if (contentModal) {
-        contentModal.addEventListener('click', (e) => {
-            if (e.target === contentModal) {
-                closeContentModal();
-            }
-        });
-    }
-    
-    if (digestsModal) {
-        digestsModal.addEventListener('click', (e) => {
-            if (e.target === digestsModal) {
-                closeDigestsModal();
-            }
-        });
-    }
-    
-    document.addEventListener('keydown', (e) => {
-        if (contentModal && contentModal.classList.contains('active')) {
-            if (e.key === 'Escape') {
-                closeContentModal();
-            } else if (e.key === 'ArrowLeft') {
-                prevContentSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextContentSlide();
-            }
-        } else if (digestsModal && digestsModal.classList.contains('active')) {
-            if (e.key === 'Escape') {
-                closeDigestsModal();
-            } else if (e.key === 'ArrowLeft') {
-                prevDigestsSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextDigestsSlide();
-            }
-        }
+
+    initCarousel({
+        trackSelector: '#digests-carousel-track',
+        slidesSelector: '#digests-carousel-track .carousel-slide',
+        indicatorSelector: '#digests-carousel-indicators .indicator',
+        prevSelector: '#digests-carousel-prev',
+        nextSelector: '#digests-carousel-next',
+        currentSelector: '#digests-carousel-counter .current-slide',
+        totalSelector: '#digests-carousel-counter .total-slides',
+        modalSelector: '#digests-modal',
+        openSelector: '#digests-card',
+        closeSelector: '#digests-modal-close'
     });
 });

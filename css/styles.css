@@ -327,7 +327,7 @@ header .terminal-title {
 }
 
 .mission .mission-text {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--text-primary);
     font-weight: 600;
     text-shadow: 0 0 10px var(--retro-cyan);
@@ -846,8 +846,14 @@ footer p {
 /* On rules page, disable scroll-triggered delay to avoid first-paint issues */
 .rules-page .fade-in { opacity: 1; transform: none; }
 
-@media (max-width: 992px) and (min-width: 769px) {
+@media (max-width: 1157px) and (min-width: 769px) {
     .thesis:nth-child(3):last-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 769px) {
+    .resource-card:nth-child(3):last-child {
         grid-column: 1 / -1;
     }
 }
@@ -919,6 +925,11 @@ footer p {
     section {
         max-width: 100%;
         overflow-x: hidden;
+    }
+
+    .mission .mission-text {
+        font-size: 1.5rem;
+        border-left: none;
     }
 }
 
