@@ -70,7 +70,7 @@ class BattleCity {
                 <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 SOUND ON</div>
             </div>
             <div class="bc-controls">
-                <div class="bc-help">WASD/Arrows - Move, SPACE - Fire, P - Pause, R - Restart</div>
+                <div class="bc-help">WASD/Arrows - Move, SPACE - Fire, P - Pause</div>
             </div>
             <div class="bc-mobile-controls" id="bc-mobile-controls">
                 <div class="bc-dpad">
@@ -110,12 +110,13 @@ class BattleCity {
                 return;
             }
             if (e.code === 'KeyR' || keyLower === 'r') {
-                if (this.messageCallback || this.isGameOver || this.isVictory) {
+                // R allowed only when paused or on end screens/messages
+                if (this.isPaused || this.messageCallback || this.isGameOver || this.isVictory) {
                     e.preventDefault();
                     e.stopPropagation();
                     this.restart();
-                    return;
                 }
+                return;
             }
             if (e.code === 'Space' || e.key === ' ') {
                 e.preventDefault();
@@ -719,6 +720,8 @@ class BattleCity {
         this.ctx.fillText('Press R to Restart', this.canvas.width / 2, this.canvas.height / 2 + 30);
     }
 
+    // showRestartPrompt removed: R only works on pause or end screens
+
     togglePause() {
         if (this.isGameOver || this.isVictory) return;
         this.isPaused = !this.isPaused;
@@ -1143,4 +1146,5 @@ class Eagle {
 }
 
 window.BattleCity = BattleCity;
+
 

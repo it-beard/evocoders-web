@@ -23,52 +23,36 @@ class BattleCitySounds {
 
         const ctx = this.audioContext;
         const now = ctx.currentTime;
-        
+        // Battle City NES style fanfare (approx.)
         const melody = [
-            { freq: 659.25, time: 0.0, duration: 0.12 },
-            { freq: 659.25, time: 0.14, duration: 0.12 },
-            { freq: 659.25, time: 0.28, duration: 0.12 },
-            { freq: 523.25, time: 0.42, duration: 0.09 },
-            { freq: 659.25, time: 0.53, duration: 0.12 },
-            { freq: 783.99, time: 0.67, duration: 0.24 },
-            { freq: 392.00, time: 0.93, duration: 0.24 },
-            { freq: 523.25, time: 1.19, duration: 0.18 },
-            { freq: 392.00, time: 1.39, duration: 0.18 },
-            { freq: 329.63, time: 1.59, duration: 0.18 },
-            { freq: 440.00, time: 1.79, duration: 0.15 },
-            { freq: 493.88, time: 1.96, duration: 0.15 },
-            { freq: 466.16, time: 2.13, duration: 0.09 },
-            { freq: 440.00, time: 2.24, duration: 0.18 },
-            { freq: 392.00, time: 2.44, duration: 0.12 },
-            { freq: 659.25, time: 2.58, duration: 0.12 },
-            { freq: 783.99, time: 2.72, duration: 0.12 },
-            { freq: 880.00, time: 2.86, duration: 0.18 },
-            { freq: 698.46, time: 3.06, duration: 0.09 },
-            { freq: 783.99, time: 3.17, duration: 0.18 },
-            { freq: 659.25, time: 3.37, duration: 0.12 },
-            { freq: 523.25, time: 3.51, duration: 0.12 },
-            { freq: 587.33, time: 3.65, duration: 0.12 },
-            { freq: 493.88, time: 3.79, duration: 0.24 }
+            { f: 523.25, t: 0.00, d: 0.12 }, // C5
+            { f: 659.25, t: 0.14, d: 0.12 }, // E5
+            { f: 783.99, t: 0.28, d: 0.20 }, // G5
+            { f: 1046.50, t: 0.52, d: 0.25 }, // C6
+            { f: 783.99, t: 0.82, d: 0.16 }, // G5
+            { f: 987.77, t: 1.02, d: 0.18 }, // B5
+            { f: 1174.66, t: 1.24, d: 0.22 }, // D6
+            { f: 1318.51, t: 1.50, d: 0.28 }, // E6
+            { f: 1046.50, t: 1.84, d: 0.20 }, // C6
+            { f: 1318.51, t: 2.08, d: 0.28 }, // E6
+            { f: 1567.98, t: 2.40, d: 0.36 }, // G6
+            { f: 1046.50, t: 2.80, d: 0.40 }  // C6 sustain end
         ];
 
-        melody.forEach(note => {
+        melody.forEach(n => {
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
-            
             osc.type = 'square';
-            osc.frequency.value = note.freq;
-            
-            gain.gain.setValueAtTime(0.15, now + note.time);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.duration);
-            
+            osc.frequency.value = n.f;
+            gain.gain.setValueAtTime(0.18, now + n.t);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + n.t + n.d);
             osc.connect(gain);
             gain.connect(this.masterGain);
-            
-            osc.start(now + note.time);
-            osc.stop(now + note.time + note.duration);
+            osc.start(now + n.t);
+            osc.stop(now + n.t + n.d);
         });
-        
-        return 4000;
+
+        return 3200;
     }
 
     playShootSound() {
