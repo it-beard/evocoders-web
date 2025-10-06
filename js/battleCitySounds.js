@@ -23,36 +23,59 @@ class BattleCitySounds {
 
         const ctx = this.audioContext;
         const now = ctx.currentTime;
-        // Battle City NES style fanfare (approx.)
-        const melody = [
-            { f: 523.25, t: 0.00, d: 0.12 }, // C5
-            { f: 659.25, t: 0.14, d: 0.12 }, // E5
-            { f: 783.99, t: 0.28, d: 0.20 }, // G5
-            { f: 1046.50, t: 0.52, d: 0.25 }, // C6
-            { f: 783.99, t: 0.82, d: 0.16 }, // G5
-            { f: 987.77, t: 1.02, d: 0.18 }, // B5
-            { f: 1174.66, t: 1.24, d: 0.22 }, // D6
-            { f: 1318.51, t: 1.50, d: 0.28 }, // E6
-            { f: 1046.50, t: 1.84, d: 0.20 }, // C6
-            { f: 1318.51, t: 2.08, d: 0.28 }, // E6
-            { f: 1567.98, t: 2.40, d: 0.36 }, // G6
-            { f: 1046.50, t: 2.80, d: 0.40 }  // C6 sustain end
+
+        // Helper to convert note name to frequency (A4 = 440)
+        const noteToFreq = (name) => {
+            const A4 = 440;
+            const map = { C: -9, D: -7, E: -5, F: -4, G: -2, A: 0, B: 2 };
+            const m = name.match(/^([A-G])([b#]?)(\d)$/);
+            if (!m) return A4;
+            let semi = map[m[1]];
+            if (m[2] === '#') semi += 1; else if (m[2] === 'b') semi -= 1;
+            const octave = parseInt(m[3], 10);
+            const n = semi + (octave - 4) * 12; // semitones from A4
+            return A4 * Math.pow(2, n / 12);
+        };
+
+        // Tempo from sheet: ♪ = 150. Triplets → 1/3 beat each
+        const bpm = 150;
+        const secPerBeat = 60 / bpm; // 0.4s
+        const tri = secPerBeat / 3;  // ~0.133s
+
+        // Main Theme (first 2 bars) simplified from score at 150 BPM
+        // Triplet arpeggios followed by ending pickup
+        const score = [
+            // bar 1 (treble triplets)
+            ['Bb4','C5','D5'], ['Bb4','C5','D5'],
+            ['C5','D5','Eb5'], ['C5','D5','Eb5'],
+            // bar 2
+            ['D5','Eb5','F5'], ['D5','Eb5','F5'],
+            ['Eb5','F5','Gb5'], ['Eb5','F5','Gb5'],
+            // small cadence (highlighted in sheet)
+            ['F5'], ['Gb5'], ['F5']
         ];
 
-        melody.forEach(n => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'square';
-            osc.frequency.value = n.f;
-            gain.gain.setValueAtTime(0.18, now + n.t);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + n.t + n.d);
-            osc.connect(gain);
-            gain.connect(this.masterGain);
-            osc.start(now + n.t);
-            osc.stop(now + n.t + n.d);
+        let t = 0;
+        score.forEach(group => {
+            const dur = group.length === 1 ? tri * 1.2 : tri; // single notes a bit longer
+            group.forEach((note, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'square';
+                osc.frequency.value = noteToFreq(note);
+                const start = now + t + i * (dur / group.length);
+                const d = dur / group.length;
+                gain.gain.setValueAtTime(0.18, start);
+                gain.gain.exponentialRampToValueAtTime(0.01, start + d);
+                osc.connect(gain);
+                gain.connect(this.masterGain);
+                osc.start(start);
+                osc.stop(start + d);
+            });
+            t += dur;
         });
 
-        return 3200;
+        return Math.round((t + 0.2) * 1000); // ms
     }
 
     playShootSound() {
