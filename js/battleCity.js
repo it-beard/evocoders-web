@@ -765,9 +765,10 @@ class BattleCity {
                 });
             });
         } else {
+            this.saveBestScore();
             this.showRestartButton();
             this.showMessage('ПОБЕДА! ИГРА ПРОЙДЕНА!', () => {
-                this.saveBestScore();
+                // Score already saved above
             });
         }
     }
@@ -886,8 +887,10 @@ class BattleCity {
     saveBestScore() {
         const best = this.getBestScore();
         if (this.score > best) {
-            localStorage.setItem('battleCityBestScore', this.score);
-            document.getElementById('bc-best').textContent = this.score;
+            try {
+                localStorage.setItem('battleCityBestScore', String(this.score));
+                document.getElementById('bc-best').textContent = this.score;
+            } catch (_) {}
         }
     }
 
