@@ -70,7 +70,7 @@ class BattleCity {
                 <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 ЗВУК ВКЛ</div>
             </div>
             <div class="bc-controls">
-                <div class="bc-help">WASD/Стрелки - Движение, ПРОБЕЛ - Огонь, P - Пауза</div>
+                <div class="bc-help">WASD/Стрелки - Движение, ПРОБЕЛ - Огонь, P - Пауза, R - Рестарт</div>
             </div>
             <div class="bc-mobile-controls" id="bc-mobile-controls">
                 <div class="bc-dpad">
@@ -121,9 +121,7 @@ class BattleCity {
             if (e.code === 'Space' || e.key === ' ') {
                 e.preventDefault();
                 e.stopPropagation();
-                if (this.player && !this.isPaused && !this.isGameOver) {
-                    this.player.shoot();
-                }
+                this.keys[' '] = true;
                 return;
             }
         });
@@ -973,6 +971,10 @@ class Tank {
             moving = true;
         }
 
+        if (this.game.keys[' ']) {
+            this.shoot();
+        }
+
         if (moving && Math.random() < 0.1) {
             this.game.sounds.playMoveSound();
         }
@@ -1038,82 +1040,105 @@ class Tank {
 
         const colors = {
             player: {
-                body: '#d4a017',
-                bodyLight: '#f5d04a',
-                tracks: '#a87500',
-                barrel: '#d4a017'
+                primary: '#e6c200',
+                secondary: '#ffed4e',
+                dark: '#a88800',
+                tracks: '#8b7000'
             },
             enemy: {
-                body: '#4a8c4a',
-                bodyLight: '#65b565',
-                tracks: '#2d5a2d',
-                barrel: '#4a8c4a'
+                primary: '#b0b0b0',
+                secondary: '#d8d8d8',
+                dark: '#707070',
+                tracks: '#505050'
             }
         };
 
-        const palette = this.isPlayer ? colors.player : colors.enemy;
-        const size = this.width;
-        const unit = size / 16;
+        const c = this.isPlayer ? colors.player : colors.enemy;
+        const u = this.width / 16;
 
         ctx.save();
         ctx.translate(this.x, this.y);
 
         if (this.direction === 'up') {
-            ctx.fillStyle = palette.tracks;
-            ctx.fillRect(0, 0, 5 * unit, 16 * unit);
-            ctx.fillRect(11 * unit, 0, 5 * unit, 16 * unit);
+            ctx.fillStyle = c.tracks;
+            ctx.fillRect(0, 0, 5*u, 16*u);
+            ctx.fillRect(11*u, 0, 5*u, 16*u);
             
-            ctx.fillStyle = palette.body;
-            ctx.fillRect(5 * unit, 0, 6 * unit, 16 * unit);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(1*u, 1*u, 3*u, 14*u);
+            ctx.fillRect(12*u, 1*u, 3*u, 14*u);
             
-            ctx.fillStyle = palette.bodyLight;
-            ctx.fillRect(6 * unit, 2 * unit, 4 * unit, 4 * unit);
-            ctx.fillRect(6 * unit, 10 * unit, 4 * unit, 4 * unit);
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(5*u, 2*u, 6*u, 14*u);
             
-            ctx.fillStyle = palette.barrel;
-            ctx.fillRect(7 * unit, 0, 2 * unit, 8 * unit);
+            ctx.fillStyle = c.secondary;
+            ctx.fillRect(6*u, 4*u, 4*u, 4*u);
+            ctx.fillRect(6*u, 10*u, 4*u, 4*u);
+            
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(7*u, 0, 2*u, 7*u);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(7*u, 0, 2*u, 1*u);
         } else if (this.direction === 'down') {
-            ctx.fillStyle = palette.tracks;
-            ctx.fillRect(0, 0, 5 * unit, 16 * unit);
-            ctx.fillRect(11 * unit, 0, 5 * unit, 16 * unit);
+            ctx.fillStyle = c.tracks;
+            ctx.fillRect(0, 0, 5*u, 16*u);
+            ctx.fillRect(11*u, 0, 5*u, 16*u);
             
-            ctx.fillStyle = palette.body;
-            ctx.fillRect(5 * unit, 0, 6 * unit, 16 * unit);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(1*u, 1*u, 3*u, 14*u);
+            ctx.fillRect(12*u, 1*u, 3*u, 14*u);
             
-            ctx.fillStyle = palette.bodyLight;
-            ctx.fillRect(6 * unit, 2 * unit, 4 * unit, 4 * unit);
-            ctx.fillRect(6 * unit, 10 * unit, 4 * unit, 4 * unit);
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(5*u, 0, 6*u, 14*u);
             
-            ctx.fillStyle = palette.barrel;
-            ctx.fillRect(7 * unit, 8 * unit, 2 * unit, 8 * unit);
+            ctx.fillStyle = c.secondary;
+            ctx.fillRect(6*u, 2*u, 4*u, 4*u);
+            ctx.fillRect(6*u, 8*u, 4*u, 4*u);
+            
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(7*u, 9*u, 2*u, 7*u);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(7*u, 15*u, 2*u, 1*u);
         } else if (this.direction === 'left') {
-            ctx.fillStyle = palette.tracks;
-            ctx.fillRect(0, 0, 16 * unit, 5 * unit);
-            ctx.fillRect(0, 11 * unit, 16 * unit, 5 * unit);
+            ctx.fillStyle = c.tracks;
+            ctx.fillRect(0, 0, 16*u, 5*u);
+            ctx.fillRect(0, 11*u, 16*u, 5*u);
             
-            ctx.fillStyle = palette.body;
-            ctx.fillRect(0, 5 * unit, 16 * unit, 6 * unit);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(1*u, 1*u, 14*u, 3*u);
+            ctx.fillRect(1*u, 12*u, 14*u, 3*u);
             
-            ctx.fillStyle = palette.bodyLight;
-            ctx.fillRect(2 * unit, 6 * unit, 4 * unit, 4 * unit);
-            ctx.fillRect(10 * unit, 6 * unit, 4 * unit, 4 * unit);
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(2*u, 5*u, 14*u, 6*u);
             
-            ctx.fillStyle = palette.barrel;
-            ctx.fillRect(0, 7 * unit, 8 * unit, 2 * unit);
+            ctx.fillStyle = c.secondary;
+            ctx.fillRect(4*u, 6*u, 4*u, 4*u);
+            ctx.fillRect(10*u, 6*u, 4*u, 4*u);
+            
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(0, 7*u, 7*u, 2*u);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(0, 7*u, 1*u, 2*u);
         } else if (this.direction === 'right') {
-            ctx.fillStyle = palette.tracks;
-            ctx.fillRect(0, 0, 16 * unit, 5 * unit);
-            ctx.fillRect(0, 11 * unit, 16 * unit, 5 * unit);
+            ctx.fillStyle = c.tracks;
+            ctx.fillRect(0, 0, 16*u, 5*u);
+            ctx.fillRect(0, 11*u, 16*u, 5*u);
             
-            ctx.fillStyle = palette.body;
-            ctx.fillRect(0, 5 * unit, 16 * unit, 6 * unit);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(1*u, 1*u, 14*u, 3*u);
+            ctx.fillRect(1*u, 12*u, 14*u, 3*u);
             
-            ctx.fillStyle = palette.bodyLight;
-            ctx.fillRect(2 * unit, 6 * unit, 4 * unit, 4 * unit);
-            ctx.fillRect(10 * unit, 6 * unit, 4 * unit, 4 * unit);
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(0, 5*u, 14*u, 6*u);
             
-            ctx.fillStyle = palette.barrel;
-            ctx.fillRect(8 * unit, 7 * unit, 8 * unit, 2 * unit);
+            ctx.fillStyle = c.secondary;
+            ctx.fillRect(2*u, 6*u, 4*u, 4*u);
+            ctx.fillRect(8*u, 6*u, 4*u, 4*u);
+            
+            ctx.fillStyle = c.primary;
+            ctx.fillRect(9*u, 7*u, 7*u, 2*u);
+            ctx.fillStyle = c.dark;
+            ctx.fillRect(15*u, 7*u, 1*u, 2*u);
         }
 
         ctx.restore();
