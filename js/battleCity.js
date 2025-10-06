@@ -62,10 +62,10 @@ class BattleCity {
         ui.className = 'battle-city-ui';
         ui.innerHTML = `
             <div class="bc-stats">
-                <div class="bc-stat">УРОВЕНЬ: <span id="bc-level">${this.currentLevel}</span></div>
+                <div class="bc-stat">УР: <span id="bc-level">${this.currentLevel}</span></div>
                 <div class="bc-stat">ОЧКИ: <span id="bc-score">${this.score}</span></div>
                 <div class="bc-stat">ЖИЗНИ: <span id="bc-lives">${this.lives}</span></div>
-                <div class="bc-stat">ОСТАЛОСЬ: <span id="bc-enemies">${this.enemiesLeft}</span> | УБИТО: <span id="bc-killed">${this.enemiesKilled}</span></div>
+                <div class="bc-stat">ОСТ: <span id="bc-enemies">${this.enemiesLeft}</span> | УБ: <span id="bc-killed">${this.enemiesKilled}</span></div>
                 <div class="bc-stat">РЕКОРД: <span id="bc-best">${this.getBestScore()}</span></div>
                 <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 ЗВУК ВКЛ</div>
             </div>
@@ -228,14 +228,14 @@ class BattleCity {
                 '  ####          ####      ',
                 '  ####  ####  ####  ####  ',
                 '  ####  ####  ####  ####  ',
-                '        ####  ####        ',
+                '        SSSS  SSSS        ',
                 '  ####  ####  ####  ####  ',
                 '  ####  ####  ####  ####  ',
                 '  ####  ####  ####  ####  ',
                 '        ####  ####        ',
-                '  SSSS  ####  ####  SSSS  ',
-                '  S  S  ####  ####  S  S  ',
-                '  S@@S              S@@S  '
+                '  ####  ####  ####  ####  ',
+                '  #  #  ####  ####  #  #  ',
+                '  #@@#              #@@#  '
             ],
             2: [
                 '                          ',
@@ -252,8 +252,8 @@ class BattleCity {
                 '  ####  ####  ####  ####  ',
                 '  ####  ####  ####  ####  ',
                 '                          ',
-                '  ##  ##  ##  ##  ##  ##  ',
-                '  ##  ##  ##  ##  ##  ##  ',
+                '  ##  SS  ##  SS  ##  SS  ',
+                '  ##  ##  SS  ##  SS  ##  ',
                 '                          ',
                 '  ####  ####  ####  ####  ',
                 '  ####  ####  ####  ####  ',
@@ -261,9 +261,9 @@ class BattleCity {
                 '  ##  ##  ##  ##  ##  ##  ',
                 '  ##  ##  ##  ##  ##  ##  ',
                 '                          ',
-                '  SSSS  ####  ####  SSSS  ',
-                '  S  S  ####  ####  S  S  ',
-                '  S@@S              S@@S  '
+                '  ####  ####  ####  ####  ',
+                '  #  #  ####  ####  #  #  ',
+                '  #@@#              #@@#  '
             ],
             3: [
                 '                          ',
@@ -289,9 +289,9 @@ class BattleCity {
                 '          ####    ####    ',
                 '  ######  ####    ####    ',
                 '  ######                  ',
-                '  SSSS    ####  ####      ',
-                '  S  S    ####  ####      ',
-                '  S@@S                    '
+                '  ####    ####  ####      ',
+                '  #  #    ####  ####      ',
+                '  #@@#                    '
             ],
             4: [
                 '                          ',
@@ -429,9 +429,9 @@ class BattleCity {
                 '  ######################  ',
                 '  ######################  ',
                 '  ######################  ',
-                '  SSSS                SSSS',
-                '  S  S  ##########    S  S',
-                '  S@@S  ##########    S@@S'
+                '  ####                ####',
+                '  #  #  ##########    #  #',
+                '  #@@#  ##########    #@@#'
             ],
             9: [
                 '                          ',
@@ -476,7 +476,7 @@ class BattleCity {
                 '                          ',
                 '  ####################    ',
                 '  ####################    ',
-                '  ####################    ',
+                '  ###########S########    ',
                 '  ####################    ',
                 '                          ',
                 '    ####################  ',
@@ -485,9 +485,9 @@ class BattleCity {
                 '    ####################  ',
                 '                          ',
                 '  ####################    ',
-                '  SSSS################    ',
-                '  S  S################    ',
-                '  S@@S##############      '
+                '  ####################    ',
+                '  #  #################    ',
+                '  #@@###############      '
             ]
         };
         
@@ -570,6 +570,7 @@ class BattleCity {
 
         if (this.player && this.player.destroyed) {
             this.lives--;
+            this.updateUI();
             if (this.lives <= 0) {
                 this.gameOver();
             } else {
