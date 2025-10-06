@@ -3,7 +3,9 @@ class BattleCitySounds {
         this.audioContext = null;
         this.masterGain = null;
         this.enabled = true;
+        this.audioElements = {};
         this.initAudio();
+        this.loadSounds();
     }
 
     initAudio() {
@@ -18,64 +20,32 @@ class BattleCitySounds {
         }
     }
 
-    playStartMusic() {
-        if (!this.enabled) return;
-
-        const ctx = this.audioContext;
-        const now = ctx.currentTime;
-
-        // Helper to convert note name to frequency (A4 = 440)
-        const noteToFreq = (name) => {
-            const A4 = 440;
-            const map = { C: -9, D: -7, E: -5, F: -4, G: -2, A: 0, B: 2 };
-            const m = name.match(/^([A-G])([b#]?)(\d)$/);
-            if (!m) return A4;
-            let semi = map[m[1]];
-            if (m[2] === '#') semi += 1; else if (m[2] === 'b') semi -= 1;
-            const octave = parseInt(m[3], 10);
-            const n = semi + (octave - 4) * 12; // semitones from A4
-            return A4 * Math.pow(2, n / 12);
+    loadSounds() {
+        const sounds = {
+            stageStart: 'sounds/stage_start.mp3',
+            gameOver: 'sounds/game_over.mp3'
         };
 
-        // Tempo from sheet: ♪ = 150. Triplets → 1/3 beat each
-        const bpm = 150;
-        const secPerBeat = 60 / bpm; // 0.4s
-        const tri = secPerBeat / 3;  // ~0.133s
+        for (const [key, url] of Object.entries(sounds)) {
+            const audio = new Audio(url);
+            audio.volume = 0.3;
+            audio.preload = 'auto';
+            this.audioElements[key] = audio;
+        }
+    }
 
-        // Main Theme (first 2 bars) simplified from score at 150 BPM
-        // Triplet arpeggios followed by ending pickup
-        const score = [
-            // bar 1 (treble triplets)
-            ['Bb4','C5','D5'], ['Bb4','C5','D5'],
-            ['C5','D5','Eb5'], ['C5','D5','Eb5'],
-            // bar 2
-            ['D5','Eb5','F5'], ['D5','Eb5','F5'],
-            ['Eb5','F5','Gb5'], ['Eb5','F5','Gb5'],
-            // small cadence (highlighted in sheet)
-            ['F5'], ['Gb5'], ['F5']
-        ];
+    playAudioFile(audioKey) {
+        if (!this.enabled || !this.audioElements[audioKey]) return 0;
 
-        let t = 0;
-        score.forEach(group => {
-            const dur = group.length === 1 ? tri * 1.2 : tri; // single notes a bit longer
-            group.forEach((note, i) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'square';
-                osc.frequency.value = noteToFreq(note);
-                const start = now + t + i * (dur / group.length);
-                const d = dur / group.length;
-                gain.gain.setValueAtTime(0.18, start);
-                gain.gain.exponentialRampToValueAtTime(0.01, start + d);
-                osc.connect(gain);
-                gain.connect(this.masterGain);
-                osc.start(start);
-                osc.stop(start + d);
-            });
-            t += dur;
-        });
+        const audio = this.audioElements[audioKey];
+        audio.currentTime = 0;
+        audio.play().catch(e => console.warn(`Failed to play sound: ${audioKey}`, e));
 
-        return Math.round((t + 0.2) * 1000); // ms
+        return Math.round(audio.duration * 1000) || 4000;
+    }
+
+    playStartMusic() {
+        return this.playAudioFile('stageStart');
     }
 
     playShootSound() {
@@ -196,34 +166,7 @@ class BattleCitySounds {
     }
 
     playGameOverSound() {
-        if (!this.enabled) return;
-
-        const ctx = this.audioContext;
-        const now = ctx.currentTime;
-        
-        const notes = [
-            { freq: 440, time: 0.0, duration: 0.2 },
-            { freq: 392, time: 0.2, duration: 0.2 },
-            { freq: 349.23, time: 0.4, duration: 0.2 },
-            { freq: 293.66, time: 0.6, duration: 0.4 }
-        ];
-
-        notes.forEach(note => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            
-            osc.type = 'square';
-            osc.frequency.value = note.freq;
-            
-            gain.gain.setValueAtTime(0.15, now + note.time);
-            gain.gain.exponentialRampToValueAtTime(0.01, now + note.time + note.duration);
-            
-            osc.connect(gain);
-            gain.connect(this.masterGain);
-            
-            osc.start(now + note.time);
-            osc.stop(now + note.time + note.duration);
-        });
+        return this.playAudioFile('gameOver');
     }
 
     playLevelCompleteSound() {
@@ -258,13 +201,23 @@ class BattleCitySounds {
     }
 
     setVolume(volume) {
+        const vol = Math.max(0, Math.min(1, volume));
         if (this.masterGain) {
-            this.masterGain.gain.value = Math.max(0, Math.min(1, volume));
+            this.masterGain.gain.value = vol;
         }
+        Object.values(this.audioElements).forEach(audio => {
+            audio.volume = vol;
+        });
     }
 
     toggle() {
         this.enabled = !this.enabled;
+        if (!this.enabled) {
+            Object.values(this.audioElements).forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+        }
         return this.enabled;
     }
 }
