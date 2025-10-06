@@ -62,15 +62,15 @@ class BattleCity {
         ui.className = 'battle-city-ui';
         ui.innerHTML = `
             <div class="bc-stats">
-                <div class="bc-stat">LEVEL: <span id="bc-level">${this.currentLevel}</span></div>
-                <div class="bc-stat">SCORE: <span id="bc-score">${this.score}</span></div>
-                <div class="bc-stat">LIVES: <span id="bc-lives">${this.lives}</span></div>
-                <div class="bc-stat">LEFT: <span id="bc-enemies">${this.enemiesLeft}</span> | KILLED: <span id="bc-killed">${this.enemiesKilled}</span></div>
-                <div class="bc-stat">BEST: <span id="bc-best">${this.getBestScore()}</span></div>
-                <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 SOUND ON</div>
+                <div class="bc-stat">УРОВЕНЬ: <span id="bc-level">${this.currentLevel}</span></div>
+                <div class="bc-stat">ОЧКИ: <span id="bc-score">${this.score}</span></div>
+                <div class="bc-stat">ЖИЗНИ: <span id="bc-lives">${this.lives}</span></div>
+                <div class="bc-stat">ОСТАЛОСЬ: <span id="bc-enemies">${this.enemiesLeft}</span> | УБИТО: <span id="bc-killed">${this.enemiesKilled}</span></div>
+                <div class="bc-stat">РЕКОРД: <span id="bc-best">${this.getBestScore()}</span></div>
+                <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 ЗВУК ВКЛ</div>
             </div>
             <div class="bc-controls">
-                <div class="bc-help">WASD/Arrows - Move, SPACE - Fire, P - Pause</div>
+                <div class="bc-help">WASD/Стрелки - Движение, ПРОБЕЛ - Огонь, P - Пауза</div>
             </div>
             <div class="bc-mobile-controls" id="bc-mobile-controls">
                 <div class="bc-dpad">
@@ -80,9 +80,9 @@ class BattleCity {
                     <button class="bc-btn bc-right" data-key="arrowright">►</button>
                 </div>
                 <div class="bc-action-btns">
-                    <button class="bc-btn bc-fire" data-key=" ">FIRE</button>
-                    <button class="bc-btn bc-pause" data-key="p">PAUSE</button>
-                    <button class="bc-btn bc-restart" id="bc-restart-btn" style="display: none;">RESTART</button>
+                    <button class="bc-btn bc-fire" data-key=" ">ОГОНЬ</button>
+                    <button class="bc-btn bc-pause" data-key="p">ПАУЗА</button>
+                    <button class="bc-btn bc-restart" id="bc-restart-btn" style="display: none;">РЕСТАРТ</button>
                 </div>
             </div>
         `;
@@ -91,7 +91,7 @@ class BattleCity {
         const soundToggle = document.getElementById('bc-sound-toggle');
         soundToggle.addEventListener('click', () => {
             const enabled = this.sounds.toggle();
-            soundToggle.textContent = enabled ? '🔊 SOUND ON' : '🔇 SOUND OFF';
+            soundToggle.textContent = enabled ? '🔊 ЗВУК ВКЛ' : '🔇 ЗВУК ВЫКЛ';
         });
 
         this.initMobileControls();
@@ -712,12 +712,12 @@ class BattleCity {
         this.ctx.fillStyle = '#00f5d4';
         this.ctx.font = '24px "Press Start 2P", monospace';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('PAUSED', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.fillText('ПАУЗА', this.canvas.width / 2, this.canvas.height / 2 - 30);
         this.ctx.font = '10px "Press Start 2P", monospace';
         this.ctx.fillStyle = '#00ff41';
-        this.ctx.fillText('Press P to Resume', this.canvas.width / 2, this.canvas.height / 2 + 10);
+        this.ctx.fillText('Нажмите P чтобы продолжить', this.canvas.width / 2, this.canvas.height / 2 + 10);
         this.ctx.fillStyle = '#9d4edd';
-        this.ctx.fillText('Press R to Restart', this.canvas.width / 2, this.canvas.height / 2 + 30);
+        this.ctx.fillText('Нажмите R для рестарта', this.canvas.width / 2, this.canvas.height / 2 + 30);
     }
 
     // showRestartPrompt removed: R only works on pause or end screens
@@ -761,7 +761,7 @@ class BattleCity {
             });
         } else {
             this.showRestartButton();
-            this.showMessage('YOU WIN! GAME COMPLETE!', () => {
+            this.showMessage('ПОБЕДА! ИГРА ПРОЙДЕНА!', () => {
                 this.saveBestScore();
             });
         }
@@ -773,7 +773,7 @@ class BattleCity {
         this.sounds.playGameOverSound();
         this.saveBestScore();
         this.showRestartButton();
-        this.showMessage('GAME OVER', () => {
+        this.showMessage('КОНЕЦ ИГРЫ', () => {
             // Allow R to restart even if focus is outside canvas
         });
     }
@@ -784,7 +784,7 @@ class BattleCity {
         this.ctx.fillStyle = '#00f5d4';
         this.ctx.font = '24px "Press Start 2P", monospace';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('STAGE', this.canvas.width / 2, this.canvas.height / 2 - 30);
+        this.ctx.fillText('УРОВЕНЬ', this.canvas.width / 2, this.canvas.height / 2 - 30);
         this.ctx.font = '32px "Press Start 2P", monospace';
         this.ctx.fillStyle = '#00ff41';
         this.ctx.fillText(this.currentLevel.toString(), this.canvas.width / 2, this.canvas.height / 2 + 20);
@@ -801,10 +801,10 @@ class BattleCity {
         this.ctx.fillStyle = '#00f5d4';
         this.ctx.font = '20px "Press Start 2P", monospace';
         this.ctx.textAlign = 'center';
-        this.ctx.fillText('STAGE ' + this.currentLevel, this.canvas.width / 2, this.canvas.height / 2 - 20);
+        this.ctx.fillText('УРОВЕНЬ ' + this.currentLevel, this.canvas.width / 2, this.canvas.height / 2 - 20);
         this.ctx.font = '14px "Press Start 2P", monospace';
         this.ctx.fillStyle = '#00ff41';
-        this.ctx.fillText('COMPLETE!', this.canvas.width / 2, this.canvas.height / 2 + 20);
+        this.ctx.fillText('ПРОЙДЕН!', this.canvas.width / 2, this.canvas.height / 2 + 20);
         
         setTimeout(() => {
             if (callback) callback();
@@ -819,7 +819,7 @@ class BattleCity {
         this.ctx.textAlign = 'center';
         this.ctx.fillText(text, this.canvas.width / 2, this.canvas.height / 2 - 20);
         this.ctx.font = '12px "Press Start 2P", monospace';
-        this.ctx.fillText('Press R to continue', this.canvas.width / 2, this.canvas.height / 2 + 20);
+        this.ctx.fillText('Нажмите R для продолжения', this.canvas.width / 2, this.canvas.height / 2 + 20);
         
         if (callback) {
             this.messageCallback = callback;
@@ -1036,22 +1036,87 @@ class Tank {
     render(ctx) {
         if (this.destroyed) return;
 
-        ctx.fillStyle = this.isPlayer ? '#00f5d4' : '#ff006e';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        const colors = {
+            player: {
+                body: '#d4a017',
+                bodyLight: '#f5d04a',
+                tracks: '#a87500',
+                barrel: '#d4a017'
+            },
+            enemy: {
+                body: '#4a8c4a',
+                bodyLight: '#65b565',
+                tracks: '#2d5a2d',
+                barrel: '#4a8c4a'
+            }
+        };
 
-        ctx.fillStyle = '#000';
-        const barrelSize = 6;
-        let bx = this.x + this.width / 2 - barrelSize / 2;
-        let by = this.y + this.height / 2 - barrelSize / 2;
+        const palette = this.isPlayer ? colors.player : colors.enemy;
+        const size = this.width;
+        const unit = size / 16;
 
-        switch (this.direction) {
-            case 'up': by = this.y; break;
-            case 'down': by = this.y + this.height - barrelSize; break;
-            case 'left': bx = this.x; break;
-            case 'right': bx = this.x + this.width - barrelSize; break;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        if (this.direction === 'up') {
+            ctx.fillStyle = palette.tracks;
+            ctx.fillRect(0, 0, 5 * unit, 16 * unit);
+            ctx.fillRect(11 * unit, 0, 5 * unit, 16 * unit);
+            
+            ctx.fillStyle = palette.body;
+            ctx.fillRect(5 * unit, 0, 6 * unit, 16 * unit);
+            
+            ctx.fillStyle = palette.bodyLight;
+            ctx.fillRect(6 * unit, 2 * unit, 4 * unit, 4 * unit);
+            ctx.fillRect(6 * unit, 10 * unit, 4 * unit, 4 * unit);
+            
+            ctx.fillStyle = palette.barrel;
+            ctx.fillRect(7 * unit, 0, 2 * unit, 8 * unit);
+        } else if (this.direction === 'down') {
+            ctx.fillStyle = palette.tracks;
+            ctx.fillRect(0, 0, 5 * unit, 16 * unit);
+            ctx.fillRect(11 * unit, 0, 5 * unit, 16 * unit);
+            
+            ctx.fillStyle = palette.body;
+            ctx.fillRect(5 * unit, 0, 6 * unit, 16 * unit);
+            
+            ctx.fillStyle = palette.bodyLight;
+            ctx.fillRect(6 * unit, 2 * unit, 4 * unit, 4 * unit);
+            ctx.fillRect(6 * unit, 10 * unit, 4 * unit, 4 * unit);
+            
+            ctx.fillStyle = palette.barrel;
+            ctx.fillRect(7 * unit, 8 * unit, 2 * unit, 8 * unit);
+        } else if (this.direction === 'left') {
+            ctx.fillStyle = palette.tracks;
+            ctx.fillRect(0, 0, 16 * unit, 5 * unit);
+            ctx.fillRect(0, 11 * unit, 16 * unit, 5 * unit);
+            
+            ctx.fillStyle = palette.body;
+            ctx.fillRect(0, 5 * unit, 16 * unit, 6 * unit);
+            
+            ctx.fillStyle = palette.bodyLight;
+            ctx.fillRect(2 * unit, 6 * unit, 4 * unit, 4 * unit);
+            ctx.fillRect(10 * unit, 6 * unit, 4 * unit, 4 * unit);
+            
+            ctx.fillStyle = palette.barrel;
+            ctx.fillRect(0, 7 * unit, 8 * unit, 2 * unit);
+        } else if (this.direction === 'right') {
+            ctx.fillStyle = palette.tracks;
+            ctx.fillRect(0, 0, 16 * unit, 5 * unit);
+            ctx.fillRect(0, 11 * unit, 16 * unit, 5 * unit);
+            
+            ctx.fillStyle = palette.body;
+            ctx.fillRect(0, 5 * unit, 16 * unit, 6 * unit);
+            
+            ctx.fillStyle = palette.bodyLight;
+            ctx.fillRect(2 * unit, 6 * unit, 4 * unit, 4 * unit);
+            ctx.fillRect(10 * unit, 6 * unit, 4 * unit, 4 * unit);
+            
+            ctx.fillStyle = palette.barrel;
+            ctx.fillRect(8 * unit, 7 * unit, 8 * unit, 2 * unit);
         }
 
-        ctx.fillRect(bx, by, barrelSize, barrelSize);
+        ctx.restore();
     }
 }
 
