@@ -649,7 +649,13 @@ class BattleCity {
 
             tanks.slice(i + 1).forEach(other => {
                 if (this.checkRectCollision(tank, other)) {
-                    this.resolveCollision(tank, other);
+                    if (tank.isPlayer && !other.isPlayer) {
+                        this.resolveCollision(other, tank);
+                    } else if (!tank.isPlayer && other.isPlayer) {
+                        this.resolveCollision(tank, other);
+                    } else {
+                        this.resolveCollision(tank, other);
+                    }
                 }
             });
         });

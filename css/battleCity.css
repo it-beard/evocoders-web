@@ -82,9 +82,8 @@
 }
 
 .bc-stats {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     margin-bottom: 15px;
     padding: 15px;
@@ -97,9 +96,15 @@
     font-size: 0.75rem;
     color: var(--text-white);
     white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .bc-stat span {
+    display: inline-block;
+    min-width: 3ch;
+    text-align: left;
     color: var(--retro-green);
     text-shadow: 0 0 10px var(--retro-green);
 }
@@ -230,7 +235,7 @@
     color: var(--retro-dark) !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
     .bc-mobile-controls {
         display: flex;
     }
@@ -256,7 +261,7 @@
     }
     
     .bc-stats {
-        flex-direction: column;
+        grid-template-columns: 1fr 1fr;
         gap: 8px;
         padding: 10px;
     }
@@ -273,6 +278,10 @@
 @media (max-width: 480px) {
     .battle-city-header h2 {
         font-size: 0.8rem;
+    }
+    
+    .bc-stats {
+        grid-template-columns: 1fr;
     }
     
     .bc-stat {
