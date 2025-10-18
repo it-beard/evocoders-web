@@ -40,7 +40,9 @@ class BattleCity {
     }
 
     init() {
-        this.container.innerHTML = '';
+        while (this.container.firstChild) {
+            this.container.removeChild(this.container.firstChild);
+        }
         this.container.appendChild(this.canvas);
         this.createUI();
         
@@ -60,42 +62,105 @@ class BattleCity {
     createUI() {
         const ui = document.createElement('div');
         ui.className = 'battle-city-ui';
-        ui.innerHTML = `
-            <div class="bc-stats">
-                <div class="bc-stat">УР: <span id="bc-level">${this.currentLevel}</span></div>
-                <div class="bc-stat">ОЧКИ: <span id="bc-score">${this.score}</span></div>
-                <div class="bc-stat">ЖИЗНИ: <span id="bc-lives">${this.lives}</span></div>
-                <div class="bc-stat">ОСТ: <span id="bc-enemies">${this.enemiesLeft}</span> | УБ: <span id="bc-killed">${this.enemiesKilled}</span></div>
-                <div class="bc-stat">РЕКОРД: <span id="bc-best">${this.getBestScore()}</span></div>
-                <div class="bc-stat bc-sound-toggle" id="bc-sound-toggle">🔊 ЗВУК ВКЛ</div>
-            </div>
-            <div class="bc-controls">
-                <div class="bc-help">WASD/Стрелки - Движение, ПРОБЕЛ - Огонь, P - Пауза, R - Рестарт</div>
-            </div>
-            <div class="bc-mobile-controls" id="bc-mobile-controls">
-                <div class="bc-dpad">
-                    <button class="bc-btn bc-up" data-key="arrowup">▲</button>
-                    <button class="bc-btn bc-left" data-key="arrowleft">◄</button>
-                    <button class="bc-btn bc-down" data-key="arrowdown">▼</button>
-                    <button class="bc-btn bc-right" data-key="arrowright">►</button>
-                </div>
-                <div class="bc-action-btns">
-                    <button class="bc-btn bc-fire" data-key=" ">ОГОНЬ</button>
-                    <button class="bc-btn bc-pause" data-key="p">ПАУЗА</button>
-                    <button class="bc-btn bc-restart" id="bc-restart-btn" style="display: none;">РЕСТАРТ</button>
-                </div>
-            </div>
-        `;
+        
+        // Stats section
+        const stats = document.createElement('div');
+        stats.className = 'bc-stats';
+        
+        const createStat = (label, id, value) => {
+            const stat = document.createElement('div');
+            stat.className = 'bc-stat';
+            stat.textContent = label + ': ';
+            const span = document.createElement('span');
+            span.id = id;
+            span.textContent = value;
+            stat.appendChild(span);
+            return stat;
+        };
+        
+        stats.appendChild(createStat('УР', 'bc-level', this.currentLevel));
+        stats.appendChild(createStat('ОЧКИ', 'bc-score', this.score));
+        stats.appendChild(createStat('ЖИЗНИ', 'bc-lives', this.lives));
+        
+        const enemyStat = document.createElement('div');
+        enemyStat.className = 'bc-stat';
+        enemyStat.textContent = 'ОСТ: ';
+        const enemiesSpan = document.createElement('span');
+        enemiesSpan.id = 'bc-enemies';
+        enemiesSpan.textContent = this.enemiesLeft;
+        enemyStat.appendChild(enemiesSpan);
+        enemyStat.appendChild(document.createTextNode(' | УБ: '));
+        const killedSpan = document.createElement('span');
+        killedSpan.id = 'bc-killed';
+        killedSpan.textContent = this.enemiesKilled;
+        enemyStat.appendChild(killedSpan);
+        stats.appendChild(enemyStat);
+        
+        stats.appendChild(createStat('РЕКОРД', 'bc-best', this.getBestScore()));
+        
+        const soundToggle = document.createElement('div');
+        soundToggle.className = 'bc-stat bc-sound-toggle';
+        soundToggle.id = 'bc-sound-toggle';
+        soundToggle.textContent = '🔊 ЗВУК ВКЛ';
+        stats.appendChild(soundToggle);
+        
+        ui.appendChild(stats);
+        
+        // Controls section
+        const controls = document.createElement('div');
+        controls.className = 'bc-controls';
+        const help = document.createElement('div');
+        help.className = 'bc-help';
+        help.textContent = 'WASD/Стрелки - Движение, ПРОБЕЛ - Огонь, P - Пауза, R - Рестарт';
+        controls.appendChild(help);
+        ui.appendChild(controls);
+        
+        // Mobile controls
+        const mobileControls = document.createElement('div');
+        mobileControls.className = 'bc-mobile-controls';
+        mobileControls.id = 'bc-mobile-controls';
+        
+        const dpad = document.createElement('div');
+        dpad.className = 'bc-dpad';
+        
+        const createButton = (className, key, text) => {
+            const btn = document.createElement('button');
+            btn.className = 'bc-btn ' + className;
+            btn.setAttribute('data-key', key);
+            btn.textContent = text;
+            return btn;
+        };
+        
+        dpad.appendChild(createButton('bc-up', 'arrowup', '▲'));
+        dpad.appendChild(createButton('bc-left', 'arrowleft', '◄'));
+        dpad.appendChild(createButton('bc-down', 'arrowdown', '▼'));
+        dpad.appendChild(createButton('bc-right', 'arrowright', '►'));
+        
+        mobileControls.appendChild(dpad);
+        
+        const actionBtns = document.createElement('div');
+        actionBtns.className = 'bc-action-btns';
+        
+        actionBtns.appendChild(createButton('bc-fire', ' ', 'ОГОНЬ'));
+        actionBtns.appendChild(createButton('bc-pause', 'p', 'ПАУЗА'));
+        
+        const restartBtn = createButton('bc-restart', '', 'РЕСТАРТ');
+        restartBtn.id = 'bc-restart-btn';
+        restartBtn.style.display = 'none';
+        actionBtns.appendChild(restartBtn);
+        
+        mobileControls.appendChild(actionBtns);
+        ui.appendChild(mobileControls);
+        
         this.container.appendChild(ui);
         
-        const soundToggle = document.getElementById('bc-sound-toggle');
         soundToggle.addEventListener('click', () => {
             const enabled = this.sounds.toggle();
             soundToggle.textContent = enabled ? '🔊 ЗВУК ВКЛ' : '🔇 ЗВУК ВЫКЛ';
         });
 
         this.initMobileControls();
-    }
+}
 
     initControls() {
         document.addEventListener('keydown', (e) => {
