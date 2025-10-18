@@ -160,7 +160,7 @@ class BattleCity {
         });
 
         this.initMobileControls();
-    }
+}
 
     initControls() {
         document.addEventListener('keydown', (e) => {
