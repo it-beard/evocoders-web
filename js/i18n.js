@@ -6,12 +6,12 @@ const translations = {
     "header.title": "Code Evolution",
     "hero.label": "[ AI + CODE = LEVEL 🆙 ]",
     "hero.subtitle":
-      "<b>▓▒░ Code Evolution ░▒▓</b> - is a private club for developers* where we learn to pair program with AI, stay up-to-date with the latest developments, and boost our productivity using AI tools.",
+      "<b>▓▒░ Code Evolution ░▒▓</b> is a private club for developers* where we learn to pair program with AI, stay up-to-date with the latest developments, and boost our productivity using AI tools.",
     "hero.note":
-      "* By developers we mean anyone with an engineering mindset who writes or wants to write code using AI: software developers, engineers, testers, designers, and other tech specialists.",
+      "* By developers, we mean anyone with an engineering mindset who writes or wants to write code using AI: software developers, engineers, QAs, designers, and other tech specialists.",
     "mission.title": "//&nbsp;OUR MISSION",
     "mission.text":
-      "Building a community of highly sought-after specialists who navigate the world of evolving AI with confidence.",
+      "To build a community of highly sought-after specialists who navigate the world of evolving AI with confidence.",
     "goal.title": "&gt; OUR GOAL",
     "goal.text":
       "Boosting members' productivity and market demand by teaching AI fundamentals, tooling, and facilitating the exchange of experience, knowledge, and professional connections.",
