@@ -46,12 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Header logo typing
-    initTyping('header .terminal-title', 'Эволюция Кода');
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang');
+    const titleText = (lang === 'en') ? 'Code Evolution' : 'Эволюция Кода';
+    
+    initTyping('header .terminal-title', titleText);
 
     // If hero title left empty (because we moved it to header), skip. If there is another terminal-title in hero, init it as well.
     const heroTerminal = document.querySelector('.hero .terminal-title');
     if (heroTerminal) {
-        initTyping('.hero .terminal-title', 'Эволюция Кода');
+        initTyping('.hero .terminal-title', titleText);
     }
 
     const observer = new IntersectionObserver((entries) => {
