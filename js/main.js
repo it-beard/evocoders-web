@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Header logo typing
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang');
-    const titleText = (lang === 'en') ? 'Code Evolution' : 'Эволюция Кода';
+    const titleText = (lang === 'en' && window.translations?.en) ? window.translations.en['header.title'] : 'Эволюция Кода';
     
     initTyping('header .terminal-title', titleText);
 

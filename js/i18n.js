@@ -103,11 +103,14 @@ const translations = {
   },
 };
 
+window.translations = translations;
+
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const lang = urlParams.get("lang");
 
   if (lang === "en") {
+    document.documentElement.lang = "en";
     applyTranslation("en");
   }
 });
@@ -135,11 +138,5 @@ function applyTranslation(lang) {
   // Handle placeholders or specific attributes if needed
   // (None in the current set)
 
-  // Changing the "typed" text in header and hero
-  // The main.js initializes typing. We need to intercept or update it.
-  // main.js runs on DOMContentLoaded. We are also on DOMContentLoaded.
-  // Race condition possible.
-  // However, main.js has hardcoded 'Эволюция Кода'.
-  // We might need to modify main.js to accept global config or just overwrite the typed function.
-  // simpler: update the call in main.js
+
 }
