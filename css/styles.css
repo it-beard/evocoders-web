@@ -474,6 +474,229 @@ header .terminal-title {
     letter-spacing: 0.01em;
 }
 
+/* === Archive section === */
+.archive {
+    padding: 80px 20px 40px;
+    text-align: center;
+}
+
+.archive h2 {
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--retro-cyan), 3px 3px 0px var(--retro-blue);
+}
+
+.archive-intro {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: var(--text-white);
+    opacity: 0.9;
+}
+
+.archive-shell {
+    background: var(--card-bg);
+    border: 4px solid var(--border-color);
+    box-shadow:
+        0 0 20px rgba(157, 76, 237, 0.5),
+        inset 0 0 20px rgba(0, 245, 212, 0.08);
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.archive-shell::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: var(--retro-cyan);
+    box-shadow: 0 0 10px var(--retro-cyan);
+}
+
+.archive-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 18px 18px 14px;
+    border-bottom: 2px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.archive-tab {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--retro-purple);
+    color: var(--text-white);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    padding: 10px 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    text-shadow: 0 0 6px rgba(157, 76, 237, 0.6);
+    letter-spacing: 0.02em;
+}
+
+.archive-tab i {
+    color: var(--retro-green);
+    text-shadow: 0 0 8px var(--retro-green);
+    font-size: 0.95em;
+}
+
+.archive-tab .archive-tab-count {
+    background: rgba(0, 245, 212, 0.12);
+    border: 1px solid var(--retro-cyan);
+    color: var(--retro-cyan);
+    padding: 1px 8px;
+    font-size: 0.85em;
+    text-shadow: 0 0 8px var(--retro-cyan);
+    min-width: 28px;
+    text-align: center;
+}
+
+.archive-tab:hover {
+    border-color: var(--retro-cyan);
+    color: var(--text-primary);
+    box-shadow: 0 0 14px rgba(0, 245, 212, 0.45);
+    text-shadow: 0 0 8px var(--retro-cyan);
+}
+
+.archive-tab.active {
+    background: var(--retro-purple);
+    border-color: var(--retro-cyan);
+    color: var(--text-primary);
+    box-shadow:
+        0 0 18px rgba(0, 245, 212, 0.6),
+        inset 0 0 10px rgba(0, 245, 212, 0.15);
+    text-shadow: 0 0 10px var(--retro-cyan);
+}
+
+.archive-tab.active i {
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--retro-cyan);
+}
+
+.archive-list {
+    max-height: 480px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 18px 26px 24px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--retro-purple) rgba(0, 0, 0, 0.3);
+}
+
+.archive-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.archive-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.archive-list::-webkit-scrollbar-thumb {
+    background: var(--retro-purple);
+    box-shadow: 0 0 8px rgba(157, 76, 237, 0.6);
+}
+
+.archive-list::-webkit-scrollbar-thumb:hover {
+    background: var(--retro-cyan);
+}
+
+.archive-year-block {
+    margin-bottom: 18px;
+}
+
+.archive-year {
+    font-size: 1.2rem;
+    color: var(--retro-cyan);
+    text-shadow: 0 0 10px var(--retro-cyan);
+    letter-spacing: 0.1em;
+    margin: 14px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed rgba(0, 245, 212, 0.35);
+    position: sticky;
+    top: -18px;
+    background: linear-gradient(180deg, rgba(10, 14, 39, 0.95) 70%, rgba(10, 14, 39, 0));
+    padding-top: 8px;
+    z-index: 1;
+}
+
+.archive-shell .archive-year-block ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.archive-item {
+    display: flex;
+    gap: 14px;
+    padding: 8px 6px 8px 14px;
+    border-left: 2px solid transparent;
+    color: var(--text-white);
+    font-size: 1.02rem;
+    line-height: 1.55;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.archive-item:hover {
+    border-left-color: var(--retro-green);
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.archive-item-date {
+    flex: 0 0 auto;
+    color: var(--retro-purple);
+    text-shadow: 0 0 6px rgba(157, 76, 237, 0.5);
+    font-variant-numeric: tabular-nums;
+    min-width: 96px;
+    opacity: 0.9;
+}
+
+.archive-item-title {
+    flex: 1 1 auto;
+    color: var(--text-white);
+}
+
+.archive-foot {
+    max-width: 1000px;
+    margin: 25px auto 0;
+    text-align: center;
+    color: var(--text-white);
+    font-size: 1.1rem;
+    opacity: 0.85;
+}
+
+.archive-foot i {
+    color: var(--retro-cyan);
+    margin-right: 8px;
+    text-shadow: 0 0 8px var(--retro-cyan);
+}
+
+@media (max-width: 768px) {
+    .archive { padding: 50px 12px 20px; }
+    .archive-intro { font-size: 1.15rem; }
+    .archive-tabs { padding: 12px 10px 8px; gap: 6px; }
+    .archive-tab { font-size: 0.9rem; padding: 8px 10px; gap: 6px; }
+    .archive-tab .archive-tab-label { display: none; }
+    .archive-tab.active .archive-tab-label { display: inline; }
+    .archive-list { max-height: 60vh; padding: 14px 14px 18px; }
+    .archive-item {
+        flex-direction: column;
+        gap: 2px;
+        font-size: 0.98rem;
+        padding: 8px 4px 10px 10px;
+    }
+    .archive-item-date { font-size: 0.85rem; min-width: 0; }
+    .archive-year { font-size: 1.05rem; }
+}
+
 .structure {
     background: var(--card-bg);
     border: 4px solid var(--border-color);
