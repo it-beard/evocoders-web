@@ -278,7 +278,6 @@ header .terminal-title {
         0 0 10px var(--retro-cyan),
         0 0 22px rgba(0, 245, 212, 0.6),
         3px 3px 0 var(--retro-blue);
-    white-space: nowrap;
 }
 
 .hero .hero-pitch {
@@ -911,13 +910,13 @@ header .terminal-title {
 @media (max-width: 768px) {
     .speakers { padding: 40px 12px 20px; }
     .speakers-intro { font-size: 1.1rem; margin-bottom: 30px; }
-    .speakers-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
-    .speaker-card { padding: 22px 14px 18px; }
-    .speaker-avatar { width: 64px; height: 64px; margin-bottom: 12px; }
-    .speaker-avatar span { font-size: 1.3rem; }
-    .speaker-name { font-size: 1.1rem; }
-    .speaker-affiliation { font-size: 0.85rem; }
-    .speaker-topic { font-size: 0.88rem; }
+    .speakers-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .speaker-card { padding: 18px 10px 14px; }
+    .speaker-avatar { width: 54px; height: 54px; margin-bottom: 10px; }
+    .speaker-avatar span { font-size: 1.1rem; }
+    .speaker-name { font-size: 0.98rem; }
+    .speaker-affiliation { font-size: 0.78rem; min-height: 0; word-break: break-word; }
+    .speaker-topic { font-size: 0.82rem; word-break: break-word; }
     .speakers-foot { font-size: 1rem; }
 }
 
@@ -2020,9 +2019,7 @@ footer i.battle-city {
     .cta p,
     .benefit-card p,
     .resource-card p {
-        text-align: justify;
-        text-justify: inter-word;
-        hyphens: auto;
+        text-align: center;
     }
     .mission h2,
     .benefits h2,
@@ -2065,7 +2062,7 @@ footer i.battle-city {
     .companies-content,
     .cta p,
     .benefit-card p,
-    .resource-card p { text-align: justify; }
+    .resource-card p { text-align: center; }
     .btn::before,
     .btn::after {
         content: '';
