@@ -113,19 +113,109 @@ p, span, div {
 }
 
 header {
-    padding: 30px 0;
+    padding: 14px 0;
     background: var(--retro-dark);
     position: sticky;
     top: 0;
     z-index: 10000;
-    border-bottom: 4px solid var(--border-color);
+    border-bottom: 3px solid var(--border-color);
     box-shadow: 0 0 20px rgba(157, 76, 237, 0.5);
 }
 
-header .container {
+header .container,
+header .header-row {
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+header .header-row {
+    justify-content: space-between;
+}
+
+.header-nav {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    flex: 1 1 auto;
     justify-content: center;
+}
+
+.header-nav a {
+    color: var(--text-white);
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    padding: 6px 4px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease, text-shadow 0.2s ease;
+    white-space: nowrap;
+}
+
+.header-nav a:hover {
+    color: var(--text-primary);
+    border-bottom-color: var(--retro-cyan);
+    text-shadow: 0 0 8px var(--retro-cyan);
+}
+
+.header-buy {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: var(--retro-purple);
+    border: 2px solid var(--retro-cyan);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 6px var(--retro-cyan);
+    box-shadow: 0 0 12px rgba(0, 245, 212, 0.45), inset 0 0 8px rgba(0, 245, 212, 0.1);
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.header-buy-price {
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.header-buy-label {
+    font-size: 0.95rem;
+    opacity: 0.95;
+}
+
+.header-buy:hover {
+    background: var(--retro-cyan);
+    color: var(--retro-darker);
+    text-shadow: none;
+    box-shadow: 0 0 18px rgba(0, 245, 212, 0.8);
+    transform: translateY(-1px);
+}
+
+/* Anchor offset so sticky header doesn't cover section titles */
+section[id] {
+    scroll-margin-top: 90px;
+}
+
+@media (max-width: 1100px) {
+    .header-nav { gap: 14px; }
+    .header-nav a { font-size: 0.95rem; padding: 5px 2px; }
+}
+
+@media (max-width: 900px) {
+    .header-nav { display: none; }
+    header .header-row { justify-content: space-between; gap: 10px; }
+    section[id] { scroll-margin-top: 72px; }
+}
+
+@media (max-width: 480px) {
+    .header-buy { padding: 7px 11px; gap: 6px; }
+    .header-buy-price { font-size: 0.95rem; }
+    .header-buy-label { font-size: 0.85rem; }
 }
 
 /* Prevent header from being covered by content shadow by reserving space */
