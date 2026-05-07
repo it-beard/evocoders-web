@@ -1682,10 +1682,11 @@ header .terminal-title {
 @media (max-width: 768px) {
     .reviews { padding: 40px 12px 20px; }
     .reviews-intro { font-size: 1.1rem; margin-bottom: 30px; }
-    .reviews-grid { grid-template-columns: 1fr; gap: 20px; }
-    .review-card { padding: 28px 22px 22px; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 16px; }
+    .review-card { padding: 24px 20px 18px; }
     .review-card::before { font-size: 4rem; top: -6px; left: 14px; }
-    .review-text { font-size: 1rem; }
+    .review-text { font-size: 1rem; margin-bottom: 16px; }
+    .review-extra { display: none; }
 }
 
 .structure {
@@ -2123,13 +2124,44 @@ footer i.battle-city {
         word-break: keep-all;
     }
     .mission, .structure, .cta, .contact {
-        padding: 30px 24px;
-        margin: 40px 15px;
+        padding: 28px 20px;
+        margin: 28px 12px;
     }
+    .benefits, .speakers, .reviews, .archive, .resources, .founder, .companies, .faq {
+        padding-top: 32px !important;
+        padding-bottom: 24px !important;
+    }
+    .benefits h2, .speakers h2, .reviews h2, .archive h2, .resources h2, .founder h2, .companies h2, .faq h2 {
+        margin-bottom: 22px !important;
+    }
+    .companies-content { margin-bottom: 28px; font-size: 1.1rem; line-height: 1.7; }
+    .companies-content p { margin-bottom: 14px; }
+    .contact { padding: 22px 20px; margin: 16px 12px; }
+    .contact h3 { font-size: 1.4rem; margin-bottom: 14px; }
+    .contact-info { font-size: 1rem; }
     .structure-content ol { padding-left: 1.2rem; }
     .theses, .benefits-grid, .resources-grid {
         grid-template-columns: 1fr;
     }
+    .theses {
+        gap: 12px;
+        margin: 24px 0 0;
+    }
+    .thesis {
+        padding: 14px 18px;
+        font-size: 1rem;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .thesis .mono {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+    .resources-grid { gap: 14px; }
+    .resource-card { padding: 22px 18px; }
     .benefit-card, .resource-card { padding: 30px 20px; }
     .btn {
         padding: 15px 30px;
