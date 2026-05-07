@@ -1866,6 +1866,29 @@ header .terminal-title {
     line-height: 1.8;
 }
 
+.cta .cta-foot {
+    margin-top: 28px;
+    margin-bottom: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-white);
+    opacity: 0.7;
+    max-width: 620px;
+}
+
+.cta .cta-foot a {
+    color: var(--retro-cyan);
+    text-decoration: none;
+    text-shadow: 0 0 8px var(--retro-cyan);
+    border-bottom: 1px dashed rgba(0, 245, 212, 0.5);
+}
+
+.cta .cta-foot a:hover {
+    color: var(--retro-green);
+    text-shadow: 0 0 8px var(--retro-green);
+    border-bottom-color: var(--retro-green);
+}
+
 .btn {
     display: inline-block;
     padding: 18px 45px;
@@ -2162,9 +2185,6 @@ footer i.battle-city {
 @media (max-width: 480px) {
     .hero h1 { font-size: 2rem; }
     header .terminal-title { font-size: 1.2rem; gap: 5px; }
-    .mission h2, .benefits h2, .structure h2, .resources h2, .cta h2, .companies h2 {
-        font-size: 2rem;
-    }
     .container { padding: 0 15px; }
     .hero p:first-of-type {
         text-align: center;
