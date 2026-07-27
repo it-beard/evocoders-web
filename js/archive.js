@@ -228,7 +228,59 @@
         container.scrollTop = 0;
     }
 
+    // Бейдж «Последнее событие» в hero — вычисляется из данных архива,
+    // чтобы обновляться автоматически при синхронизации с базой знаний.
+    const MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+    function updateLatestEventBadge() {
+        const el = document.getElementById('hero-latest-text');
+        if (!el) return;
+        let latest = null;
+        Object.values(ARCHIVE_DATA).forEach(cat => cat.items.forEach(item => {
+            if (!/^\d{4}\.\d{2}\.\d{2}$/.test(item.date)) return;
+            if (!latest || item.date > latest.date) latest = item;
+        }));
+        if (!latest) return;
+        const [y, m, d] = latest.date.split('.').map(Number);
+        const shortTitle = latest.title.split(':')[0].split(' / ')[0].trim();
+        el.textContent = `${shortTitle} — ${d} ${MONTHS_RU[m - 1]} ${y}`;
+    }
+
+    // Сводка архива — пересчитывается из данных, чтобы статичный абзац не устаревал.
+    function pluralRu(n, forms) {
+        const n10 = n % 10, n100 = n % 100;
+        if (n10 === 1 && n100 !== 11) return forms[0];
+        if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return forms[1];
+        return forms[2];
+    }
+
+    const CATEGORY_PLURALS = {
+        workshops: ['воркшоп', 'воркшопа', 'воркшопов'],
+        clubcalls: ['клубный созвон', 'клубных созвона', 'клубных созвонов'],
+        interviews: ['интервью', 'интервью', 'интервью'],
+        reviews: ['обзор', 'обзора', 'обзоров'],
+        booksclub: ['встреча книжного клуба', 'встречи книжного клуба', 'встреч книжного клуба'],
+        lessons: ['обучалка', 'обучалки', 'обучалок'],
+        talks: ['доклад', 'доклада', 'докладов']
+    };
+
+    function updateArchiveSummary() {
+        const el = document.getElementById('archive-summary');
+        if (!el) return;
+        let total = 0;
+        const parts = TAB_ORDER.map(key => {
+            const count = ARCHIVE_DATA[key].items.length;
+            total += count;
+            return `<strong>${count} ${pluralRu(count, CATEGORY_PLURALS[key])}</strong>`;
+        });
+        const last = parts.pop();
+        el.innerHTML = `С 2024 года в архиве: ${parts.join(', ')} и ${last} — всего <strong>${total} ${pluralRu(total, ['запись', 'записи', 'записей'])}</strong>.`;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+        updateLatestEventBadge();
+        updateArchiveSummary();
+
         const tabsEl = document.getElementById('archive-tabs');
         const listEl = document.getElementById('archive-list');
         if (!tabsEl || !listEl) return;

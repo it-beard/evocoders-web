@@ -2714,3 +2714,259 @@ footer i.battle-city {
         bottom: 10px;
     }
 }
+
+/* ============================================
+   CRO-блоки: бейдж свежести, компании спикеров,
+   ритм клуба, тарифные карточки, мягкая конверсия
+   ============================================ */
+
+/* Hero: бейдж «последнее событие» */
+.hero .hero-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px auto 18px;
+    padding: 8px 18px;
+    border: 1px solid rgba(0, 255, 65, 0.45);
+    background: rgba(0, 255, 65, 0.06);
+    color: var(--text-white);
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+}
+
+.hero-latest-dot {
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    background: var(--retro-green);
+    box-shadow: 0 0 10px var(--retro-green);
+    animation: pulse 2s infinite;
+}
+
+.hero-latest #hero-latest-text {
+    color: var(--retro-green);
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+}
+
+/* Hero: компании спикеров */
+.hero .hero-companies {
+    font-size: 0.95rem;
+    color: var(--text-white);
+    opacity: 0.6;
+    max-width: 760px;
+    margin: 14px auto 0;
+    letter-spacing: 0.04em;
+}
+
+.hero-companies span {
+    color: var(--text-primary);
+    text-shadow: 0 0 6px rgba(0, 245, 212, 0.4);
+    white-space: nowrap;
+}
+
+/* Секция «Твой месяц в клубе» */
+.rhythm {
+    padding: 70px 20px 60px;
+    text-align: center;
+}
+
+.rhythm h2 {
+    font-size: clamp(1.1rem, 5.5vw, 2.4rem);
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    text-shadow:
+        0 0 10px var(--retro-cyan),
+        3px 3px 0px var(--retro-blue);
+}
+
+.rhythm-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto 26px;
+}
+
+.rhythm-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1 1 220px;
+    max-width: 260px;
+    padding: 26px 20px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    box-shadow: inset 0 0 15px rgba(0, 245, 212, 0.05);
+}
+
+.rhythm-num {
+    font-size: 2.2rem;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 0 12px var(--retro-cyan);
+}
+
+.rhythm-lbl {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-white);
+    opacity: 0.85;
+}
+
+.rhythm-foot {
+    font-size: 1.05rem;
+    color: var(--text-white);
+    opacity: 0.7;
+}
+
+.rhythm-foot a {
+    color: var(--retro-cyan);
+    text-decoration: none;
+    text-shadow: 0 0 8px var(--retro-cyan);
+    border-bottom: 1px dashed rgba(0, 245, 212, 0.5);
+}
+
+.rhythm-foot a:hover {
+    color: var(--retro-green);
+    text-shadow: 0 0 8px var(--retro-green);
+    border-bottom-color: var(--retro-green);
+}
+
+/* CTA: тарифные карточки */
+.pricing-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 28px;
+    margin: 6px auto 0;
+}
+
+.price-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 250px;
+    padding: 30px 36px 28px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid var(--border-color);
+}
+
+.price-card.featured {
+    border-color: var(--retro-cyan);
+    box-shadow:
+        0 0 22px rgba(0, 245, 212, 0.35),
+        inset 0 0 15px rgba(0, 245, 212, 0.08);
+}
+
+.price-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 14px;
+    background: var(--retro-green);
+    color: var(--retro-darker);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.price-plan {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-white);
+    opacity: 0.75;
+}
+
+.price-num {
+    font-size: 2.8rem;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow:
+        0 0 12px var(--retro-cyan),
+        3px 3px 0px var(--retro-blue);
+}
+
+.price-sub {
+    font-size: 0.95rem;
+    color: var(--text-white);
+    opacity: 0.65;
+}
+
+.price-card .btn {
+    margin: 18px 0 0;
+    padding: 14px 28px;
+    font-size: 1.15rem;
+}
+
+.cta .cta-cancel {
+    margin: 30px auto 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--retro-green);
+    opacity: 0.85;
+    text-shadow: 0 0 6px rgba(0, 255, 65, 0.4);
+}
+
+/* Секция «ещё присматриваешься» */
+.notready {
+    padding: 0 20px 70px;
+    text-align: center;
+}
+
+.notready-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text-white);
+    opacity: 0.85;
+    max-width: 680px;
+    margin: 0 auto 10px;
+}
+
+@media (max-width: 768px) {
+    .hero .hero-latest { font-size: 0.9rem; padding: 7px 12px; }
+    .hero .hero-companies { font-size: 0.85rem; }
+    .rhythm { padding: 50px 16px 40px; }
+    .rhythm-item { flex-basis: 100%; max-width: 340px; padding: 20px 16px; }
+    .pricing-grid { gap: 24px; }
+    .price-card { min-width: 0; width: 100%; max-width: 340px; padding: 26px 20px 24px; }
+    .notready-text { font-size: 1.05rem; }
+}
+
+/* Доступность: уважение prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Архив: статичная сводка с цифрами (GEO) */
+.archive .archive-summary {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-white);
+    opacity: 0.8;
+    max-width: 780px;
+    margin: -14px auto 34px;
+    text-align: center;
+}
+
+.archive .archive-summary strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}

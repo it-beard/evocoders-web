@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const canvas = document.createElement('canvas');
     canvas.id = 'game-of-life-canvas';
     document.body.insertBefore(canvas, document.body.firstChild);
 
     const game = new GameOfLife('game-of-life-canvas', 12, 0.14, 20, 7000);
-    game.start();
+    if (!reduceMotion) {
+        game.start();
+    }
 
     // Click/touch to add bursts to Game of Life
     function injectFromEvent(e) {
@@ -121,14 +125,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    setInterval(() => {
-        if (Math.random() > 0.95) {
-            document.body.style.animation = 'glitch 0.1s';
-            setTimeout(() => {
-                document.body.style.animation = '';
-            }, 100);
-        }
-    }, 2000);
+    if (!reduceMotion) {
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                document.body.style.animation = 'glitch 0.1s';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 100);
+            }
+        }, 2000);
+    }
 
     // Footer system line: READY + UPTIME HH:MM:SS
     const systemLine = document.getElementById('system-line');
