@@ -7,20 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function openBattleCity() {
         battleCityModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-        
+
         if (!battleCityGame) {
             battleCityGame = new BattleCity('battle-city-game');
             battleCityGame.init();
-        } else if (battleCityGame.isPaused && !battleCityGame.isGameOver && !battleCityGame.isVictory) {
-            battleCityGame.render();
-            battleCityGame.drawPauseScreen();
+        } else {
+            battleCityGame.resumeFromOpen();
         }
     }
 
     function closeBattleCity() {
         battleCityModal.classList.remove('active');
         document.body.style.overflow = '';
-        // Do not auto-save mid-level state; simply hide modal
+        // Pause the game and silence all audio so nothing keeps running in the background
+        if (battleCityGame) {
+            battleCityGame.pauseForClose();
+        }
     }
 
     battleCityTriggers.forEach(trigger => {
@@ -45,4 +47,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-

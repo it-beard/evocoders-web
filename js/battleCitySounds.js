@@ -169,6 +169,128 @@ class BattleCitySounds {
         return this.playAudioFile('gameOver');
     }
 
+    playHitSteelSound() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.06);
+
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(now);
+        osc.stop(now + 0.06);
+    }
+
+    playPowerUpAppearSound() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        [660, 880].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.12, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.08);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.08);
+        });
+    }
+
+    playPowerUpPickupSound() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.15, now + i * 0.06);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.06 + 0.08);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now + i * 0.06);
+            osc.stop(now + i * 0.06 + 0.08);
+        });
+    }
+
+    playExtraLifeSound() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        [783.99, 987.77, 1174.66, 1567.98].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.2, now + i * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.12);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.12);
+        });
+    }
+
+    playPauseSound() {
+        if (!this.enabled || !this.audioContext) return;
+
+        const ctx = this.audioContext;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(660, now + 0.08);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + 0.16);
+    }
+
+    stopMusic() {
+        Object.values(this.audioElements).forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    }
+
+    suspend() {
+        this.stopMusic();
+        if (this.audioContext && this.audioContext.state === 'running') {
+            this.audioContext.suspend().catch(() => {});
+        }
+    }
+
+    resume() {
+        if (this.audioContext && this.audioContext.state === 'suspended') {
+            this.audioContext.resume().catch(() => {});
+        }
+    }
+
     playLevelCompleteSound() {
         if (!this.enabled) return;
 

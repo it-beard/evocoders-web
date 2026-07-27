@@ -109,7 +109,10 @@ p, span, div {
     padding: 0 20px;
     position: relative;
     z-index: 1;
+    /* clip (unlike hidden) does not force overflow-y into auto,
+       so fade-in translateY animations can't spawn a temporary scrollbar */
     overflow-x: hidden;
+    overflow-x: clip;
 }
 
 header {
@@ -2217,6 +2220,7 @@ footer i.battle-city {
     section {
         max-width: 100%;
         overflow-x: hidden;
+        overflow-x: clip;
     }
 
     .mission .mission-text {
