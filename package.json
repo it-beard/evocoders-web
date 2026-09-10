@@ -1,0 +1,14 @@
+{
+  "name": "evocoders-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Лендинг закрытого клуба «Эволюция Кода». Прод — чистая статика, зависимости нужны только для тестов.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:watch": "node --test --watch tests/*.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1"
+  }
+}
