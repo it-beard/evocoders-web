@@ -2832,6 +2832,44 @@ footer i.battle-city {
     opacity: 0.85;
 }
 
+.rhythm-new {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-white);
+    max-width: 760px;
+    margin: 0 auto 18px;
+}
+
+.rhythm-new-badge {
+    display: inline-block;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    line-height: 1;
+    padding: 6px 7px;
+    margin-right: 8px;
+    vertical-align: middle;
+    color: var(--retro-darker);
+    background: var(--retro-green);
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.55);
+}
+
+.rhythm-new strong {
+    color: var(--text-primary);
+    text-shadow: 0 0 8px var(--retro-cyan);
+}
+
+.rhythm-new a {
+    color: var(--retro-cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(0, 245, 212, 0.5);
+}
+
+.rhythm-new a:hover {
+    color: var(--retro-green);
+    text-shadow: 0 0 8px var(--retro-green);
+    border-bottom-color: var(--retro-green);
+}
+
 .rhythm-foot {
     font-size: 1.05rem;
     color: var(--text-white);

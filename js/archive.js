@@ -5,6 +5,7 @@
             label: 'Воркшопы',
             icon: 'fas fa-flask-vial',
             items: [
+                { year: 2026, date: '2026.08.06', title: 'INITE Architecture: от AI-продуктов к субъектной операционной системе / Михаил Савченко' },
                 { year: 2026, date: '2026.06.16', title: 'INITE Brain: память, время и границы для AI-агентов / Михаил Савченко' },
                 { year: 2026, date: '2026.06.10', title: 'Temporal как позвоночник мультиагентных систем / Михаил Савченко' },
                 { year: 2026, date: '2026.04.16', title: 'Применения Spec Driven Development на монолитах и больших кодовых базах / Клубчанин Михаил' },
@@ -52,7 +53,10 @@
             label: 'Созвоны',
             icon: 'fas fa-headset',
             items: [
-                { year: 2026, date: '2026.07.14', title: 'Созвон №37: Fable 5 vs Soul, концепция Dark Factory и оркестрация агентов, безопасность агентов на локальных машинах, VPS и облака для разработки, память агентов и персонализация, Gemini vs OpenAI/Anthropic, Agent Protocol, поездка Лекса в США' },
+                { year: 2026, date: '2026.09.01', title: 'Созвон №40: Dark Factory — устройство, мониторинг и мультивендорность (Claude + Codex), автономность и контроль агентов, безопасность ИИ-кода и промпт-инъекции, локальные модели без цензуры на Mac, релиз Claude Fable 5.1 и Mythos 5.1, Grok 4.6, OpenAI убирает свои модели из Cursor' },
+                { year: 2026, date: '2026.08.18', title: 'Созвон №39: AI-ассистенты и трансформация бизнес-процессов, каталог AI-инструментов сообщества, новые модели GLM 5.3, Grok 4.6 и Qwen 3.8, локальный запуск и MLX Fast, Cursor Origins и покупка OpenRouter, сколько стоит агентский кодинг, заменит ли AI программистов' },
+                { year: 2026, date: '2026.07.27', title: 'Созвон №38: GPT-5.6 и Opus 5, Kimi K3, экономика токенов и кэширование, TDD и Dark Factory, аналитики пишут код через Superpowers, SDD и организация памяти проекта, клавиатура CODEX Micro, браузерные ИИ-агенты, Luna High' },
+                { year: 2026, date: '2026.07.14', title: 'Созвон №37: Fable 5 vs Sol, концепция Dark Factory и оркестрация агентов, безопасность агентов на локальных машинах, VPS и облака для разработки, память агентов и персонализация, Gemini vs OpenAI/Anthropic, Agent Protocol, поездка Лекса в США' },
                 { year: 2026, date: '2026.06.10', title: 'Созвон №36: Fable 5 — первые впечатления, цены и отключение headless-режима, Mythos vs Fable, Minimax M3 и DeepSeek, стоимость ИИ-фабрики (Dark Factory) из 25 агентов, миграция легаси с FoxPro, как проходить собеседование на ИИ-инженера' },
                 { year: 2026, date: '2026.05.19', title: 'Созвон №35: Composer 2.5 и ценообразование моделей, $1.3 млн в месяц на ИИ-инфраструктуру, найм ИИ-разработчика, локальный инференс и железо для моделей, OpenClaw' },
                 { year: 2026, date: '2026.05.05', title: 'Созвон №34: GPT 5.5, Opus 4.7, DeepSeek v4, рост цен, легаси и трансформация профессии' },
@@ -89,6 +93,13 @@
                 { year: 2025, date: '2025.02.18', title: 'Созвон №3: про VR, Cursor, локальные модели и децентраленд' },
 
                 { year: 2024, date: '2024.12.16', title: 'Созвон №2: про Claude 3.5 Sonnet, джунов и базовую терминологию клуба и ИИ' }
+            ]
+        },
+        latecoffee: {
+            label: 'Late Coffee',
+            icon: 'fas fa-mug-hot',
+            items: [
+                { year: 2026, date: '2026.09.03', title: 'Late Coffee №1: пилотный выпуск — новые модели Google, Meta, Anthropic и World Labs, ИИ в правительстве ОАЭ, армии США, защите водоснабжения и диагностике заболеваний сердца, проверки моделей перед релизом и инциденты с Claude в кибертестах' }
             ]
         },
         interviews: {
@@ -190,7 +201,7 @@
         }
     };
 
-    const TAB_ORDER = ['workshops', 'clubcalls', 'interviews', 'reviews', 'booksclub', 'lessons', 'talks'];
+    const TAB_ORDER = ['workshops', 'clubcalls', 'latecoffee', 'interviews', 'reviews', 'booksclub', 'lessons', 'talks'];
 
     function renderTabs(container) {
         container.innerHTML = TAB_ORDER.map((key, idx) => {
@@ -257,6 +268,7 @@
     const CATEGORY_PLURALS = {
         workshops: ['воркшоп', 'воркшопа', 'воркшопов'],
         clubcalls: ['клубный созвон', 'клубных созвона', 'клубных созвонов'],
+        latecoffee: ['выпуск Late Coffee', 'выпуска Late Coffee', 'выпусков Late Coffee'],
         interviews: ['интервью', 'интервью', 'интервью'],
         reviews: ['обзор', 'обзора', 'обзоров'],
         booksclub: ['встреча книжного клуба', 'встречи книжного клуба', 'встреч книжного клуба'],
