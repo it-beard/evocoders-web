@@ -25,9 +25,18 @@ test.after(() => archive?.page.close());
 const ALLOWED_DIVERGENCE = new Map([
     ['clubcalls|2024.12.16', 'в базе знаний опечатка «Sonet» — на лендинге «Sonnet»'],
     ['reviews|2024.10.18', 'в базе знаний опечатка «Knowlege» — на лендинге «Knowledge»'],
-    ['talks|2024.10.30', 'на лендинге двоеточие вместо тире перед темой доклада'],
-    ['latecoffee|2026.09.03', 'выпуск пронумерован «Late Coffee №1» ради бейджа «последнее событие» в hero']
+    ['talks|2024.10.30', 'на лендинге двоеточие вместо тире перед темой доклада']
 ]);
+
+/**
+ * Системные переименования: префикс на лендинге другой, но тема обязана совпадать.
+ * «Выпуск #3: …» из базы знаний здесь — «Late Coffee №3: …», иначе бейдж
+ * «последнее событие» в hero показал бы безликое «Выпуск #3».
+ */
+const LANDING_TITLE = {
+    latecoffee: (title) => title.replace(/^Выпуск #(\d+):/, 'Late Coffee №$1:')
+};
+const titleOnSite = (category, title) => (LANDING_TITLE[category] ? LANDING_TITLE[category](title) : title);
 
 test('в навигаторе нет незнакомых категорий', { skip }, () => {
     assert.deepEqual(
@@ -90,7 +99,8 @@ test('заголовки датированных событий совпада�
             if (ALLOWED_DIVERGENCE.has(`${category}|${item.date}`)) continue;
 
             const candidates = onSite.get(item.date) || [];
-            const matched = candidates.some((title) => normalizeTitle(title) === normalizeTitle(item.title));
+            const expected = normalizeTitle(titleOnSite(category, item.title));
+            const matched = candidates.some((title) => normalizeTitle(title) === expected);
             if (!matched) {
                 diffs.push(`${category} ${item.date}\n  база знаний: ${item.title}\n  лендинг    : ${candidates.join('\n               ')}`);
             }
@@ -109,7 +119,7 @@ test('список осознанных расхождений не протух
         assert.ok(learnItem, `${key}: записи больше нет в базе знаний — убери её из ALLOWED_DIVERGENCE`);
         assert.ok(siteItem, `${key}: записи больше нет на лендинге — убери её из ALLOWED_DIVERGENCE`);
         assert.notEqual(
-            normalizeTitle(learnItem.title), normalizeTitle(siteItem.title),
+            normalizeTitle(titleOnSite(category, learnItem.title)), normalizeTitle(siteItem.title),
             `${key}: заголовки уже совпали (${reason}) — убери запись из ALLOWED_DIVERGENCE`
         );
     }

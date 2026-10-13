@@ -10,9 +10,9 @@ test.after(() => archive.page.close());
  * с добавлением контента в js/archive.js, а не «само собой».
  */
 const EXPECTED = {
-    workshops:  { label: 'Воркшопы',      icon: 'fas fa-flask-vial',                count: 40 },
-    clubcalls:  { label: 'Созвоны',       icon: 'fas fa-headset',                   count: 38 },
-    latecoffee: { label: 'Late Coffee',   icon: 'fas fa-mug-hot',                   count: 1  },
+    workshops:  { label: 'Воркшопы',      icon: 'fas fa-flask-vial',                count: 41 },
+    clubcalls:  { label: 'Созвоны',       icon: 'fas fa-headset',                   count: 40 },
+    latecoffee: { label: 'Late Coffee',   icon: 'fas fa-mug-hot',                   count: 4  },
     interviews: { label: 'Интервью',      icon: 'fas fa-microphone',                count: 9  },
     reviews:    { label: 'Обзоры',        icon: 'fas fa-magnifying-glass-chart',    count: 26 },
     booksclub:  { label: 'Книжный клуб',  icon: 'fas fa-book-open',                 count: 16 },
@@ -20,7 +20,7 @@ const EXPECTED = {
     talks:      { label: 'Доклады',       icon: 'fas fa-person-chalkboard',         count: 3  }
 };
 
-const TOTAL = 141;
+const TOTAL = 147;
 
 test('порядок вкладок зафиксирован', () => {
     assert.deepEqual(archive.order, Object.keys(EXPECTED));
